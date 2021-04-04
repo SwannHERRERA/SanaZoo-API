@@ -13,12 +13,14 @@ import {statisticRouter} from "./monitoring/statistic.router";
 import {affluenceRouter} from "./monitoring/affluence.router";
 import {userRouter} from "./user/user.router";
 import {userRoleRouter} from "./user/user_role.router";
+import {animalSpecieRouter} from "./animal/animal_specie.router";
 
 export function buildRoutes(app: Express) {
     app.use("/enclosure", enclosureRouter);
     app.use("/enclosure/maintenance", enclosureMaintenanceRouter);
 
     app.use("/animal", animalRouter);
+    app.use("/animal/specie", animalSpecieRouter);
     app.use("/animal/health", animalHealthBookRouter);
 
     app.use("/planning", employeePlanningRouter);
