@@ -7,7 +7,7 @@
     "watch": "nodemon --watch \"src/**\" --exec ts-node src/index.ts",
     "build": "tsc",
     "start": "ts-node dist/index.js",
-    "heroku": "ts-node src/index.ts",
+    "heroku": "node dist/index.js",
     "dev": "nodemon dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
