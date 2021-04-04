@@ -5,6 +5,10 @@ import {animalRouter} from "./animal/animal.router";
 import {animalHealthBookRouter} from "./animal/animal_health_book.router";
 import {employeePlanningRouter} from "./planning/employee_planning.router";
 import {zooOpeningRouter} from "./planning/zoo_opening.router";
+import {passRouter} from "./pass/pass.router";
+import {passControlRouter} from "./pass/pass_control.router";
+import {passEscapeGameRouter} from "./pass/pass_escape_game.router";
+import {passNightRouter} from "./pass/pass_night.router";
 
 export function buildRoutes(app: Express) {
     app.use("/enclosure", enclosureRouter);
@@ -15,4 +19,9 @@ export function buildRoutes(app: Express) {
 
     app.use("/planning", employeePlanningRouter);
     app.use("/zoo", zooOpeningRouter);
+
+    app.use("/pass", passRouter);
+    app.use("/pass/control", passControlRouter);
+    app.use("/pass/escape-game", passEscapeGameRouter);
+    app.use("/pass/night", passNightRouter);
 }
