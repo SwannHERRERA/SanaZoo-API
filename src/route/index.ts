@@ -9,6 +9,8 @@ import {passRouter} from "./pass/pass.router";
 import {passControlRouter} from "./pass/pass_control.router";
 import {passEscapeGameRouter} from "./pass/pass_escape_game.router";
 import {passNightRouter} from "./pass/pass_night.router";
+import {statisticRouter} from "./monitoring/statistic.router";
+import {affluenceRouter} from "./monitoring/affluence.router";
 
 export function buildRoutes(app: Express) {
     app.use("/enclosure", enclosureRouter);
@@ -24,4 +26,7 @@ export function buildRoutes(app: Express) {
     app.use("/pass/control", passControlRouter);
     app.use("/pass/escape-game", passEscapeGameRouter);
     app.use("/pass/night", passNightRouter);
+
+    app.use("/monitoring/statistic", statisticRouter);
+    app.use("/monitoring/affluence", affluenceRouter);
 }
