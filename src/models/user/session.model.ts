@@ -7,7 +7,7 @@ import {
   BelongsToSetAssociationMixin,
   BelongsToGetAssociationMixin,
 } from "sequelize";
-import { UserInstance } from "./user.model";
+import { IUser_Instance } from "./user.model";
 
 export interface Session_Props {
   id: number;
@@ -20,8 +20,8 @@ export interface Session_Creation_Props extends Optional<Session_Props, "id"> {}
 export interface Session_Instance
   extends Model<Session_Props, Session_Creation_Props>,
     Session_Props {
-  setUser: BelongsToSetAssociationMixin<UserInstance, "id">;
-  getUser: BelongsToGetAssociationMixin<UserInstance>;
+  setUser: BelongsToSetAssociationMixin<IUser_Instance, "id">;
+  getUser: BelongsToGetAssociationMixin<IUser_Instance>;
 }
 
 export default function (sequelize: Sequelize): ModelCtor<Session_Instance> {
