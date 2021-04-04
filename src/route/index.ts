@@ -1,8 +1,8 @@
 import {Express} from "express";
-import {enclosureRouter} from "./enclosure/enclosure.route";
-import {enclosureMaintenanceRouter} from "./enclosure/enclosure_maintenance.route";
-import {animalRouter} from "./animal/animalRouter";
-import {animalHealthBookRouter} from "./animal/animal_health_book.route";
+import {enclosureRouter} from "./enclosure/enclosure.router";
+import {enclosureMaintenanceRouter} from "./enclosure/enclosure_maintenance.router";
+import {animalRouter} from "./animal/animal.router";
+import {animalHealthBookRouter} from "./animal/animal_health_book.router";
 
 export function buildRoutes(app: Express) {
     app.use("/enclosure", enclosureRouter);
