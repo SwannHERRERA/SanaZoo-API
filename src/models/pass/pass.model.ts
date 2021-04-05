@@ -11,15 +11,13 @@ export interface IPass_Props {
   validDate: Date;
 }
 
-export interface IPass_Creation_Props
-  extends Optional<IPass_Props, "id"> {}
+export interface IPass_Creation_Props extends Optional<IPass_Props, "id"> {}
 
-export interface Pass_Instance
-  extends Model<IPass_Props, IPass_Creation_Props>,
+export interface IPass_Instance extends Model<IPass_Props, IPass_Creation_Props>,
     IPass_Props {}
 
-const initPass = (sequelize: Sequelize): ModelCtor<Pass_Instance> => {
-  return sequelize.define<Pass_Instance>(
+const initPass = (sequelize: Sequelize): ModelCtor<IPass_Instance> => {
+  return sequelize.define<IPass_Instance>(
     "Pass",
     {
       id: {

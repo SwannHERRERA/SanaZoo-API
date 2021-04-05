@@ -4,10 +4,10 @@ export interface IEntry_Props {
   id: number;
 }
 
-export interface Entry_Instance extends Model<IEntry_Props>, IEntry_Props {}
+export interface IEntry_Instance extends Model<IEntry_Props>, IEntry_Props {}
 
-const initEntry = (sequelize: Sequelize): ModelCtor<Entry_Instance> => {
-  return sequelize.define<Entry_Instance>(
+const initEntry = (sequelize: Sequelize): ModelCtor<IEntry_Instance> => {
+  return sequelize.define<IEntry_Instance>(
     "Entry",
     {
       id: {
