@@ -1,0 +1,35 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "une API pour un ZOO",
+    "title": "ZOO API",
+    "version": "1.0"
+  },
+  "schemes": ["http"],
+  "host": "localhost:3000",
+  "basePath": "/",
+  "paths": {
+    "/": {
+      "get": {
+        "summary": "Hello World !",
+        "description": "Get the hello world",
+        "produces": ["application/json"],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "400": {
+            "description": "Invalid status value",
+            "schema": {
+              "$ref": "#/definitions/InvalidResponse"
+            }
+          }
+        }
+      }
+    }
+  }
+}

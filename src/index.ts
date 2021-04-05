@@ -1,6 +1,8 @@
 import express from "express";
 import { config } from "dotenv";
 import { SequelizeManager } from "./utils/db";
+import swaggerUI from "swagger-ui-express";
+import swaggerJSON from "../docs/swagger.json";
 import { buildRoutes } from "./route";
 
 config();
@@ -8,6 +10,8 @@ config();
 const app = express();
 
 app.use(express.json());
+app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerJSON));
+// const sequelize = SequelizeManager.getInstance();
 
 buildRoutes(app);
 
