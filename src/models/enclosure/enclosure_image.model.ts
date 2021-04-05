@@ -19,31 +19,23 @@ export interface IEnclosure_Image_instance extends Model<IEnclosure_Image_Props,
     IEnclosure_Image_Props {
 }
 
-const initEnclosureImage = (
-    sequelize: Sequelize
-): ModelCtor<IEnclosure_Image_instance> => {
-    return sequelize.define<IEnclosure_Image_instance>(
-        "Enclosure_Image",
-        {
-            id: {
-                type: DataTypes.BIGINT,
-                primaryKey: true,
-                autoIncrement: true,
-            },
-            title: {
-                type: DataTypes.STRING,
-            },
-            path: {
-                type: DataTypes.STRING,
-            },
+export function enclosureImageCreator(sequelize: Sequelize): ModelCtor<IEnclosure_Image_instance> {
+    return sequelize.define<IEnclosure_Image_instance>("Enclosure_Image", {
+        id: {
+            type: DataTypes.BIGINT,
+            primaryKey: true,
+            autoIncrement: true,
         },
-        {
-            freezeTableName: true,
-            underscored: true,
-            paranoid: true,
-            timestamps: true,
-        }
-    );
-};
-
-export default initEnclosureImage;
+        title: {
+            type: DataTypes.STRING,
+        },
+        path: {
+            type: DataTypes.STRING,
+        },
+    }, {
+        freezeTableName: true,
+        underscored: true,
+        paranoid: true,
+        timestamps: true,
+    });
+}

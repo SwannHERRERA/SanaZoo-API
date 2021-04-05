@@ -19,9 +19,7 @@ export interface IPass_Night_Availability_Instance extends Model<IPass_Night_Ava
     getPassNight: BelongsToGetAssociationMixin<IPass_Type_Instance>;
 }
 
-const initPassNight = (
-    sequelize: Sequelize
-): ModelCtor<IPass_Night_Availability_Instance> => {
+export function passNightAvailabilityCreator(sequelize: Sequelize): ModelCtor<IPass_Night_Availability_Instance> {
     return sequelize.define<IPass_Night_Availability_Instance>(
         "Pass_Night_Availability",
         {
@@ -34,8 +32,5 @@ const initPassNight = (
                 type: DataTypes.DATE,
                 allowNull: false,
             },
-        }
-    );
-};
-
-export default initPassNight;
+        });
+}

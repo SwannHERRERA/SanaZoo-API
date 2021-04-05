@@ -13,9 +13,7 @@ export interface IEnclosure_Service_Book_Instance extends Model<IEnclosure_Servi
     IEnclosure_Service_Book_Props {
 }
 
-export default function (
-    sequelize: Sequelize
-): ModelCtor<IEnclosure_Service_Book_Instance> {
+export function enclosureServiceBookCreator(sequelize: Sequelize): ModelCtor<IEnclosure_Service_Book_Instance> {
     return sequelize.define<IEnclosure_Service_Book_Instance>(
         "Enclosure_Service",
         {

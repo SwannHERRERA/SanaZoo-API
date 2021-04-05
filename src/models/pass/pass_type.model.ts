@@ -19,7 +19,7 @@ export interface IPass_Type_Instance extends Model<IPass_Type_Props, IPass_Type_
     IPass_Type_Props {
 }
 
-const initPassType = (sequelize: Sequelize): ModelCtor<IPass_Type_Instance> => {
+export function passTypeCreator(sequelize: Sequelize): ModelCtor<IPass_Type_Instance> {
     return sequelize.define<IPass_Type_Instance>(
         "Pass_Type",
         {
@@ -42,8 +42,5 @@ const initPassType = (sequelize: Sequelize): ModelCtor<IPass_Type_Instance> => {
             underscored: true,
             paranoid: true,
             timestamps: true,
-        }
-    );
-};
-
-export default initPassType;
+        });
+}

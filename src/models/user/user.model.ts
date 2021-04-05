@@ -18,7 +18,7 @@ export interface IUser_Instance extends Model<IUser_Props, IUser_Creation_Props>
 
 }
 
-export default function(sequelize: Sequelize): ModelCtor<IUser_Instance> {
+export function userCreator(sequelize: Sequelize): ModelCtor<IUser_Instance> {
     return sequelize.define<IUser_Instance>("User", {
         id: {
             type: DataTypes.BIGINT,

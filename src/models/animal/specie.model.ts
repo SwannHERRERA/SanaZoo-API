@@ -8,13 +8,14 @@ export interface ISpecie_Props {
     description: string;
 }
 
-export interface ISpecie_Creation_Props extends Optional<ISpecie_Props, "id"> {}
+export interface ISpecie_Creation_Props extends Optional<ISpecie_Props, "id"> {
+}
 
 export interface ISpecie_Instance extends Model<ISpecie_Props, ISpecie_Creation_Props>, ISpecie_Props {
 
 }
 
-export default function(sequelize: Sequelize): ModelCtor<ISpecie_Instance> {
+export function specieCreator(sequelize: Sequelize): ModelCtor<ISpecie_Instance> {
     return sequelize.define<ISpecie_Instance>("Specie", {
         id: {
             type: DataTypes.BIGINT,

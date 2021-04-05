@@ -24,7 +24,7 @@ export interface ISession_Instance extends Model<ISession_Props, ISession_Creati
     getUser: BelongsToGetAssociationMixin<IUser_Instance>;
 }
 
-export default function (sequelize: Sequelize): ModelCtor<ISession_Instance> {
+export function sessionCreator(sequelize: Sequelize): ModelCtor<ISession_Instance> {
     return sequelize.define<ISession_Instance>(
         "Session",
         {
