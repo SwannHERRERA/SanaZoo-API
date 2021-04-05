@@ -1,10 +1,4 @@
-import {
-  DataTypes,
-  Model,
-  ModelCtor,
-  Optional,
-  Sequelize,
-} from "sequelize/types";
+import { DataTypes, Model, ModelCtor, Optional, Sequelize } from "sequelize";
 
 export interface IPass_Type_Props {
   id: number;

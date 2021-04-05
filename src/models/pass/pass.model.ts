@@ -1,18 +1,11 @@
-import {
-  DataTypes,
-  Model,
-  ModelCtor,
-  Optional,
-  Sequelize,
-} from "sequelize/types";
+import { DataTypes, Model, ModelCtor, Optional, Sequelize } from "sequelize";
 
 export interface IPass_Props {
   id: number;
   validDate: Date;
 }
 
-export interface IPass_Creation_Props
-  extends Optional<IPass_Props, "id"> {}
+export interface IPass_Creation_Props extends Optional<IPass_Props, "id"> {}
 
 export interface Pass_Instance
   extends Model<IPass_Props, IPass_Creation_Props>,

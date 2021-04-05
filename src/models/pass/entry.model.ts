@@ -1,4 +1,4 @@
-import { DataTypes, Model, ModelCtor, Sequelize } from "sequelize/types";
+import { DataTypes, Model, ModelCtor, Sequelize } from "sequelize";
 
 export interface IEntry_Props {
   id: number;

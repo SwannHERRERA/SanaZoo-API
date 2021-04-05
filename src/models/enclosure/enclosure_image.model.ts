@@ -1,10 +1,13 @@
 import {
+  BelongsToGetAssociationMixin,
+  BelongsToSetAssociationMixin,
   DataTypes,
   Model,
   ModelCtor,
   Optional,
   Sequelize,
-} from "sequelize/types";
+} from "sequelize";
+import { IEnclosure_Instance } from "./enclosure.model";
 
 export interface IEnclosure_image_Props {
   id: number;
@@ -15,14 +18,17 @@ export interface IEnclosure_image_Props {
 export interface IEnclosure_image_creation_props
   extends Optional<IEnclosure_image_Props, "id"> {}
 
-export interface Enclosure_image_instance
+export interface IEnclosure_image_Instance
   extends Model<IEnclosure_image_Props, IEnclosure_image_creation_props>,
-    IEnclosure_image_Props {}
+    IEnclosure_image_Props {
+  setEnclosure: BelongsToSetAssociationMixin<IEnclosure_Instance, "id">;
+  getEnclosure: BelongsToGetAssociationMixin<IEnclosure_Instance>;
+}
 
 const initEnclosureImage = (
   sequelize: Sequelize
-): ModelCtor<Enclosure_image_instance> => {
-  return sequelize.define<Enclosure_image_instance>(
+): ModelCtor<IEnclosure_image_Instance> => {
+  return sequelize.define<IEnclosure_image_Instance>(
     "Enclosure_Image",
     {
       id: {

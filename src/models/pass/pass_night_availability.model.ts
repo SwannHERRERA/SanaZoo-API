@@ -5,7 +5,7 @@ import {
   Model,
   ModelCtor,
   Sequelize,
-} from "sequelize/types";
+} from "sequelize";
 import { Pass_Type_Instance } from "./pass_type.model";
 
 export interface IPass_Night_Availability_Props {
