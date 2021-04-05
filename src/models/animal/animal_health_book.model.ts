@@ -1,19 +1,32 @@
-import {ModelCtor, Optional, Sequelize, Model, DataTypes} from "sequelize";
-
+import {
+    ModelCtor,
+    Optional,
+    Sequelize,
+    Model,
+    DataTypes,
+    BelongsToGetAssociationMixin,
+    BelongsToSetAssociationMixin,
+} from "sequelize";
+import {IAnimal_Instance} from "..";
+import {IUser_Instance} from "..";
 
 export interface IAnimal_Health_Book_Props {
     id: number;
-    animal: number;
-    user: number;
     description: string;
     date: string;
-
 }
 
-export interface IAnimal_Health_Book_Creation_Props extends Optional<IAnimal_Health_Book_Props, "id"> {}
+export interface IAnimal_Health_Book_Creation_Props
+    extends Optional<IAnimal_Health_Book_Props, "id"> {
+}
 
-export interface IAnimal_Health_Book_Instance extends Model<IAnimal_Health_Book_Props, IAnimal_Health_Book_Creation_Props>, IAnimal_Health_Book_Props {
-
+export interface IAnimal_Health_Book_Instance
+    extends Model<IAnimal_Health_Book_Props, IAnimal_Health_Book_Creation_Props>,
+        IAnimal_Health_Book_Props {
+    setAnimal: BelongsToSetAssociationMixin<IAnimal_Instance, "id">;
+    getAnimal: BelongsToGetAssociationMixin<IAnimal_Instance>;
+    setUser: BelongsToSetAssociationMixin<IUser_Instance, "id">;
+    getUser: BelongsToGetAssociationMixin<IUser_Instance>;
 }
 
 export function animalHealthBookCreator(sequelize: Sequelize): ModelCtor<IAnimal_Health_Book_Instance> {
@@ -25,12 +38,6 @@ export function animalHealthBookCreator(sequelize: Sequelize): ModelCtor<IAnimal
         },
         description: {
             type: DataTypes.STRING
-        },
-        animal: {
-            type: DataTypes.BIGINT
-        },
-        user: {
-            type: DataTypes.BIGINT
         },
         date: {
             type: DataTypes.DATE

@@ -1,11 +1,18 @@
-import {ModelCtor, Optional, Sequelize, Model, DataTypes} from "sequelize";
+import {
+    BelongsToGetAssociationMixin,
+    BelongsToSetAssociationMixin,
+    DataTypes,
+    Model,
+    ModelCtor,
+    Optional,
+    Sequelize
+} from "sequelize";
+import {IUser_Instance} from "..";
 
 
 export interface IEmployee_Planning_Props {
     id: number;
-    user: number;
     day_of_week: string;
-    enclosure: number;
     start_time: string;
     end_time: string;
 
@@ -15,7 +22,8 @@ export interface IEmployee_Planning_Creation_Props extends Optional<IEmployee_Pl
 }
 
 export interface IEmployee_Planning_Instance extends Model<IEmployee_Planning_Props, IEmployee_Planning_Creation_Props>, IEmployee_Planning_Props {
-
+    setUser: BelongsToSetAssociationMixin<IUser_Instance, "id">;
+    getUser: BelongsToGetAssociationMixin<IUser_Instance>;
 }
 
 export function employeePlanningCreator(sequelize: Sequelize): ModelCtor<IEmployee_Planning_Instance> {
@@ -27,12 +35,6 @@ export function employeePlanningCreator(sequelize: Sequelize): ModelCtor<IEmploy
         },
         day_of_week: {
             type: DataTypes.STRING
-        },
-        user: {
-            type: DataTypes.BIGINT
-        },
-        enclosure: {
-            type: DataTypes.BIGINT
         },
         start_time: {
             type: DataTypes.DATE

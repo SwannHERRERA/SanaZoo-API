@@ -15,8 +15,9 @@ export interface IPass_Night_Availability_Props {
 
 export interface IPass_Night_Availability_Instance extends Model<IPass_Night_Availability_Props>,
     IPass_Night_Availability_Props {
-    setPassNight: BelongsToSetAssociationMixin<IPass_Type_Instance, "id">;
-    getPassNight: BelongsToGetAssociationMixin<IPass_Type_Instance>;
+
+    setPassType: BelongsToSetAssociationMixin<IPass_Type_Instance, "id">;
+    getPassType: BelongsToGetAssociationMixin<IPass_Type_Instance>;
 }
 
 export function passNightAvailabilityCreator(sequelize: Sequelize): ModelCtor<IPass_Night_Availability_Instance> {

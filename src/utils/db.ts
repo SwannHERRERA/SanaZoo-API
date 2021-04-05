@@ -12,7 +12,7 @@ import {
     IAnimal_Health_Book_Instance,
     IAnimal_Instance,
     IEmployee_Planning_Instance,
-    IEnclosure_Image_instance,
+    IEnclosure_Image_Instance,
     IEnclosure_Instance,
     IEnclosure_Service_Book_Instance,
     IEnclosure_Type_Instance,
@@ -41,7 +41,7 @@ export interface SequelizeManagerProps {
     Specie: ModelCtor<ISpecie_Instance>;
     //Enclosure package
     Enclosure: ModelCtor<IEnclosure_Instance>;
-    EnclosureImage: ModelCtor<IEnclosure_Image_instance>;
+    EnclosureImage: ModelCtor<IEnclosure_Image_Instance>;
     EnclosureServiceBook: ModelCtor<IEnclosure_Service_Book_Instance>;
     EnclosureType: ModelCtor<IEnclosure_Type_Instance>;
     //Pass
@@ -68,7 +68,7 @@ export class SequelizeManager implements SequelizeManagerProps {
     Specie: ModelCtor<ISpecie_Instance>;
     //Enclosure package
     Enclosure: ModelCtor<IEnclosure_Instance>;
-    EnclosureImage: ModelCtor<IEnclosure_Image_instance>;
+    EnclosureImage: ModelCtor<IEnclosure_Image_Instance>;
     EnclosureServiceBook: ModelCtor<IEnclosure_Service_Book_Instance>;
     EnclosureType: ModelCtor<IEnclosure_Type_Instance>;
     //Pass
