@@ -49,7 +49,7 @@ export interface SequelizeManagerProps {
     Pass: ModelCtor<IPass_Instance>;
     PassEnclosureAccess: ModelCtor<IPass_Enclosure_Access_Instance>;
     PassNightAvailability: ModelCtor<IPass_Night_Availability_Instance>;
-    Pass_Type: ModelCtor<IPass_Type_Instance>;
+    PassType: ModelCtor<IPass_Type_Instance>;
     //Planning
     EmployeePlanning: ModelCtor<IEmployee_Planning_Instance>;
     //User
@@ -76,7 +76,7 @@ export class SequelizeManager implements SequelizeManagerProps {
     Pass: ModelCtor<IPass_Instance>;
     PassEnclosureAccess: ModelCtor<IPass_Enclosure_Access_Instance>;
     PassNightAvailability: ModelCtor<IPass_Night_Availability_Instance>;
-    Pass_Type: ModelCtor<IPass_Type_Instance>;
+    PassType: ModelCtor<IPass_Type_Instance>;
     //Planning
     EmployeePlanning: ModelCtor<IEmployee_Planning_Instance>;
     //User
@@ -117,7 +117,7 @@ export class SequelizeManager implements SequelizeManagerProps {
             Pass: passCreator(sequelize),
             PassEnclosureAccess: passEnclosureCreator(sequelize),
             PassNightAvailability: passNightAvailabilityCreator(sequelize),
-            Pass_Type: passTypeCreator(sequelize),
+            PassType: passTypeCreator(sequelize),
             //Planning
             EmployeePlanning: employeePlanningCreator(sequelize),
             Session: sessionCreator(sequelize),
@@ -126,16 +126,81 @@ export class SequelizeManager implements SequelizeManagerProps {
         };
         SequelizeManager.associate(managerProps);
         await sequelize.sync({
-            force: true
+            force: false
         });
         return new SequelizeManager(managerProps);
     }
 
     private static associate(props: SequelizeManagerProps): void {
-        const {Animal, AnimalHealthBook, Specie, Enclosure} = props;
+        const {
+            Animal,
+            AnimalHealthBook,
+            Specie,
+            Enclosure,
+            User,
+            EnclosureType,
+            EnclosureImage,
+            Entry,
+            PassEnclosureAccess,
+            EnclosureServiceBook,
+            Pass,
+            PassType,
+            PassNightAvailability,
+            EmployeePlanning,
+            UserRole,
+            Session
+        } = props;
         Animal.hasMany(AnimalHealthBook);
         Animal.belongsTo(Specie);
         Animal.belongsTo(Enclosure);
+
+        AnimalHealthBook.belongsTo(Animal);
+        AnimalHealthBook.belongsTo(User);
+
+        Specie.hasMany(Animal);
+
+        Enclosure.belongsTo(EnclosureType);
+        Enclosure.hasMany(Animal);
+        Enclosure.hasMany(EnclosureImage);
+        Enclosure.hasMany(EnclosureServiceBook);
+        Enclosure.hasMany(Entry);
+        Enclosure.hasMany(PassEnclosureAccess);
+
+        EnclosureImage.belongsTo(Enclosure);
+
+        EnclosureServiceBook.belongsTo(Enclosure);
+        EnclosureServiceBook.belongsTo(User);
+
+        EnclosureType.hasMany(Enclosure);
+
+        Entry.belongsTo(Enclosure);
+        Entry.belongsTo(Pass);
+
+        Pass.belongsTo(PassType);
+        Pass.belongsTo(User);
+        Pass.hasMany(Entry);
+        Pass.hasMany(PassEnclosureAccess);
+
+        PassEnclosureAccess.belongsTo(Enclosure);
+        PassEnclosureAccess.belongsTo(Pass);
+
+        PassNightAvailability.belongsTo(PassType);
+
+        PassType.hasMany(Pass);
+        PassType.hasMany(PassNightAvailability);
+
+        EmployeePlanning.belongsTo(User);
+
+        Session.belongsTo(User);
+
+        User.belongsTo(UserRole);
+        User.hasMany(EnclosureServiceBook);
+        User.hasMany(Pass);
+        User.hasMany(Session);
+        User.hasMany(EmployeePlanning);
+        User.hasMany(AnimalHealthBook);
+
+        UserRole.hasMany(User);
     }
 
     private constructor(props: SequelizeManagerProps) {
@@ -153,7 +218,7 @@ export class SequelizeManager implements SequelizeManagerProps {
         this.Pass = props.Pass;
         this.PassEnclosureAccess = props.PassEnclosureAccess;
         this.PassNightAvailability = props.PassNightAvailability;
-        this.Pass_Type = props.Pass_Type;
+        this.PassType = props.PassType;
         //Planning
         this.EmployeePlanning = props.EmployeePlanning;
         //User
