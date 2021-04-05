@@ -11,14 +11,20 @@ let passTypeController: PassTypeController;
  */
 passTypeRouter.get('/', authMiddleware, async function (req, res, next) {
     const result = await (await getPassTypeController()).getAllPassTypes();
-    console.log(result);
     res.json(result);
 });
 
 /**
  * Get pass type by id
  */
-
+passTypeRouter.get('/:id', authMiddleware, async function (req, res, next) {
+    const result = await (await getPassTypeController()).getPassTypes(req.params.id);
+    if (!result) {
+        res.status(404).end();
+        return;
+    }
+    res.json(result);
+});
 
 
 async function getPassTypeController(): Promise<PassTypeController> {

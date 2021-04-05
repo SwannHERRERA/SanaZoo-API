@@ -20,6 +20,14 @@ export class PassTypeController {
         return this.PassType.findAll();
     }
 
+    public async getPassTypes(id: string): Promise<IPass_Type_Instance | null> {
+        return this.PassType.findOne({
+            where: {
+                id
+            }
+        });
+    }
+
     constructor(PassType: ModelCtor<IPass_Type_Instance>, Pass: ModelCtor<IPass_Instance>) {
         this.PassType = PassType;
         this.Pass = Pass;
