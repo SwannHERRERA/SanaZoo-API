@@ -4,7 +4,7 @@ import {
     ModelCtor,
     Optional,
     Sequelize,
-} from "sequelize/types";
+} from "sequelize";
 
 export interface IPass_Props {
     id: number;

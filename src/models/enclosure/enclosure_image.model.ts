@@ -4,7 +4,7 @@ import {
     ModelCtor,
     Optional,
     Sequelize,
-} from "sequelize/types";
+} from "sequelize";
 
 export interface IEnclosure_Image_Props {
     id: number;
