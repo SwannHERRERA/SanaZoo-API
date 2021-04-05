@@ -2,7 +2,7 @@
 FROM node:lts-alpine as builder
 WORKDIR /usr/app
 COPY package*.json ./
-RUN npm install
+RUN npm ci
 COPY . .
 RUN npm run build
 
@@ -10,7 +10,7 @@ RUN npm run build
 FROM node:lts-alpine
 WORKDIR /usr/app
 COPY package*.json ./
-RUN npm install --production
+RUN npm ci --production
 
 COPY --from=builder /usr/app/dist ./dist
 
@@ -18,8 +18,8 @@ ENV PORT=3000
 ENV DB_PORT=3306
 ENV DB_DRIVER='mysql'
 ENV DB_HOST='localhost'
-ENV DB_NAME='root'
-ENV DB_USER=''
-ENV DB_PASSWORD='zoo'
+ENV DB_NAME='zoo'
+ENV DB_USER='root'
+ENV DB_PASSWORD=''
 
 CMD node dist/src/index.js
