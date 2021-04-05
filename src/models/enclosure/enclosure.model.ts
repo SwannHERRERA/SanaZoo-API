@@ -31,7 +31,7 @@ export interface IEnclosure_Instance extends Model<IEnclosure_Props, IEnclosure_
     addPassEnclosureAccess: HasManyAddAssociationMixin<Pass_Enclosure_Access_Instance, "id">;
 }
 
-export default function(sequelize: Sequelize): ModelCtor<IEnclosure_Instance> {
+export function enclosureCreator(sequelize: Sequelize): ModelCtor<IEnclosure_Instance> {
     return sequelize.define<IEnclosure_Instance>("Enclosure", {
         id: {
             type: DataTypes.BIGINT,

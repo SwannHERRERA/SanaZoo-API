@@ -16,7 +16,7 @@ export interface IAnimal_Health_Book_Instance extends Model<IAnimal_Health_Book_
 
 }
 
-export default function(sequelize: Sequelize): ModelCtor<IAnimal_Health_Book_Instance> {
+export function animalHealthBookCreator(sequelize: Sequelize): ModelCtor<IAnimal_Health_Book_Instance> {
     return sequelize.define<IAnimal_Health_Book_Instance>("Animal_Health_Book", {
         id: {
             type: DataTypes.BIGINT,

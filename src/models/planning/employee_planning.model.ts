@@ -21,14 +21,15 @@ export interface IEmployee_Planning_Props {
 
 }
 
-export interface IEmployee_Planning_Creation_Props extends Optional<IEmployee_Planning_Props, "id"> {}
+export interface IEmployee_Planning_Creation_Props extends Optional<IEmployee_Planning_Props, "id"> {
+}
 
 export interface IEmployee_Planning_Instance extends Model<IEmployee_Planning_Props, IEmployee_Planning_Creation_Props>, IEmployee_Planning_Props {
     setUser: BelongsToSetAssociationMixin<IUser_Instance, "id">;
     getUser: BelongsToGetAssociationMixin<IUser_Instance>;
 }
 
-export default function(sequelize: Sequelize): ModelCtor<IEmployee_Planning_Instance> {
+export function employeePlanningCreator(sequelize: Sequelize): ModelCtor<IEmployee_Planning_Instance> {
     return sequelize.define<IEmployee_Planning_Instance>("Employee_Planning", {
         id: {
             type: DataTypes.BIGINT,
