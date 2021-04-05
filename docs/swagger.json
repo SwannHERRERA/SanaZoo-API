@@ -2,7 +2,8 @@
   "swagger": "2.0",
   "info": {
     "description": "une API pour un ZOO",
-    "title": "ZOO API"
+    "title": "ZOO API",
+    "version": "1.0"
   },
   "schemes": ["http"],
   "host": "localhost:3000",
