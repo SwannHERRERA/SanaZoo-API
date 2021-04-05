@@ -1,34 +1,31 @@
 import {
-  Sequelize,
-  Optional,
-  Model,
-  DataTypes,
-  ModelCtor,
-  BelongsToGetAssociationMixin,
-  BelongsToSetAssociationMixin,
+    Sequelize,
+    Optional,
+    Model,
+    DataTypes,
+    ModelCtor,
+    BelongsToGetAssociationMixin,
+    BelongsToSetAssociationMixin,
 } from "sequelize";
-import { IEnclosure_Instance } from "..";
-import { IUser_Instance } from "..";
+import {IEnclosure_Instance} from "..";
+import {IUser_Instance} from "..";
 
 export interface IEnclosure_Service_Book_Props {
-  id: number;
-  date: Date;
-  description: string;
+    id: number;
+    date: Date;
+    description: string;
 }
 
 export interface IEnclosure_Service_Book_Creation_Props extends Optional<IEnclosure_Service_Book_Props, "id"> {
 }
 
 export interface IEnclosure_Service_Book_Instance
-  extends Model<
-      IEnclosure_Service_Book_Props,
-      IEnclosure_Service_Book_Creation_Props
-    >,
-    IEnclosure_Service_Book_Props {
-  setEnclosure: BelongsToSetAssociationMixin<IEnclosure_Instance, "id">;
-  getEnclosure: BelongsToGetAssociationMixin<IEnclosure_Instance>;
-  setUser: BelongsToSetAssociationMixin<IUser_Instance, "id">;
-  getUser: BelongsToGetAssociationMixin<IUser_Instance>;
+    extends Model<IEnclosure_Service_Book_Props, IEnclosure_Service_Book_Creation_Props>, IEnclosure_Service_Book_Props {
+    setEnclosure: BelongsToSetAssociationMixin<IEnclosure_Instance, "id">;
+    getEnclosure: BelongsToGetAssociationMixin<IEnclosure_Instance>;
+
+    setUser: BelongsToSetAssociationMixin<IUser_Instance, "id">;
+    getUser: BelongsToGetAssociationMixin<IUser_Instance>;
 }
 
 export function enclosureServiceBookCreator(sequelize: Sequelize): ModelCtor<IEnclosure_Service_Book_Instance> {

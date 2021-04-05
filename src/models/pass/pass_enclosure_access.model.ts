@@ -11,12 +11,14 @@ import {IEnclosure_Instance} from "..";
 
 export interface IPass_Enclosure_Access_Props {
     id: number;
+    order?: number;
 }
 
-export interface IPass_Enclosure_Access_Instance extends Model<IPass_Enclosure_Access_Props>,
-    IPass_Enclosure_Access_Props {
+export interface IPass_Enclosure_Access_Instance
+    extends Model<IPass_Enclosure_Access_Props>, IPass_Enclosure_Access_Props {
     setPass: BelongsToSetAssociationMixin<IPass_Instance, "id">;
     getPass: BelongsToGetAssociationMixin<IPass_Instance>;
+
     setEnclosure: BelongsToSetAssociationMixin<IEnclosure_Instance, "id">;
     getEnclosure: BelongsToGetAssociationMixin<IEnclosure_Instance>;
 }
@@ -29,6 +31,9 @@ export function passEnclosureCreator(sequelize: Sequelize): ModelCtor<IPass_Encl
                 type: DataTypes.BIGINT,
                 primaryKey: true,
                 autoIncrement: true,
+            },
+            order: {
+                type: DataTypes.INTEGER,
             },
         },
         {

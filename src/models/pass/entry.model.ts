@@ -15,6 +15,7 @@ export interface IEntry_Props {
 export interface IEntry_Instance extends Model<IEntry_Props>, IEntry_Props {
     setPass: BelongsToSetAssociationMixin<IPass_Instance, "id">;
     getPass: BelongsToGetAssociationMixin<IPass_Instance>;
+
     setEnclosure: BelongsToSetAssociationMixin<IEnclosure_Instance, "id">;
     getEnclosure: BelongsToGetAssociationMixin<IEnclosure_Instance>;
 }

@@ -12,9 +12,7 @@ import {IUser_Instance} from "..";
 
 export interface IEmployee_Planning_Props {
     id: number;
-    user: number;
     day_of_week: string;
-    enclosure: number;
     start_time: string;
     end_time: string;
 
@@ -37,12 +35,6 @@ export function employeePlanningCreator(sequelize: Sequelize): ModelCtor<IEmploy
         },
         day_of_week: {
             type: DataTypes.STRING
-        },
-        user: {
-            type: DataTypes.BIGINT
-        },
-        enclosure: {
-            type: DataTypes.BIGINT
         },
         start_time: {
             type: DataTypes.DATE

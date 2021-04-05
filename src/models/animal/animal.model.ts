@@ -1,35 +1,36 @@
 import {
-  ModelCtor,
-  Optional,
-  Sequelize,
-  Model,
-  DataTypes,
-  BelongsToSetAssociationMixin,
-  BelongsToGetAssociationMixin,
+    ModelCtor,
+    Optional,
+    Sequelize,
+    Model,
+    DataTypes,
+    BelongsToSetAssociationMixin,
+    BelongsToGetAssociationMixin, HasManyGetAssociationsMixin, HasManyAddAssociationsMixin,
 } from "sequelize";
-import { IEnclosure_Instance } from "../enclosure/enclosure.model";
-import { ISpecie_Instance } from "./specie.model";
+import {IEnclosure_Instance} from "../enclosure/enclosure.model";
+import {ISpecie_Instance} from "./specie.model";
+import {IAnimal_Health_Book_Instance} from "./animal_health_book.model";
 
 export interface IAnimal_Props {
-  id: number;
-  name: string;
-  specie: number;
-  description: string;
-  enclosure: number;
-  birthdate: string;
-  image: string;
+    id: number;
+    name: string;
+    description: string;
+    birthdate: string;
+    image: string;
 }
 
 export interface IAnimal_Creation_Props extends Optional<IAnimal_Props, "id"> {
 }
 
 export interface IAnimal_Instance
-  extends Model<IAnimal_Props, IAnimal_Creation_Props>,
-    IAnimal_Props {
-  setSpecie: BelongsToSetAssociationMixin<ISpecie_Instance, "id">;
-  getSpecie: BelongsToGetAssociationMixin<ISpecie_Instance>;
-  setEnclosure: BelongsToSetAssociationMixin<IEnclosure_Instance, "id">;
-  getEnclosure: BelongsToGetAssociationMixin<IEnclosure_Instance>;
+    extends Model<IAnimal_Props, IAnimal_Creation_Props>,
+        IAnimal_Props {
+    setSpecie: BelongsToSetAssociationMixin<ISpecie_Instance, "id">;
+    getSpecie: BelongsToGetAssociationMixin<ISpecie_Instance>;
+    setEnclosure: BelongsToSetAssociationMixin<IEnclosure_Instance, "id">;
+    getEnclosure: BelongsToGetAssociationMixin<IEnclosure_Instance>;
+    getAnimalHealthBookList: HasManyGetAssociationsMixin<IAnimal_Health_Book_Instance>
+    addAnimalHealthBookList: HasManyAddAssociationsMixin<IAnimal_Health_Book_Instance, "id">
 }
 
 export function animalCreator(sequelize: Sequelize): ModelCtor<IAnimal_Instance> {
@@ -45,12 +46,6 @@ export function animalCreator(sequelize: Sequelize): ModelCtor<IAnimal_Instance>
         },
         description: {
             type: DataTypes.STRING
-        },
-        specie: {
-            type: DataTypes.BIGINT
-        },
-        enclosure: {
-            type: DataTypes.BIGINT
         },
         birthdate: {
             type: DataTypes.DATE

@@ -1,11 +1,11 @@
 import {
+    DataTypes,
+    HasManyAddAssociationMixin,
+    HasManyGetAssociationsMixin,
+    Model,
     ModelCtor,
     Optional,
-    Sequelize,
-    Model,
-    DataTypes,
-    BelongsToSetAssociationMixin,
-    BelongsToGetAssociationMixin
+    Sequelize
 } from "sequelize";
 import {IUser_Instance} from "./user.model";
 
@@ -19,8 +19,8 @@ export interface IUser_Role_Creation_Props extends Optional<IUser_Role_Props, "i
 }
 
 export interface IUser_Role_Instance extends Model<IUser_Role_Props, IUser_Role_Creation_Props>, IUser_Role_Props {
-    setUser: BelongsToSetAssociationMixin<IUser_Instance, "id">;
-    getUser: BelongsToGetAssociationMixin<IUser_Instance>;
+    getUserList: HasManyGetAssociationsMixin<IUser_Instance>;
+    addUser: HasManyAddAssociationMixin<IUser_Instance, "id">;
 }
 
 export function userRoleCreator(sequelize: Sequelize): ModelCtor<IUser_Role_Instance> {

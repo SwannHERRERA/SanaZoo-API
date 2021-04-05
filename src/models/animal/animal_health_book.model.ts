@@ -12,8 +12,6 @@ import {IUser_Instance} from "..";
 
 export interface IAnimal_Health_Book_Props {
     id: number;
-    animal: number;
-    user: number;
     description: string;
     date: string;
 }
@@ -40,12 +38,6 @@ export function animalHealthBookCreator(sequelize: Sequelize): ModelCtor<IAnimal
         },
         description: {
             type: DataTypes.STRING
-        },
-        animal: {
-            type: DataTypes.BIGINT
-        },
-        user: {
-            type: DataTypes.BIGINT
         },
         date: {
             type: DataTypes.DATE

@@ -1,4 +1,6 @@
 import {
+    BelongsToGetAssociationMixin,
+    BelongsToSetAssociationMixin,
     DataTypes,
     HasManyAddAssociationMixin,
     HasManyGetAssociationsMixin,
@@ -7,7 +9,12 @@ import {
     Optional,
     Sequelize
 } from "sequelize";
-import {IEmployee_Planning_Instance} from "..";
+import {
+    IAnimal_Health_Book_Instance,
+    IEmployee_Planning_Instance,
+    IEnclosure_Service_Book_Instance,
+    IPass_Instance
+} from "..";
 import {ISession_Instance} from "./session.model";
 import {IUser_Role_Instance} from "./user_role.model";
 
@@ -19,19 +26,30 @@ export interface IUser_Props {
     email: string;
     birthdate: string;
     password: string;
-    role: number;
 
 }
 
-export interface IUser_Creation_Props extends Optional<IUser_Props, "id"> {}
+export interface IUser_Creation_Props extends Optional<IUser_Props, "id"> {
+}
 
 export interface IUser_Instance extends Model<IUser_Props, IUser_Creation_Props>, IUser_Props {
-    getEmployeePlanning: HasManyGetAssociationsMixin<IEmployee_Planning_Instance>;
+    getPassList: HasManyGetAssociationsMixin<IPass_Instance>;
+    addPass: HasManyAddAssociationMixin<IPass_Instance, "id">;
+
+    getAnimalHealthBookList: HasManyGetAssociationsMixin<IAnimal_Health_Book_Instance>;
+    addAnimalHealthBook: HasManyAddAssociationMixin<IAnimal_Health_Book_Instance, "id">;
+
+    getEnclosureServiceBookList: HasManyGetAssociationsMixin<IEnclosure_Service_Book_Instance>;
+    addEnclosureServiceBook: HasManyAddAssociationMixin<IEnclosure_Service_Book_Instance, "id">;
+
+    getEmployeePlanningList: HasManyGetAssociationsMixin<IEmployee_Planning_Instance>;
     addEmployeePlanning: HasManyAddAssociationMixin<IEmployee_Planning_Instance, "id">;
-    getSession: HasManyGetAssociationsMixin<ISession_Instance>;
+
+    getSessionList: HasManyGetAssociationsMixin<ISession_Instance>;
     addSession: HasManyAddAssociationMixin<ISession_Instance, "id">;
-    getUserRole: HasManyGetAssociationsMixin<IUser_Role_Instance>;
-    addUserRole: HasManyAddAssociationMixin<IUser_Role_Instance, "id">;
+
+    getUserRole: BelongsToGetAssociationMixin<IUser_Role_Instance>;
+    setUserRole: BelongsToSetAssociationMixin<IUser_Role_Instance, "id">;
 }
 
 export function userCreator(sequelize: Sequelize): ModelCtor<IUser_Instance> {
@@ -47,9 +65,6 @@ export function userCreator(sequelize: Sequelize): ModelCtor<IUser_Instance> {
         },
         last_name: {
             type: DataTypes.STRING
-        },
-        role: {
-            type: DataTypes.BIGINT
         },
         email: {
             type: DataTypes.STRING

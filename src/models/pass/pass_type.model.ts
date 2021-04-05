@@ -17,9 +17,9 @@ export interface IPass_Type_Props {
 }
 
 export interface IPass_Type_Creation_Props extends Optional<IPass_Type_Props, "id"> {
-    getPass: HasManyGetAssociationsMixin<IPass_Instance>;
+    getPassList: HasManyGetAssociationsMixin<IPass_Instance>;
     addPass: HasManyAddAssociationMixin<IPass_Instance, "id">;
-    getPassNight: HasManyGetAssociationsMixin<IPass_Night_Availability_Instance>;
+    getPassNightList: HasManyGetAssociationsMixin<IPass_Night_Availability_Instance>;
     addPassNight: HasManyAddAssociationMixin<IPass_Night_Availability_Instance, "id">;
 }
 
