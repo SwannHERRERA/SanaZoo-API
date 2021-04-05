@@ -1,11 +1,11 @@
 import {
-    Sequelize,
-    Optional,
-    Model,
-    DataTypes,
-    ModelCtor,
-    BelongsToSetAssociationMixin,
     BelongsToGetAssociationMixin,
+    BelongsToSetAssociationMixin,
+    DataTypes,
+    Model,
+    ModelCtor,
+    Optional,
+    Sequelize,
 } from "sequelize";
 import {IUser_Instance} from "./user.model";
 

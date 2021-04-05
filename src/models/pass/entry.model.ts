@@ -1,14 +1,14 @@
 import {IEnclosure_Instance} from "..";
-import {Pass_Instance} from "..";
-import { DataTypes, Model, ModelCtor, Sequelize, BelongsToSetAssociationMixin, BelongsToGetAssociationMixin } from "sequelize/types";
+import {IPass_Instance} from "..";
+import { DataTypes, Model, ModelCtor, Sequelize, BelongsToSetAssociationMixin, BelongsToGetAssociationMixin } from "sequelize";
 
 export interface IEntry_Props {
     id: number;
 }
 
 export interface IEntry_Instance extends Model<IEntry_Props>, IEntry_Props {
-  setPass: BelongsToSetAssociationMixin<Pass_Instance, "id">;
-  getPass: BelongsToGetAssociationMixin<Pass_Instance>;
+  setPass: BelongsToSetAssociationMixin<IPass_Instance, "id">;
+  getPass: BelongsToGetAssociationMixin<IPass_Instance>;
   setEnclosure: BelongsToSetAssociationMixin<IEnclosure_Instance, "id">;
   getEnclosure: BelongsToGetAssociationMixin<IEnclosure_Instance>;
 }

@@ -1,4 +1,4 @@
-  import {
+import {
     DataTypes,
     Model,
     ModelCtor,
@@ -6,12 +6,12 @@
     Sequelize,
     HasManyAddAssociationMixin,
     HasManyGetAssociationsMixin, BelongsToSetAssociationMixin, BelongsToGetAssociationMixin,
-} from "sequelize/types";
-import {Entry_Instance, Pass_Enclosure_Access_Instance, Pass_Type_Instance} from "..";
+} from "sequelize";
+import {IEntry_Instance, IPass_Enclosure_Access_Instance, IPass_Type_Instance} from "..";
 
-  export interface IPass_Props {
-  id: number;
-  validDate: Date;
+export interface IPass_Props {
+    id: number;
+    validDate: Date;
 }
 
 export interface IPass_Creation_Props extends Optional<IPass_Props, "id"> {
@@ -19,12 +19,12 @@ export interface IPass_Creation_Props extends Optional<IPass_Props, "id"> {
 
 export interface IPass_Instance extends Model<IPass_Props, IPass_Creation_Props>,
     IPass_Props {
-    setPassType: BelongsToSetAssociationMixin<Pass_Type_Instance, "id">;
-    getPassType: BelongsToGetAssociationMixin<Pass_Type_Instance>;
-    getEntry: HasManyGetAssociationsMixin<Entry_Instance>;
-    addEntry: HasManyAddAssociationMixin<Entry_Instance, "id">;
-    getPassEnclosureAccess: HasManyGetAssociationsMixin<Pass_Enclosure_Access_Instance>;
-    addPassEnclosureAccess: HasManyAddAssociationMixin<Pass_Enclosure_Access_Instance, "id">;
+    setPassType: BelongsToSetAssociationMixin<IPass_Type_Instance, "id">;
+    getPassType: BelongsToGetAssociationMixin<IPass_Type_Instance>;
+    getEntry: HasManyGetAssociationsMixin<IEntry_Instance>;
+    addEntry: HasManyAddAssociationMixin<IEntry_Instance, "id">;
+    getPassEnclosureAccess: HasManyGetAssociationsMixin<IPass_Enclosure_Access_Instance>;
+    addPassEnclosureAccess: HasManyAddAssociationMixin<IPass_Enclosure_Access_Instance, "id">;
 }
 
 export function passCreator(sequelize: Sequelize): ModelCtor<IPass_Instance> {

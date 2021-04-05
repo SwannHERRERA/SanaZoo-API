@@ -1,14 +1,13 @@
 import {
+    BelongsToGetAssociationMixin,
+    BelongsToSetAssociationMixin,
+    DataTypes,
+    Model,
     ModelCtor,
     Optional,
-    Sequelize,
-    Model,
-    DataTypes,
-    BelongsToSetAssociationMixin,
-    BelongsToGetAssociationMixin
+    Sequelize
 } from "sequelize";
-import {Pass_Type_Instance} from "../pass/pass_type.model";
-import {IUser_Instance} from "../user/user.model";
+import {IUser_Instance} from "..";
 
 
 export interface IEmployee_Planning_Props {
