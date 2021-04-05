@@ -1,13 +1,13 @@
 import {
-  BelongsToGetAssociationMixin,
-  BelongsToSetAssociationMixin,
-  DataTypes,
-  Model,
-  ModelCtor,
-  Optional,
-  Sequelize,
+    BelongsToGetAssociationMixin,
+    BelongsToSetAssociationMixin,
+    DataTypes,
+    Model,
+    ModelCtor,
+    Optional,
+    Sequelize,
 } from "sequelize";
-import { IEnclosure_Instance } from "./enclosure.model";
+import {IEnclosure_Instance} from "./enclosure.model";
 
 export interface IEnclosure_Image_Props {
     id: number;
@@ -18,15 +18,15 @@ export interface IEnclosure_Image_Props {
 export interface IEnclosure_Image_Creation_Props extends Optional<IEnclosure_Image_Props, "id"> {
 }
 
-export interface IEnclosure_image_Instance
-  extends Model<IEnclosure_image_Props, IEnclosure_image_creation_props>,
-    IEnclosure_image_Props {
-  setEnclosure: BelongsToSetAssociationMixin<IEnclosure_Instance, "id">;
-  getEnclosure: BelongsToGetAssociationMixin<IEnclosure_Instance>;
+export interface IEnclosure_Image_Instance
+    extends Model<IEnclosure_Image_Props, IEnclosure_Image_Creation_Props>,
+        IEnclosure_Image_Props {
+    setEnclosure: BelongsToSetAssociationMixin<IEnclosure_Instance, "id">;
+    getEnclosure: BelongsToGetAssociationMixin<IEnclosure_Instance>;
 }
 
-export function enclosureImageCreator(sequelize: Sequelize): ModelCtor<IEnclosure_Image_instance> {
-    return sequelize.define<IEnclosure_Image_instance>("Enclosure_Image", {
+export function enclosureImageCreator(sequelize: Sequelize): ModelCtor<IEnclosure_Image_Instance> {
+    return sequelize.define<IEnclosure_Image_Instance>("Enclosure_Image", {
         id: {
             type: DataTypes.BIGINT,
             primaryKey: true,
