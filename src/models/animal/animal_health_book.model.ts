@@ -30,35 +30,29 @@ export interface IAnimal_Health_Book_Instance
   getUser: BelongsToGetAssociationMixin<IUser_Instance>;
 }
 
-export default function (
-  sequelize: Sequelize
-): ModelCtor<IAnimal_Health_Book_Instance> {
-  return sequelize.define<IAnimal_Health_Book_Instance>(
-    "Animal_Health_Book",
-    {
-      id: {
-        type: DataTypes.BIGINT,
-        primaryKey: true,
-        autoIncrement: true,
-      },
-      description: {
-        type: DataTypes.STRING,
-      },
-      animal: {
-        type: DataTypes.BIGINT,
-      },
-      user: {
-        type: DataTypes.BIGINT,
-      },
-      date: {
-        type: DataTypes.DATE,
-      },
-    },
-    {
-      freezeTableName: true,
-      underscored: true,
-      paranoid: true,
-      timestamps: true,
-    }
-  );
+export function animalHealthBookCreator(sequelize: Sequelize): ModelCtor<IAnimal_Health_Book_Instance> {
+    return sequelize.define<IAnimal_Health_Book_Instance>("Animal_Health_Book", {
+        id: {
+            type: DataTypes.BIGINT,
+            primaryKey: true,
+            autoIncrement: true
+        },
+        description: {
+            type: DataTypes.STRING
+        },
+        animal: {
+            type: DataTypes.BIGINT
+        },
+        user: {
+            type: DataTypes.BIGINT
+        },
+        date: {
+            type: DataTypes.DATE
+        }
+    }, {
+        freezeTableName: true,
+        underscored: true,
+        paranoid: true,
+        timestamps: true
+    });
 }
