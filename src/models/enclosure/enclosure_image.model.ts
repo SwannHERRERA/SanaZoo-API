@@ -15,14 +15,14 @@ export interface IEnclosure_Image_Props {
 export interface IEnclosure_Image_Creation_Props extends Optional<IEnclosure_Image_Props, "id"> {
 }
 
-export interface IEnclosure_image_instance extends Model<IEnclosure_Image_Props, IEnclosure_Image_Creation_Props>,
+export interface IEnclosure_Image_instance extends Model<IEnclosure_Image_Props, IEnclosure_Image_Creation_Props>,
     IEnclosure_Image_Props {
 }
 
 const initEnclosureImage = (
     sequelize: Sequelize
-): ModelCtor<IEnclosure_image_instance> => {
-    return sequelize.define<IEnclosure_image_instance>(
+): ModelCtor<IEnclosure_Image_instance> => {
+    return sequelize.define<IEnclosure_Image_instance>(
         "Enclosure_Image",
         {
             id: {
