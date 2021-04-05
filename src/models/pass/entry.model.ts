@@ -1,28 +1,32 @@
-import { DataTypes, Model, ModelCtor, Sequelize } from "sequelize/types";
+import {IEnclosure_Instance} from "..";
+import {IPass_Instance} from "..";
+import { DataTypes, Model, ModelCtor, Sequelize, BelongsToSetAssociationMixin, BelongsToGetAssociationMixin } from "sequelize";
 
 export interface IEntry_Props {
-  id: number;
+    id: number;
 }
 
-export interface Entry_Instance extends Model<IEntry_Props>, IEntry_Props {}
+export interface IEntry_Instance extends Model<IEntry_Props>, IEntry_Props {
+  setPass: BelongsToSetAssociationMixin<IPass_Instance, "id">;
+  getPass: BelongsToGetAssociationMixin<IPass_Instance>;
+  setEnclosure: BelongsToSetAssociationMixin<IEnclosure_Instance, "id">;
+  getEnclosure: BelongsToGetAssociationMixin<IEnclosure_Instance>;
+}
 
-const initEntry = (sequelize: Sequelize): ModelCtor<Entry_Instance> => {
-  return sequelize.define<Entry_Instance>(
-    "Entry",
-    {
-      id: {
-        type: DataTypes.BIGINT,
-        primaryKey: true,
-        autoIncrement: true,
-      },
-    },
-    {
-      freezeTableName: true,
-      underscored: true,
-      paranoid: true,
-      timestamps: true,
-    }
-  );
-};
-
-export default initEntry;
+export function entryCreator(sequelize: Sequelize): ModelCtor<IEntry_Instance> {
+    return sequelize.define<IEntry_Instance>(
+        "Entry",
+        {
+            id: {
+                type: DataTypes.BIGINT,
+                primaryKey: true,
+                autoIncrement: true,
+            },
+        },
+        {
+            freezeTableName: true,
+            underscored: true,
+            paranoid: true,
+            timestamps: true,
+        });
+}
