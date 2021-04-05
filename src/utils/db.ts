@@ -126,7 +126,7 @@ export class SequelizeManager implements SequelizeManagerProps {
         };
         SequelizeManager.associate(managerProps);
         await sequelize.sync({
-            force: true
+            force: false
         });
         return new SequelizeManager(managerProps);
     }

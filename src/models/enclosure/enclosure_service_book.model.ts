@@ -30,7 +30,7 @@ export interface IEnclosure_Service_Book_Instance
 
 export function enclosureServiceBookCreator(sequelize: Sequelize): ModelCtor<IEnclosure_Service_Book_Instance> {
     return sequelize.define<IEnclosure_Service_Book_Instance>(
-        "Enclosure_Service",
+        "Enclosure_Service_Book",
         {
             id: {
                 type: DataTypes.BIGINT,
