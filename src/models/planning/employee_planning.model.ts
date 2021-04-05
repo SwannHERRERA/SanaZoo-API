@@ -1,4 +1,14 @@
-import {ModelCtor, Optional, Sequelize, Model, DataTypes} from "sequelize";
+import {
+    ModelCtor,
+    Optional,
+    Sequelize,
+    Model,
+    DataTypes,
+    BelongsToSetAssociationMixin,
+    BelongsToGetAssociationMixin
+} from "sequelize";
+import {Pass_Type_Instance} from "../pass/pass_type.model";
+import {IUser_Instance} from "../user/user.model";
 
 
 export interface IEmployee_Planning_Props {
@@ -14,7 +24,8 @@ export interface IEmployee_Planning_Props {
 export interface IEmployee_Planning_Creation_Props extends Optional<IEmployee_Planning_Props, "id"> {}
 
 export interface IEmployee_Planning_Instance extends Model<IEmployee_Planning_Props, IEmployee_Planning_Creation_Props>, IEmployee_Planning_Props {
-
+    setUser: BelongsToSetAssociationMixin<IUser_Instance, "id">;
+    getUser: BelongsToGetAssociationMixin<IUser_Instance>;
 }
 
 export default function(sequelize: Sequelize): ModelCtor<IEmployee_Planning_Instance> {

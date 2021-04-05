@@ -1,10 +1,13 @@
 import {
-  DataTypes,
-  Model,
-  ModelCtor,
-  Optional,
-  Sequelize,
+    DataTypes, HasManyAddAssociationMixin, HasManyGetAssociationsMixin,
+    Model,
+    ModelCtor,
+    Optional,
+    Sequelize,
 } from "sequelize/types";
+import {Entry_Instance} from "./entry.model";
+import {Pass_Instance} from "./pass.model";
+import {Pass_Night_Availability_Instance} from "./pass_night_availability.model";
 
 export interface IPass_Type_Props {
   id: number;
@@ -13,7 +16,12 @@ export interface IPass_Type_Props {
 }
 
 export interface IPass_Type_Creation_Props
-  extends Optional<IPass_Type_Props, "id"> {}
+  extends Optional<IPass_Type_Props, "id"> {
+    getPass: HasManyGetAssociationsMixin<Pass_Instance>;
+    addPass: HasManyAddAssociationMixin<Pass_Instance, "id">;
+    getPassNight: HasManyGetAssociationsMixin<Pass_Night_Availability_Instance>;
+    addPassNight: HasManyAddAssociationMixin<Pass_Night_Availability_Instance, "id">;
+}
 
 export interface Pass_Type_Instance
   extends Model<IPass_Type_Props, IPass_Type_Creation_Props>,

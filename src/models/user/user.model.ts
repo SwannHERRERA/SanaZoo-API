@@ -1,4 +1,16 @@
-import {ModelCtor, Optional, Sequelize, Model, DataTypes} from "sequelize";
+import {
+    ModelCtor,
+    Optional,
+    Sequelize,
+    Model,
+    DataTypes,
+    HasManyGetAssociationsMixin,
+    HasManyAddAssociationMixin
+} from "sequelize";
+import {Entry_Instance} from "../pass/entry.model";
+import {IEmployee_Planning_Instance} from "../planning/employee_planning.model";
+import {Session_Instance} from "./session.model";
+import {IUser_Role_Instance} from "./user_role.model";
 
 
 export interface IUser_Props {
@@ -15,7 +27,12 @@ export interface IUser_Props {
 export interface IUser_Creation_Props extends Optional<IUser_Props, "id"> {}
 
 export interface IUser_Instance extends Model<IUser_Props, IUser_Creation_Props>, IUser_Props {
-
+    getEmployeePlanning: HasManyGetAssociationsMixin<IEmployee_Planning_Instance>;
+    addEmployeePlanning: HasManyAddAssociationMixin<IEmployee_Planning_Instance, "id">;
+    getSession: HasManyGetAssociationsMixin<Session_Instance>;
+    addSession: HasManyAddAssociationMixin<Session_Instance, "id">;
+    getUserRole: HasManyGetAssociationsMixin<IUser_Role_Instance>;
+    addUserRole: HasManyAddAssociationMixin<IUser_Role_Instance, "id">;
 }
 
 export default function(sequelize: Sequelize): ModelCtor<IUser_Instance> {
