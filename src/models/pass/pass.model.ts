@@ -1,11 +1,13 @@
 import {
+    BelongsToGetAssociationMixin,
+    BelongsToSetAssociationMixin,
     DataTypes,
+    HasManyAddAssociationMixin,
+    HasManyGetAssociationsMixin,
     Model,
     ModelCtor,
     Optional,
     Sequelize,
-    HasManyAddAssociationMixin,
-    HasManyGetAssociationsMixin, BelongsToSetAssociationMixin, BelongsToGetAssociationMixin,
 } from "sequelize";
 import {IEntry_Instance, IPass_Enclosure_Access_Instance, IPass_Type_Instance} from "..";
 
