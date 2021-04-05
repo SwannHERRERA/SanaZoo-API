@@ -41,6 +41,7 @@
     "mysql2": "^2.2.5",
     "sequelize": "^6.6.2",
     "swagger-jsdoc": "^7.0.0-rc.6",
-    "swagger-ui-express": "^4.1.6"
+    "swagger-ui-express": "^4.1.6",
+    "yup": "^0.32.9"
   }
 }
