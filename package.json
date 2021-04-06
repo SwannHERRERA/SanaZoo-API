@@ -9,7 +9,9 @@
     "start": "nodemon --watch src/**/*.ts --exec ts-node src/index.ts",
     "heroku": "node dist/src/index.js",
     "dev": "nodemon dist/src/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint src --ext .ts",
+    "lint:fix": "npm run lint -- --fix"
   },
   "repository": {
     "type": "git",
