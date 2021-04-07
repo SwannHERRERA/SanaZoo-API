@@ -17,6 +17,8 @@ export interface IPass_Props {
 }
 
 export interface IPass_Creation_Props extends Optional<IPass_Props, "id"> {
+    userId: number;
+    passTypeId: number;
 }
 
 export interface IPass_Instance extends Model<IPass_Props, IPass_Creation_Props>, IPass_Props {
