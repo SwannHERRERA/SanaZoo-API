@@ -31,7 +31,7 @@ passTypeRouter.get('/:id', authMiddleware, async function (req, res, next) {
 
 
 /**
- * Add pass typ
+ * Add pass type
  */
 passTypeRouter.post('/', adminMiddleware, async function (req, res, next) {
     const name = req.body.name;
