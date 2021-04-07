@@ -1,11 +1,5 @@
 import {ModelCtor, ValidationErrorItem} from "sequelize";
-import {
-    IPass_Instance,
-    IPass_Type_Creation_Props,
-    IPass_Type_Instance,
-    IUser_Instance,
-    IUser_Props
-} from "../../models";
+import {IPass_Instance, IPass_Type_Creation_Props, IPass_Type_Instance} from "../../models";
 import {SequelizeManager} from "../../utils/db";
 
 export class PassTypeController {
@@ -19,7 +13,7 @@ export class PassTypeController {
             const manager = await SequelizeManager.getInstance();
             PassTypeController.instance = new PassTypeController(manager.PassType, manager.Pass);
         }
-        return this.instance;
+        return PassTypeController.instance;
     }
 
     public async getAllPassTypes(): Promise<IPass_Type_Instance[]> {
