@@ -31,6 +31,7 @@ export class PassController {
         userId: yup.number().optional().min(1),
         enclosureAccessList: yup.array().of(yup.number().required()).optional()
     });
+    passEnclosure
 
     private static instance: PassController;
 
@@ -86,24 +87,38 @@ export class PassController {
     }
 
     public async getPassById(req: Request, res: Response): Promise<void> {
-        const id = req.params.id;
-        const pass: IPass_Instance | null = await this.Pass.findByPk(id);
+        const passId = req.params.id;
+        const pass: IPass_Instance | null = await this.Pass.findByPk(passId);
         if (!pass) {
             res.status(404).end();
             return;
         }
-        const enclosureAccess = await pass.getPassEnclosureAccessList();
-        const enclosureEntries = await pass.getEntryList();
+        const enclosureAccess: IPass_Enclosure_Access_Instance[] = await this.PassEnclosureAccess.findAll({where: {passId}});
+        const enclosureEntries: IPass_Enclosure_Access_Instance[] = await this.Entry.findAll({where: {passId}});
 
         res.status(200).json({pass, entryList: enclosureAccess, enclosureEntries}).end();
     }
 
     public async getPassByUserId(req: Request, res: Response): Promise<void> {
+        const userId = req.params.id;
+        const result: IPass_Instance[] = await this.Pass.findAll({where: {userId}});
+        res.status(200).json(result).end();
+    }
+
+    public async addPassEnclosureAccess(req: Request, res: Response): Promise<void> {
+        const passId = req.params.id;
+        const enclosureId = req.params.id;
 
     }
 
-    public async addPassEntry(req: Request, res: Response): Promise<void> {
+    public async updatePassEnclosureAccess(req: Request, res: Response): Promise<void> {
+        const passId = req.params.id;
+        const enclosureId = req.params.id;
 
+    }
+
+    public async removePassEnclosureAccess(req: Request, res: Response): Promise<void> {
+        const id = req.params.id;
     }
 
     public async updatePass(req: Request, res: Response): Promise<void> {
@@ -111,14 +126,16 @@ export class PassController {
     }
 
     public async deletePass(req: Request, res: Response): Promise<void> {
-        const id = req.params.id;
-        const pass: IPass_Instance | null = await this.Pass.findByPk(id);
+        const passId = req.params.id;
+        const pass: IPass_Instance | null = await this.Pass.findByPk(passId);
         if (!pass) {
-            res.status(400).end();
+            res.status(404).end();
             return;
         }
+        await this.PassEnclosureAccess.destroy({where: {passId}});
+        await this.Entry.destroy({where: {passId}});
         await pass.destroy();
-        res.status(200).json('deleted').end();
+        res.status(204).json('deleted').end();
     }
 
 
