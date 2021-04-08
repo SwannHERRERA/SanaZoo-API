@@ -87,8 +87,8 @@ export class Enclosure_Controller {
     }
 
     public async getAll(params? : IEnclosure_Get_All_Params ): Promise<IEnclosure_Instance[] | null> {
-        let limit = params?.limit || 20;
-        let offset = params?.offset || 0;
+        const limit = params?.limit || 20;
+        const offset = params?.offset || 0;
 
         return this.Enclosure.findAll({
             limit,

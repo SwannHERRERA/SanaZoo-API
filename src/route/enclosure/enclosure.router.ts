@@ -38,7 +38,15 @@ enclosureRouter.post("/", adminMiddleware,  async function(req, res) {
     }).catch ((err) => {
         res.status(400).json(err.message).end();
     });
-})
+});
+
+enclosureRouter.get("/:id", async function(req, res){
+    const controller = await Enclosure_Controller.getInstance();
+    const result = await controller.getOne(Number.parseInt(req.params.id));
+    if (!result)
+        res.status(404).end();
+    res.status(200).json(result).end();
+});
 
 enclosureRouter.get("/", async function(req, res) {
     const offset: number = req.body.offset;
@@ -53,14 +61,6 @@ enclosureRouter.get("/", async function(req, res) {
     res.status(200).json(result).end();
 });
 
-enclosureRouter.get("/:id", async function(req, res){
-    const controller = await Enclosure_Controller.getInstance();
-    const result = await controller.getOne(Number.parseInt(req.params.id));
-    if (!result)
-        res.status(404).end();
-    res.status(200).json(result).end();
-})
-
 enclosureRouter.delete("/:id", adminMiddleware, async function(req, res){
     const controller = await Enclosure_Controller.getInstance();
     const number = await controller.remove(Number.parseInt(req.params.id));
@@ -68,7 +68,7 @@ enclosureRouter.delete("/:id", adminMiddleware, async function(req, res){
     if (number === 0)
         res.status(404).end();
     res.status(200).end();
-})
+});
 
 enclosureRouter.put("/:id", adminMiddleware, async function (req, res) {
     const name = req.body.name;

@@ -3,6 +3,10 @@ import {IEnclosure_Instance, IEnclosure_Type_Creation_Props, IEnclosure_Type_Ins
 import {SequelizeManager} from "../../utils/db";
 import {IEnclosure_Get_All_Params} from "./enclosure.controller";
 
+export interface IGetAllParams {
+    limit: number;
+    offset: number;
+}
 
 export class Enclosure_Type_Controller {
     Enclosure: ModelCtor<IEnclosure_Instance>;
@@ -53,6 +57,20 @@ export class Enclosure_Type_Controller {
     }
 
     public async getAll(params? : IGetAllParams ): Promise<IEnclosure_Type_Instance[] | null> {
-        return null;
+        const limit = params?.limit || 20;
+        const offset = params?.offset || 0;
+
+        return this.EnclosureType.findAll({
+            limit,
+            offset
+        });
+    }
+
+    public async getEnclosureByType(id: number): Promise<IEnclosure_Instance[] | null> {
+        return this.Enclosure.findAll({
+            where: {
+                enclosureTypeId: id
+            }
+        });
     }
 }
