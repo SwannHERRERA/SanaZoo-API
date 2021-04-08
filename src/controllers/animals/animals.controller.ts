@@ -12,6 +12,16 @@ export class AnimalsController {
     enclosureId: yup.number().required(),
   });
 
+  async validate(animalPost: unknown, res: Response): Promise<boolean> {
+    return this.animalSchema
+      .validate(animalPost)
+      .then(() => true)
+      .catch((err) => {
+        res.status(400).json(err.message).end();
+        return false;
+      });
+  }
+
   async getOneById(req: Request, res: Response): Promise<void> {
     try {
       const id = Number(req.params.id);
@@ -37,9 +47,8 @@ export class AnimalsController {
 
   create = async (req: Request, res: Response): Promise<void> => {
     const animalPost = req.body;
-    const isValid = await this.animalSchema.isValid(animalPost);
+    const isValid = await this.validate(animalPost, res);
     if (isValid === false) {
-      res.status(400).end();
       return;
     }
     try {
@@ -55,9 +64,8 @@ export class AnimalsController {
   updateOne = async (req: Request, res: Response): Promise<void> => {
     const id = Number(req.params.id);
     const animalPost = req.body;
-    const isValid = await this.animalSchema.isValid(animalPost);
+    const isValid = await this.validate(animalPost, res);
     if (isValid === false) {
-      res.status(400).end();
       return;
     }
     try {
