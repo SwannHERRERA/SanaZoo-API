@@ -12,9 +12,9 @@ export class AnimalsController {
     enclosureId: yup.number().required(),
   });
 
-  async validate(animalPost: unknown, res: Response): Promise<boolean> {
+  async validate(animal: unknown, res: Response): Promise<boolean> {
     return this.animalSchema
-      .validate(animalPost)
+      .validate(animal)
       .then(() => true)
       .catch((err) => {
         res.status(400).json(err.message).end();

@@ -14,6 +14,8 @@ export interface IAnimal_Health_Book_Props {
   id: number;
   description: string;
   date: string;
+  animalId: string;
+  userId: string;
 }
 
 export interface IAnimal_Health_Book_Creation_Props
@@ -44,6 +46,22 @@ export function animalHealthBookCreator(
       },
       date: {
         type: DataTypes.DATE,
+      },
+      animalId: {
+        type: DataTypes.BIGINT,
+        allowNull: false,
+        references: {
+          model: "Animal",
+          key: "id",
+        },
+      },
+      userId: {
+        type: DataTypes.BIGINT,
+        allowNull: false,
+        references: {
+          model: "User",
+          key: "id",
+        },
       },
     },
     {

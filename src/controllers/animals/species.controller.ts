@@ -8,6 +8,15 @@ export class SpeciesController {
     origin: yup.string().required(),
     description: yup.string(),
   });
+  async validate(specie: any, res: Response): Promise<boolean> {
+    return this.specieSchema
+      .validate(specie)
+      .then(() => true)
+      .catch((err) => {
+        res.status(400).json(err.message).end();
+        return false;
+      });
+  }
 
   async getOneById(req: Request, res: Response): Promise<void> {
     try {
@@ -24,8 +33,8 @@ export class SpeciesController {
   async getAll(req: Request, res: Response): Promise<void> {
     try {
       const { Specie } = await SequelizeManager.getInstance();
-      const result = await Specie.findAll();
-      res.json(result);
+      const species = await Specie.findAll();
+      res.json(species);
     } catch (err) {
       console.error(err);
       res.status(500).end();
@@ -34,9 +43,9 @@ export class SpeciesController {
 
   create = async (req: Request, res: Response): Promise<void> => {
     const speciePost = req.body;
-    const isValid = await this.specieSchema.isValid(speciePost);
+    const isValid = await this.validate(speciePost, res);
     if (isValid === false) {
-      res.status(400).end();
+      return;
     }
     try {
       const { Specie } = await SequelizeManager.getInstance();
@@ -51,9 +60,9 @@ export class SpeciesController {
   updateOne = async (req: Request, res: Response): Promise<void> => {
     const id = Number(req.params.id);
     const speciePost = req.body;
-    const isValid = await this.specieSchema.isValid(speciePost);
+    const isValid = await this.validate(speciePost, res);
     if (isValid === false) {
-      res.status(400).end();
+      return;
     }
     try {
       const { Specie } = await SequelizeManager.getInstance();
