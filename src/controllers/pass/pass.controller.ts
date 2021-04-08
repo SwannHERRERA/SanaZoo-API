@@ -23,7 +23,13 @@ export class PassController {
         validDate: yup.date().required(),
         passTypeId: yup.number().required().min(1),
         userId: yup.number().required().min(1),
-        entries: yup.array().of(yup.number().required()).min(1).required()
+        enclosureAccessList: yup.array().of(yup.number().required()).min(1).required()
+    });
+    passUpdateSchema = yup.object().shape({
+        validDate: yup.date().optional(),
+        passTypeId: yup.number().optional().min(1),
+        userId: yup.number().optional().min(1),
+        enclosureAccessList: yup.array().of(yup.number().required()).optional()
     });
 
     private static instance: PassController;
@@ -59,28 +65,37 @@ export class PassController {
         const validDate = req.body.validDate
         const passTypeId = req.body.passTypeId
         const userId = req.body.userId
-        const entries = req.body.entries
+        const enclosureAccessList = req.body.enclosureAccessList
         this.passCreateSchema.validate({
             validDate,
             passTypeId,
             userId,
-            entries
+            enclosureAccessList
         }).then(async () => {
             //create
             const pass: IPass_Instance = await this.Pass.create({passTypeId, validDate, userId});
-            const entryList = [];
-            for (let enclosureId of entries) {
-                const entry = await this.Entry.create({passId: pass.id, enclosureId: enclosureId})
-                entryList.push(entry);
+            const enclosureAccess = [];
+            for (let enclosureId of enclosureAccessList) {
+                const entry = await this.PassEnclosureAccess.create({passId: pass.id, enclosureId})
+                enclosureAccess.push(entry);
             }
-            res.status(200).json({pass, entryList}).end();
+            res.status(200).json({pass, entryList: enclosureAccess}).end();
         }).catch((err) => {
             res.status(400).json(err.message).end();
         });
     }
 
     public async getPassById(req: Request, res: Response): Promise<void> {
+        const id = req.params.id;
+        const pass: IPass_Instance | null = await this.Pass.findByPk(id);
+        if (!pass) {
+            res.status(404).end();
+            return;
+        }
+        const enclosureAccess = await pass.getPassEnclosureAccessList();
+        const enclosureEntries = await pass.getEntryList();
 
+        res.status(200).json({pass, entryList: enclosureAccess, enclosureEntries}).end();
     }
 
     public async getPassByUserId(req: Request, res: Response): Promise<void> {
@@ -96,7 +111,14 @@ export class PassController {
     }
 
     public async deletePass(req: Request, res: Response): Promise<void> {
-
+        const id = req.params.id;
+        const pass: IPass_Instance | null = await this.Pass.findByPk(id);
+        if (!pass) {
+            res.status(400).end();
+            return;
+        }
+        await pass.destroy();
+        res.status(200).json('deleted').end();
     }
 
 
