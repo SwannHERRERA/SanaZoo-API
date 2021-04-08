@@ -71,14 +71,21 @@ enclosureRouter.delete("/:id", adminMiddleware, async function(req, res){
 });
 
 enclosureRouter.put("/:id", adminMiddleware, async function (req, res) {
-    const name = req.body.name;
-    const capacity = req.body.capacity;
-    const description = req.body.description;
-    const visitDuration = req.body.visitDuration;
-    const handicapAccess = req.body.handicapAccess;
-    const maintenance = req.body.maintenance;
-    const enclosureTypeId = req.body.enclosureTypeId;
-    enclosureSchemaUpdate.validate({
+    const controller = await Enclosure_Controller.getInstance();
+    const previous = await controller.getOne(Number.parseInt(req.params.id));
+    if (!previous) {
+        res.status(404).end();
+        return;
+    }
+
+    const name = req.body.name || previous.name;
+    const capacity = req.body.capacity || previous.capacity;
+    const description = req.body.description || previous.description;
+    const visitDuration = req.body.visitDuration || previous.visitDuration;
+    const handicapAccess = req.body.handicapAccess || previous.handicapAccess;
+    const maintenance = req.body.maintenance || previous.maintenance;
+    const enclosureTypeId = req.body.enclosureTypeId || previous.enclosureTypeId;
+    enclosureSchemaCreat.validate({
         name,
         capacity,
         description,
@@ -87,7 +94,7 @@ enclosureRouter.put("/:id", adminMiddleware, async function (req, res) {
         maintenance,
         enclosureTypeId
     }).then(async function() {
-        const controller = await Enclosure_Controller.getInstance();
+
         const result = await controller.update(Number.parseInt(req.params.id), {
             name,
             capacity,
@@ -101,16 +108,6 @@ enclosureRouter.put("/:id", adminMiddleware, async function (req, res) {
     }).catch((err) => {
         res.status(500).json(err.message).end();
     })
-});
-
-const enclosureSchemaUpdate = yup.object().shape({
-    name: yup.string().optional(),
-    capacity: yup.number().optional(),
-    description: yup.string().optional(),
-    visitDuration: yup.number().optional(),
-    handicapAccess: yup.boolean().optional(),
-    maintenance: yup.boolean().optional(),
-    enclosureTypeId: yup.number().optional()
 });
 
 const enclosureSchemaCreat = yup.object().shape({
