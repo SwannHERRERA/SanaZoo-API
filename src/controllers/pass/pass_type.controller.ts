@@ -1,4 +1,4 @@
-import {ModelCtor, ValidationErrorItem} from "sequelize";
+import {ModelCtor, Op, ValidationErrorItem} from "sequelize";
 import {IPass_Instance, IPass_Type_Creation_Props, IPass_Type_Instance} from "../../models";
 import {SequelizeManager} from "../../utils/db";
 

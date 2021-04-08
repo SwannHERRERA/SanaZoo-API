@@ -42,7 +42,7 @@ passRouter.post('/', authMiddleware, async function (req, res, next) {
     const passTypeId = req.body.passTypeId
     const userId = req.body.userId
     const entries = req.body.entries
-    await passSchema.validate({
+    passSchema.validate({
         validDate,
         passTypeId,
         userId,
@@ -61,8 +61,8 @@ passRouter.post('/', authMiddleware, async function (req, res, next) {
 
 const passSchema = yup.object().shape({
     validDate: yup.date().required(),
-    passTypeId: yup.number().required(),
-    userId: yup.number().required(),
+    passTypeId: yup.number().required().min(1),
+    userId: yup.number().required().min(1),
     entries: yup.array().of(yup.number().required()).min(1).required()
 })
 
