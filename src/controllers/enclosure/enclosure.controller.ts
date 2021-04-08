@@ -1,7 +1,7 @@
 import {ModelCtor} from "sequelize";
 import {
     IAnimal_Instance, IEnclosure_Creation_Props, IEnclosure_Image_Instance,
-    IEnclosure_Instance, IEnclosure_Props, IEnclosure_Service_Book_Instance,
+    IEnclosure_Instance, IEnclosure_Service_Book_Instance,
     IEnclosure_Type_Instance,
     IEntry_Instance,
     IPass_Enclosure_Access_Instance
@@ -78,7 +78,7 @@ export class Enclosure_Controller {
         });
     }
 
-    public async getOneEnclosure(id: number): Promise<IEnclosure_Instance | null> {
+    public async getOne(id: number): Promise<IEnclosure_Instance | null> {
         return this.Enclosure.findOne({
             where: {
                 id
@@ -86,7 +86,7 @@ export class Enclosure_Controller {
         });
     }
 
-    public async getAllEnclosure(params? : IEnclosure_Get_All_Params ): Promise<IEnclosure_Instance[] | null> {
+    public async getAll(params? : IEnclosure_Get_All_Params ): Promise<IEnclosure_Instance[] | null> {
         let limit = params?.limit || 20;
         let offset = params?.offset || 0;
 
