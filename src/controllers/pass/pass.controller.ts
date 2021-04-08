@@ -43,8 +43,12 @@ export class PassController {
         });
     }
 
-    public async createPass(passProps: IPass_Creation_Props, EnclosureEntries: number[] = []): Promise<IPass_Instance | null> {
-        return await this.Pass.create(passProps);
+    public async createPass(passProps: IPass_Creation_Props, enclosureEntries: number[] = []): Promise<IPass_Instance | null> {
+        const pass: IPass_Instance = await this.Pass.create(passProps);
+        for (let enclosureId of enclosureEntries) {
+            await this.Entry.create({passId: pass.id, enclosureId: enclosureId})
+        }
+        return pass;
     }
 
     constructor(PassType: ModelCtor<IPass_Type_Instance>, Pass: ModelCtor<IPass_Instance>, User: ModelCtor<IUser_Instance>, Entry: ModelCtor<IEntry_Instance>, PassEnclosureAccess: ModelCtor<IPass_Enclosure_Access_Instance>) {
