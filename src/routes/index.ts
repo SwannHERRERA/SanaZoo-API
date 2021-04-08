@@ -19,21 +19,21 @@ export function buildRoutes(app: Express): void {
   app.use("/enclosure", enclosureRouter);
   app.use("/enclosure/maintenance", enclosureMaintenanceRouter);
 
-  app.use("/animal", animalRouter);
   app.use("/animal/specie", animalSpecieRouter);
   app.use("/animal/health", animalHealthBookRouter);
+  app.use("/animal", animalRouter);
 
   app.use("/planning", employeePlanningRouter);
   app.use("/zoo", zooOpeningRouter);
 
-  app.use("/pass", passRouter);
   app.use("/pass/control", passControlRouter);
   app.use("/pass/escape-game", passEscapeGameRouter);
   app.use("/pass/night", passNightRouter);
+  app.use("/pass", passRouter);
 
   app.use("/monitoring/statistic", statisticRouter);
   app.use("/monitoring/affluence", affluenceRouter);
 
-  app.use("/user", userRouter);
   app.use("/user/role", userRoleRouter);
+  app.use("/user", userRouter);
 }
