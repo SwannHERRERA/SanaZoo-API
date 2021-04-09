@@ -11,3 +11,9 @@ export async function adminMiddleware(
     next();
   });
 }
+
+    await employeeMiddleware(req, res, async () => {
+        console.info(`Admin middleware from : ${req.originalUrl}`);
+        next();
+    })
+}

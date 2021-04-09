@@ -19,7 +19,7 @@ buildRoutes(app);
 const sequelize = SequelizeManager.getInstance();
 
 /**
- * Just testing route, will be deleted in final release
+ * Just testing routes, will be deleted in final release
  */
 app.get(
   "/",

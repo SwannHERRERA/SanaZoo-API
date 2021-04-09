@@ -14,10 +14,11 @@ import { affluenceRouter } from "./monitoring/affluence.router";
 import { userRouter } from "./user/user.router";
 import { userRoleRouter } from "./user/user_role.router";
 import { animalSpecieRouter } from "./animal/animal_specie.router";
+import { passTypeRouter } from "./pass/pass_type.router";
 
 export function buildRoutes(app: Express): void {
-  app.use("/enclosure", enclosureRouter);
   app.use("/enclosure/maintenance", enclosureMaintenanceRouter);
+  app.use("/enclosure", enclosureRouter);
 
   app.use("/animal/specie", animalSpecieRouter);
   app.use("/animal/health", animalHealthBookRouter);
@@ -29,6 +30,7 @@ export function buildRoutes(app: Express): void {
   app.use("/pass/control", passControlRouter);
   app.use("/pass/escape-game", passEscapeGameRouter);
   app.use("/pass/night", passNightRouter);
+  app.use("/pass/type", passTypeRouter);
   app.use("/pass", passRouter);
 
   app.use("/monitoring/statistic", statisticRouter);

@@ -11,3 +11,9 @@ export async function employeeMiddleware(
     next();
   });
 }
+
+    await authMiddleware(req, res, async () => {
+        console.info(`Employee middleware from : ${req.originalUrl}`);
+        next();
+    });
+}

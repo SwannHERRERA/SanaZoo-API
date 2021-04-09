@@ -11,3 +11,9 @@ export async function veterinaryMiddleware(
     next();
   });
 }
+
+    await employeeMiddleware(req, res, async () => {
+        console.info(`Veterinary middleware from : ${req.originalUrl}`);
+        next();
+    })
+}
