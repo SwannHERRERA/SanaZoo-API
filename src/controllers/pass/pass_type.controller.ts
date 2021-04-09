@@ -1,5 +1,11 @@
-import {ModelCtor, Op, ValidationErrorItem} from "sequelize";
-import {IPass_Instance, IPass_Type_Creation_Props, IPass_Type_Instance} from "../../models";
+import {ModelCtor, ValidationErrorItem} from "sequelize";
+import {
+    IPass_Instance,
+    IPass_Type_Creation_Props,
+    IPass_Type_Instance, IPass_Type_Props,
+    IUser_Instance,
+    IUser_Props
+} from "../../models";
 import {SequelizeManager} from "../../utils/db";
 
 export class PassTypeController {
@@ -31,7 +37,7 @@ export class PassTypeController {
         });
     }
 
-    public async updatePassType(passType: IPass_Type_Creation_Props): Promise<IPass_Type_Instance | null> {
+    public async updatePassType(passType: IPass_Type_Props): Promise<IPass_Type_Instance | null> {
         return await this.PassType.update(passType, {where: {id: passType.id}}).catch((err) => {
             console.error(err.errors.map((err: ValidationErrorItem) => err.message));
             return null;

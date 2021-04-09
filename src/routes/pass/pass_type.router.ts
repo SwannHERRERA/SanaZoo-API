@@ -37,7 +37,7 @@ passTypeRouter.post('/', adminMiddleware, async function (req, res, next) {
     const name = req.body.name;
     const price = req.body.price;
 
-    await passTypeSchema.validate({
+    await passTypeCreateSchema.validate({
         name,
         price
     }).then(async function () {
@@ -55,12 +55,13 @@ passTypeRouter.post('/', adminMiddleware, async function (req, res, next) {
 /**
  * Update pass type
  */
-passTypeRouter.put('/', adminMiddleware, async function (req, res, next) {
+passTypeRouter.put('/:id', adminMiddleware, async function (req, res, next) {
     const name = req.body.name;
     const price = req.body.price;
-    const id = req.body.id;
+    const id = Number.parseInt(req.params.id);
 
-    await passTypeSchema.validate({
+    await passTypeUpdateSchema.validate({
+        id,
         name,
         price
     }).then(async function () {
@@ -116,11 +117,15 @@ async function getPassTypeController(): Promise<PassTypeController> {
     return passTypeController;
 }
 
-const passTypeSchema = yup.object().shape({
-    id: yup.number().min(0).optional(),
+const passTypeCreateSchema = yup.object().shape({
     name: yup.string().min(4).required(),
     price: yup.number().min(0).required()
-})
+});
+const passTypeUpdateSchema = yup.object().shape({
+    id: yup.number().min(0).required(),
+    name: yup.string().min(4).optional(),
+    price: yup.number().min(0).optional()
+});
 
 
 export {
