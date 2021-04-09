@@ -14,6 +14,7 @@ import {affluenceRouter} from "./monitoring/affluence.router";
 import {userRouter} from "./user/user.router";
 import {userRoleRouter} from "./user/user_role.router";
 import {animalSpecieRouter} from "./animal/animal_specie.router";
+import {passTypeRouter} from "./pass/pass_type.router";
 
 export function buildRoutes(app: Express) {
     app.use("/enclosure", enclosureRouter);
@@ -26,14 +27,15 @@ export function buildRoutes(app: Express) {
     app.use("/planning", employeePlanningRouter);
     app.use("/zoo", zooOpeningRouter);
 
-    app.use("/pass", passRouter);
     app.use("/pass/control", passControlRouter);
     app.use("/pass/escape-game", passEscapeGameRouter);
     app.use("/pass/night", passNightRouter);
+    app.use("/pass/type", passTypeRouter);
+    app.use("/pass", passRouter);
 
     app.use("/monitoring/statistic", statisticRouter);
     app.use("/monitoring/affluence", affluenceRouter);
 
-    app.use("/user", userRouter);
     app.use("/user/role", userRoleRouter);
+    app.use("/user", userRouter);
 }
