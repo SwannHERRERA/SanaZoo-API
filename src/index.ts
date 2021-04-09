@@ -3,7 +3,7 @@ import {config} from "dotenv";
 import {SequelizeManager} from "./utils/db";
 import swaggerUI from "swagger-ui-express";
 import swaggerJSON from "../docs/swagger.json";
-import {buildRoutes} from "./route";
+import {buildRoutes} from "./routes";
 import {adminMiddleware} from "./middlewares/admin.middleware";
 
 config();
@@ -19,7 +19,7 @@ buildRoutes(app);
 const sequelize = SequelizeManager.getInstance();
 
 /**
- * Just testing route, will be deleted in final release
+ * Just testing routes, will be deleted in final release
  */
 app.get("/", adminMiddleware, async (req: express.Request, res: express.Response) => {
     res.send("Hello world !");

@@ -4,7 +4,7 @@ import {employeeMiddleware} from "./employee.middleware";
 export async function adminMiddleware(req: Request, res: Response, next: NextFunction) {
 
     await employeeMiddleware(req, res, async () => {
-        console.info(`Admin middleware from : ${req.url}`);
+        console.info(`Admin middleware from : ${req.originalUrl}`);
         next();
     })
 }
