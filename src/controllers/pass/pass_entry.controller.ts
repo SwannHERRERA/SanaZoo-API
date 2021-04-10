@@ -91,7 +91,7 @@ export class PassController {
         }
 
         if (!passEnclosureAccessList.find((e) => {
-            return e.getEnclosure == enclosureId;
+            return e.enclosureId == enclosureId;
         })) {
             res.status(403).json("Your pass don't allow access to this enclosure").end();
             return;
@@ -115,7 +115,27 @@ export class PassController {
     }
 
     public async escapeGameEntry(res: Response, pass: IPass_Instance, enclosure: IEnclosure_Instance, passEnclosureAccessList: IPass_Enclosure_Access_Instance[]) {
-        
+        //Normalement, toute les autres vérification de validité ont été vérifié
+        const enclosureAccess: IPass_Enclosure_Access_Instance | undefined = passEnclosureAccessList.find((e) => {
+            return e.enclosureId == enclosure.id;
+        });
+        if (enclosureAccess === undefined) {
+            res.status(404).json('can\'t find enclosureAccess').end();
+            return;
+        }
+
+        if (!enclosureAccess.order) {
+            res.status(403).json('This is escape pass but enclosure access don\'t have order').end();
+            return;
+        }
+
+        const enclosureEntries: IEntry_Instance[] = await this.Entry.findAll({where: {passId: pass.id}});
+        if (enclosureAccess.order > 1 && !passEnclosureAccessList.find((e) => {
+            return e.order && enclosureAccess.order && e.order == enclosureAccess.order - 1;
+        })) {
+            res.status(403).json('Wrong order to access this enclosure');
+        }
+
     }
 
     constructor(Enclosure: ModelCtor<IEnclosure_Instance>, PassType: ModelCtor<IPass_Type_Instance>, Pass: ModelCtor<IPass_Instance>, Entry: ModelCtor<IEntry_Instance>, PassEnclosureAccess: ModelCtor<IPass_Enclosure_Access_Instance>) {
