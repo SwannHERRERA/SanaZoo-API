@@ -2,10 +2,18 @@ import express from "express";
 import {employeeMiddleware} from "../../middlewares/employee.middleware";
 import {Enclosure_Controller} from "../../controllers/enclosure/enclosure.controller";
 import * as yup from "yup";
-import {BooleanSchema} from "yup";
+import {Enclosure_Maintenance_Controller} from "../../controllers/enclosure/enclosure_maintenance.controller";
 
 
 const enclosureMaintenanceRouter = express.Router();
+
+enclosureMaintenanceRouter.get("/month/:id", employeeMiddleware, async function(req, res) {
+    const id = Number.parseInt(req.params.id);
+    const controller = await Enclosure_Maintenance_Controller.getInstance();
+    const result = await controller.getBestMonth(id);
+
+    res.status(200).json(result).end();
+});
 
 enclosureMaintenanceRouter.get("/:state", employeeMiddleware, async function(req, res) {
     const controller = await Enclosure_Controller.getInstance();

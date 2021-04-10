@@ -1,4 +1,4 @@
-import {IEnclosure_Service_Book_Creation_Props, IEnclosure_Service_Book_Instance} from "../../models";
+import {IEnclosure_Service_Book_Creation_Props, IEnclosure_Service_Book_Instance, IEntry_Instance} from "../../models";
 import {ModelCtor} from "sequelize";
 import {SequelizeManager} from "../../utils/db";
 
@@ -14,14 +14,14 @@ export class Enclosure_Service_Book_Controller {
 
     public static async getInstance():Promise<Enclosure_Service_Book_Controller> {
         if (Enclosure_Service_Book_Controller.instance === undefined) {
-            const {EnclosureServiceBook} = await SequelizeManager.getInstance();
+            const {EnclosureServiceBook, Entry} = await SequelizeManager.getInstance();
             Enclosure_Service_Book_Controller.instance = new Enclosure_Service_Book_Controller(EnclosureServiceBook);
         }
 
         return Enclosure_Service_Book_Controller.instance;
     }
 
-    constructor(enclosure_service_book: ModelCtor<IEnclosure_Service_Book_Instance>) {
+    private constructor(enclosure_service_book: ModelCtor<IEnclosure_Service_Book_Instance>) {
         this.enclosure_service_book = enclosure_service_book;
     }
 
