@@ -85,7 +85,11 @@ export class AnimalsController {
     try {
       const { Animal } = await SequelizeManager.getInstance();
       const isDestroyed = await Animal.destroy({ where: { id } });
-      res.json(isDestroyed);
+      if (isDestroyed) {
+        res.status(204);
+      } else {
+        res.status(404);
+      }
     } catch (err) {
       console.error(err);
       res.status(500).end();

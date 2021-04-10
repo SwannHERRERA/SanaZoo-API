@@ -7,13 +7,7 @@ export async function adminMiddleware(
   next: NextFunction
 ): Promise<void> {
   await employeeMiddleware(req, res, async () => {
-    console.info(`Admin middleware from : ${req.url}`);
+    console.info(`Admin middleware from : ${req.originalUrl}`);
     next();
   });
-}
-
-    await employeeMiddleware(req, res, async () => {
-        console.info(`Admin middleware from : ${req.originalUrl}`);
-        next();
-    })
 }
