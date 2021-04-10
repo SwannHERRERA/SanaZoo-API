@@ -14,6 +14,8 @@ import {IEntry_Instance, IPass_Enclosure_Access_Instance, IPass_Type_Instance, I
 export interface IPass_Props {
     id: number;
     validDate: Date;
+    userId: number;
+    passTypeId: number;
 }
 
 export interface IPass_Creation_Props extends Optional<IPass_Props, "id"> {
@@ -46,6 +48,22 @@ export function passCreator(sequelize: Sequelize): ModelCtor<IPass_Instance> {
                 type: DataTypes.DATE,
                 allowNull: false,
             },
+            passTypeId: {
+                type: DataTypes.BIGINT,
+                allowNull: false,
+                references: {
+                    model: 'PassType',
+                    key: 'id',
+                }
+            },
+            userId: {
+                type: DataTypes.BIGINT,
+                allowNull: false,
+                references: {
+                    model: 'User',
+                    key: 'id',
+                }
+            }
         },
         {
             freezeTableName: true,
