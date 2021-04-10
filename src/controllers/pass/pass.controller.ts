@@ -109,8 +109,8 @@ export class PassController {
     }
 
     public async addPassEnclosureAccess(req: Request, res: Response): Promise<void> {
-        const passId = Number.parseInt(req.params.id);
-        const enclosureId = Number.parseInt(req.params.id);
+        const passId = Number.parseInt(req.body.passId);
+        const enclosureId = Number.parseInt(req.body.enclosureId);
         this.passEnclosureAccessSchema.validate({
             passId,
             enclosureId
@@ -127,8 +127,9 @@ export class PassController {
     }
 
     public async removePassEnclosureAccess(req: Request, res: Response): Promise<void> {
-        const passId = req.params.passId;
-        const enclosureId = req.params.enclosureId;
+        const passId = req.query.passId;
+        const enclosureId = req.query.enclosureId;
+        console.log('ici')
         this.passEnclosureAccessSchema.validate({
             passId,
             enclosureId
@@ -146,7 +147,7 @@ export class PassController {
     }
 
     public async updatePass(req: Request, res: Response): Promise<void> {
-        const id = req.body.id;
+        const id = req.params.id;
         const previous: IPass_Instance | null = await this.Pass.findByPk(id);
         if (!previous) {
             res.status(404).end();
