@@ -27,6 +27,10 @@ export class AnimalsController {
       const id = Number(req.params.id);
       const { Animal } = await SequelizeManager.getInstance();
       const animal = await Animal.findByPk(id);
+      if (animal === null) {
+        res.status(404).end();
+        return;
+      }
       res.json(animal);
     } catch (err) {
       console.error(err);

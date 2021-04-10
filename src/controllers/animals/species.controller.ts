@@ -22,7 +22,11 @@ export class SpeciesController {
     try {
       const id = Number(req.params.id);
       const { Specie } = await SequelizeManager.getInstance();
-      const result = await Specie.findOne({ where: { id } });
+      const result = await Specie.findByPk(id);
+      if (result === null) {
+        res.status(404).end();
+        return;
+      }
       res.json(result);
     } catch (err) {
       console.error(err);

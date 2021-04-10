@@ -27,6 +27,10 @@ export class AnimalsHealsBookController {
       const healsId = Number(req.body.id);
       const { AnimalHealthBook } = await SequelizeManager.getInstance();
       const healsBook = await AnimalHealthBook.findByPk(healsId);
+      if (healsBook === null) {
+        res.status(404).end();
+        return;
+      }
       res.json(healsBook);
     } catch (err) {
       console.error(err);
