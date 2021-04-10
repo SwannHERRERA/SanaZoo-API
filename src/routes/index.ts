@@ -15,11 +15,12 @@ import { userRouter } from "./user/user.router";
 import { userRoleRouter } from "./user/user_role.router";
 import { animalSpecieRouter } from "./animal/animal_specie.router";
 import { passTypeRouter } from "./pass/pass_type.router";
+import { enclosureTypeRouter } from "./enclosure/enclosure_type.router";
 
 export function buildRoutes(app: Express): void {
-    app.use("/enclosure/maintenance", enclosureMaintenanceRouter);
-    app.use("/enclosure/type", enclosureTypeRouter)
-    app.use("/enclosure", enclosureRouter);
+  app.use("/enclosure/maintenance", enclosureMaintenanceRouter);
+  app.use("/enclosure/type", enclosureTypeRouter);
+  app.use("/enclosure", enclosureRouter);
 
   app.use("/animal/specie", animalSpecieRouter);
   app.use("/animal/health", animalHealthBookRouter);
