@@ -136,9 +136,9 @@ export class AnimalsHealsBookController {
       const { AnimalHealthBook } = await SequelizeManager.getInstance();
       const isDestroyed = await AnimalHealthBook.destroy({ where: { id } });
       if (isDestroyed) {
-        res.status(204);
+        res.status(204).end();
       } else {
-        res.status(404);
+        res.status(404).end();
       }
     } catch (err) {
       console.error(err);
