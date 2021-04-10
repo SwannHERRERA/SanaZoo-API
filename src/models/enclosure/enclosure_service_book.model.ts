@@ -15,7 +15,7 @@ export interface IEnclosure_Service_Book_Props {
     date: Date;
     description: string;
     enclosureId: number;
-    employeeId: number;
+    userId: number;
 }
 
 export interface IEnclosure_Service_Book_Creation_Props extends Optional<IEnclosure_Service_Book_Props, "id"> {
@@ -54,7 +54,7 @@ export function enclosureServiceBookCreator(sequelize: Sequelize): ModelCtor<IEn
                     key: "id"
                 }
             },
-            employeeId: {
+            userId: {
                 type: DataTypes.BIGINT,
                 allowNull: false,
                 references: {

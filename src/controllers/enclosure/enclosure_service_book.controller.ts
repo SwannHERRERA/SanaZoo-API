@@ -66,14 +66,14 @@ export class Enclosure_Service_Book_Controller {
     public async getAllFromEmployee(id: number): Promise<IEnclosure_Service_Book_Instance[] | null> {
         return this.enclosure_service_book.findAll({
             where: {
-                employeeId: id
+                userId: id
             }
         });
     }
 
     public async getAll(param?: IEnclosure_Service_Book_Get_All_Params): Promise<IEnclosure_Service_Book_Instance[] | null> {
-        const offset = param?.offset || 20;
-        const limit = param?.limit || 0;
+        const offset = param?.offset || 0;
+        const limit = param?.limit || 20;
 
         return this.enclosure_service_book.findAll({
             limit,

@@ -19,20 +19,20 @@ enclosureServiceBookRouter.post("/", employeeMiddleware, async function(req, res
     const date = req.body.date;
     const description = req.body.description;
     const enclosureId = req.body.enclosureId;
-    const employeeId = req.body.employeeId;
+    const userId = req.body.userId;
 
     enclosureServiceBookSchemaCreat.validate({
         date,
         description,
         enclosureId,
-        employeeId
+        employeeId: userId
     }).then(async function(){
         const controller = await Enclosure_Service_Book_Controller.getInstance();
         const result = await controller.add({
             date,
             description,
             enclosureId,
-            employeeId
+            userId
         });
 
         res.status(200).json(result).end();
@@ -53,20 +53,20 @@ enclosureServiceBookRouter.put("/:id", employeeMiddleware, async function(req,re
     const date = req.body.date || previous.date;
     const description = req.body.description || previous.description;
     const enclosureId = req.body.enclosureId || previous.enclosureId;
-    const employeeId = req.body.employeeId || previous.employeeId;
+    const userId = req.body.userId || previous.userId;
 
     enclosureServiceBookSchemaCreat.validate({
         date,
         description,
         enclosureId,
-        employeeId
+        userId
     }).then(async function(){
 
         const result = await controller.update(id,{
             date,
             description,
             enclosureId,
-            employeeId
+            userId
         });
         res.status(200).json(result).end();
     }).catch((err) => {
