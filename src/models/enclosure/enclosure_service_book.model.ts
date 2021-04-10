@@ -14,6 +14,7 @@ export interface IEnclosure_Service_Book_Props {
     id: number;
     date: Date;
     description: string;
+    enclosureId: number;
 }
 
 export interface IEnclosure_Service_Book_Creation_Props extends Optional<IEnclosure_Service_Book_Props, "id"> {
@@ -44,6 +45,14 @@ export function enclosureServiceBookCreator(sequelize: Sequelize): ModelCtor<IEn
             description: {
                 type: DataTypes.TEXT,
             },
+            enclosureId: {
+                type: DataTypes.BIGINT,
+                allowNull: false,
+                references: {
+                    model: "Enclosure",
+                    key: "id"
+                }
+            }
         },
         {
             freezeTableName: true,

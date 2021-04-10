@@ -20,9 +20,10 @@ export interface IEnclosure_Props {
     name: string;
     capacity: number;
     description: string;
-    visit_duration: string;
-    handicap_access: boolean;
+    visitDuration: number;
+    handicapAccess: boolean;
     maintenance: boolean;
+    enclosureTypeId: number;
 }
 
 export interface IEnclosure_Creation_Props
@@ -66,14 +67,22 @@ export function enclosureCreator(sequelize: Sequelize): ModelCtor<IEnclosure_Ins
         capacity: {
             type: DataTypes.INTEGER
         },
-        visit_duration: {
-            type: DataTypes.DATE
+        visitDuration: {
+            type: DataTypes.INTEGER
         },
-        handicap_access: {
+        handicapAccess: {
             type: DataTypes.BOOLEAN
         },
         maintenance: {
             type: DataTypes.BOOLEAN
+        },
+        enclosureTypeId: {
+            type: DataTypes.BIGINT,
+            allowNull: false,
+            references: {
+                model: 'Enclosure_Type',
+                key: 'id'
+            }
         }
     }, {
         freezeTableName: true,
