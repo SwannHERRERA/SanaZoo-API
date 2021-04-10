@@ -80,4 +80,20 @@ export class Enclosure_Service_Book_Controller {
             offset
         });
     }
+
+    public async removeFromEmployee(id: number): Promise<number> {
+        return this.enclosure_service_book.destroy({
+            where: {
+                userId: id
+            }
+        });
+    }
+
+    public async removeFromEnclosure(id: number): Promise<number> {
+        return this.enclosure_service_book.destroy({
+            where: {
+                enclosureId: id
+            }
+        });
+    }
 }
