@@ -29,9 +29,12 @@ export class PassController {
         validDate: yup.date().optional(),
         passTypeId: yup.number().optional().min(1),
         userId: yup.number().optional().min(1),
-        enclosureAccessList: yup.array().of(yup.number().required()).optional()
     });
-    passEnclosure
+
+    passEnclosureAccessSchema = yup.object().shape({
+        passId: yup.number().min(1).required(),
+        enclosureId: yup.number().min(1).required(),
+    });
 
     private static instance: PassController;
 
@@ -77,10 +80,10 @@ export class PassController {
             const pass: IPass_Instance = await this.Pass.create({passTypeId, validDate, userId});
             const enclosureAccess = [];
             for (let enclosureId of enclosureAccessList) {
-                const entry = await this.PassEnclosureAccess.create({passId: pass.id, enclosureId})
-                enclosureAccess.push(entry);
+                const access = await this.PassEnclosureAccess.create({passId: pass.id, enclosureId})
+                enclosureAccess.push(access);
             }
-            res.status(200).json({pass, entryList: enclosureAccess}).end();
+            res.status(200).json({pass, enclosureAccess}).end();
         }).catch((err) => {
             res.status(400).json(err.message).end();
         });
@@ -96,7 +99,7 @@ export class PassController {
         const enclosureAccess: IPass_Enclosure_Access_Instance[] = await this.PassEnclosureAccess.findAll({where: {passId}});
         const enclosureEntries: IPass_Enclosure_Access_Instance[] = await this.Entry.findAll({where: {passId}});
 
-        res.status(200).json({pass, entryList: enclosureAccess, enclosureEntries}).end();
+        res.status(200).json({pass, enclosureAccess, enclosureEntries}).end();
     }
 
     public async getPassByUserId(req: Request, res: Response): Promise<void> {
@@ -106,23 +109,66 @@ export class PassController {
     }
 
     public async addPassEnclosureAccess(req: Request, res: Response): Promise<void> {
-        const passId = req.params.id;
-        const enclosureId = req.params.id;
-
-    }
-
-    public async updatePassEnclosureAccess(req: Request, res: Response): Promise<void> {
-        const passId = req.params.id;
-        const enclosureId = req.params.id;
+        const passId = Number.parseInt(req.params.id);
+        const enclosureId = Number.parseInt(req.params.id);
+        this.passEnclosureAccessSchema.validate({
+            passId,
+            enclosureId
+        }).then(async () => {
+            const enclosureAccess = await this.PassEnclosureAccess.create({
+                passId,
+                enclosureId
+            });
+            res.status(200).json(enclosureAccess).end();
+        }).catch((err) => {
+            res.status(400).json(err).end();
+        })
 
     }
 
     public async removePassEnclosureAccess(req: Request, res: Response): Promise<void> {
-        const id = req.params.id;
+        const passId = req.params.passId;
+        const enclosureId = req.params.enclosureId;
+        this.passEnclosureAccessSchema.validate({
+            passId,
+            enclosureId
+        }).then(async () => {
+            await this.PassEnclosureAccess.destroy({
+                where: {
+                    passId,
+                    enclosureId
+                }
+            });
+            res.status(204).json('deleted').end();
+        }).catch((err) => {
+            res.status(400).json(err).end();
+        })
     }
 
     public async updatePass(req: Request, res: Response): Promise<void> {
+        const id = req.body.id;
+        const previous: IPass_Instance | null = await this.Pass.findByPk(id);
+        if (!previous) {
+            res.status(404).end();
+            return;
+        }
+        const validDate = req.body.validDate || previous.validDate;
+        const passTypeId = req.body.passTypeId || previous.passTypeId;
+        const userId = req.body.userId || previous.userId;
 
+        this.passUpdateSchema.validate({
+            validDate,
+            passTypeId,
+            userId
+        }).then(async () => {
+            await this.Pass.update({validDate, passTypeId, userId}, {
+                where: {id}
+            });
+            const updatedPass = await this.Pass.findByPk(id);
+            res.status(200).json(updatedPass).end();
+        }).catch((err) => {
+            res.status(400).json(err).end();
+        })
     }
 
     public async deletePass(req: Request, res: Response): Promise<void> {

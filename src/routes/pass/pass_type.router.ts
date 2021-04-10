@@ -118,12 +118,12 @@ async function getPassTypeController(): Promise<PassTypeController> {
 }
 
 const passTypeCreateSchema = yup.object().shape({
-    name: yup.string().min(4).required(),
+    name: yup.string().min(4).max(255).required(),
     price: yup.number().min(0).required()
 });
 const passTypeUpdateSchema = yup.object().shape({
     id: yup.number().min(0).required(),
-    name: yup.string().min(4).optional(),
+    name: yup.string().min(4).max(255).optional(),
     price: yup.number().min(0).optional()
 });
 
