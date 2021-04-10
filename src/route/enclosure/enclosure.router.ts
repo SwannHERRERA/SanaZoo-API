@@ -67,7 +67,7 @@ enclosureRouter.delete("/:id", adminMiddleware, async function(req, res){
 
     if (number === 0)
         res.status(404).end();
-    res.status(200).end();
+    res.status(204).end();
 });
 
 enclosureRouter.put("/:id", adminMiddleware, async function (req, res) {
@@ -111,10 +111,10 @@ enclosureRouter.put("/:id", adminMiddleware, async function (req, res) {
 });
 
 const enclosureSchemaCreat = yup.object().shape({
-    name: yup.string().required(),
-    capacity: yup.number().required(),
-    description: yup.string().required(),
-    visitDuration: yup.number().required(),
+    name: yup.string().min(6).max(255).required(),
+    capacity: yup.number().min(1).required(),
+    description: yup.string().min(6).max(255).required(),
+    visitDuration: yup.number().min(1).required(),
     handicapAccess: yup.boolean().required(),
     maintenance: yup.boolean().required(),
     enclosureTypeId: yup.number().required()

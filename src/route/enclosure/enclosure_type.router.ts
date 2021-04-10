@@ -48,7 +48,7 @@ enclosureTypeRouter.delete("/:id", adminMiddleware, async function(req, res) {
     const result = await controller.remove(Number.parseInt(req.params.id));
     if (result === 0)
         res.status(404).end();
-    res.status(200).end();
+    res.status(204).end();
 });
 
 enclosureTypeRouter.put("/:id", adminMiddleware, async function(req, res) {
@@ -68,7 +68,7 @@ enclosureTypeRouter.put("/:id", adminMiddleware, async function(req, res) {
 });
 
 const enclosureSchemaCreat = yup.object().shape({
-    name: yup.string().required()
+    name: yup.string().min(6).max(255).required()
 });
 
 export {
