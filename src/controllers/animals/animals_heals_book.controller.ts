@@ -41,6 +41,7 @@ export class AnimalsHealsBookController {
       res.status(500).end();
     }
   }
+
   create = async (req: Request, res: Response): Promise<void> => {
     const heals = req.body;
     const isValid = await this.validate(heals, res);
@@ -56,6 +57,7 @@ export class AnimalsHealsBookController {
       res.status(500).end();
     }
   };
+
   updateOne = async (req: Request, res: Response): Promise<void> => {
     const healsId = Number(req.body.id);
     const heals = req.body;

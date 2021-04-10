@@ -16,7 +16,7 @@ animalRouter.delete("/:id", employeeMiddleware, controller.deleteOne);
  * @param enclosureId
  */
 animalRouter.patch(
-  "moveEnclosure",
+  "/:id/move-enclosure",
   employeeMiddleware,
   controller.moveEnclosure
 );

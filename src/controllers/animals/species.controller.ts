@@ -90,11 +90,12 @@ export class SpeciesController {
           .json({ message: "this species has animals you can't remove" })
           .end();
       }
+
       const isDestroyed = await Specie.destroy({ where: { id } });
       if (isDestroyed) {
-        res.status(204);
+        res.status(204).end();
       } else {
-        res.status(404);
+        res.status(404).end();
       }
     } catch (err) {
       console.error(err);

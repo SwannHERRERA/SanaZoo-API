@@ -86,9 +86,9 @@ export class AnimalsController {
       const { Animal } = await SequelizeManager.getInstance();
       const isDestroyed = await Animal.destroy({ where: { id } });
       if (isDestroyed) {
-        res.status(204);
+        res.status(204).end();
       } else {
-        res.status(404);
+        res.status(404).end();
       }
     } catch (err) {
       console.error(err);
@@ -96,27 +96,43 @@ export class AnimalsController {
     }
   }
 
-  async moveEnclosure(req: Request, res: Response): Promise<void> {
+  async moveEnclosureVerif(req: Request, res: Response): Promise<boolean> {
+    const animalId = Number(req.params.id);
     const moveEnclosureSchema = yup.object().shape({
       animalId: yup.number().required(),
       enclosureId: yup.number().required(),
     });
-    await moveEnclosureSchema
-      .validate(req.body)
-      .catch((err) => res.status(400).json(err.message).end());
+    if (animalId !== req.body.animalId) {
+      res.status(400).end();
+      return false;
+    }
+    try {
+      await moveEnclosureSchema.validate(req.body);
+      return true;
+    } catch (err) {
+      res.status(400).json(err.message).end();
+      return false;
+    }
+  }
 
+  moveEnclosure = async (req: Request, res: Response): Promise<void> => {
+    const reqIsValid = await this.moveEnclosureVerif(req, res);
+    if (!reqIsValid) {
+      return;
+    }
     try {
       const { Animal } = await SequelizeManager.getInstance();
       const animal = await Animal.findByPk(req.body.animalId);
       if (animal === null) {
         throw new Error("animal doesn't exist");
       }
-      await animal.setEnclosure(req.body.enclosureId);
+      const animalUpdated = await animal.setEnclosure(req.body.enclosureId);
+      res.json(animalUpdated);
     } catch (err) {
       console.error(err);
       res.status(500).end();
     }
-  }
+  };
 }
 
 export default new AnimalsController();
