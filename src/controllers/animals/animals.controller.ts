@@ -95,6 +95,28 @@ export class AnimalsController {
       res.status(500).end();
     }
   }
+
+  async moveEnclosure(req: Request, res: Response): Promise<void> {
+    const moveEnclosureSchema = yup.object().shape({
+      animalId: yup.number().required(),
+      enclosureId: yup.number().required(),
+    });
+    await moveEnclosureSchema
+      .validate(req.body)
+      .catch((err) => res.status(400).json(err.message).end());
+
+    try {
+      const { Animal } = await SequelizeManager.getInstance();
+      const animal = await Animal.findByPk(req.body.animalId);
+      if (animal === null) {
+        throw new Error("animal doesn't exist");
+      }
+      await animal.setEnclosure(req.body.enclosureId);
+    } catch (err) {
+      console.error(err);
+      res.status(500).end();
+    }
+  }
 }
 
 export default new AnimalsController();

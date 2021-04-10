@@ -92,6 +92,17 @@ export class AnimalsHealsBookController {
       res.status(500).end();
     }
   }
+
+  async getAllByAnimal(req: Request, res: Response): Promise<void> {
+    try {
+      const animalId = Number(req.params.animalId);
+      const { AnimalHealthBook } = await SequelizeManager.getInstance();
+      AnimalHealthBook.findAll({ where: { animalId } });
+    } catch (err) {
+      console.error(err);
+      res.status(500).end();
+    }
+  }
 }
 
 export default new AnimalsHealsBookController();

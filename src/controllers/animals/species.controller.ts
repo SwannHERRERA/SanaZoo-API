@@ -82,13 +82,32 @@ export class SpeciesController {
   async deleteOne(req: Request, res: Response): Promise<void> {
     const id = Number(req.params.id);
     try {
-      const { Specie } = await SequelizeManager.getInstance();
+      const { Specie, Animal } = await SequelizeManager.getInstance();
+      const animals = await Animal.findAll({ where: { specieId: id } });
+      if (animals.length > 0) {
+        res
+          .status(409)
+          .json({ message: "this species has animals you can't remove" })
+          .end();
+      }
       const isDestroyed = await Specie.destroy({ where: { id } });
       if (isDestroyed) {
         res.status(204);
       } else {
         res.status(404);
       }
+    } catch (err) {
+      console.error(err);
+      res.status(500).end();
+    }
+  }
+
+  async getAllAnimals(req: Request, res: Response): Promise<void> {
+    try {
+      const specieId = Number(req.params.specieId);
+      const { Animal } = await SequelizeManager.getInstance();
+      const animals = await Animal.findAll({ where: { specieId } });
+      res.json(animals);
     } catch (err) {
       console.error(err);
       res.status(500).end();

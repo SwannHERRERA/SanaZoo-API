@@ -9,4 +9,16 @@ animalRouter.get("/:id", authMiddleware, controller.getOneById);
 animalRouter.put("/:id", employeeMiddleware, controller.updateOne);
 animalRouter.delete("/:id", employeeMiddleware, controller.deleteOne);
 
+/**
+ * Move an animal into another enclosure.
+ * should have animalId and enclosureId in BODY
+ * @param animalId
+ * @param enclosureId
+ */
+animalRouter.patch(
+  "moveEnclosure",
+  employeeMiddleware,
+  controller.moveEnclosure
+);
+
 export { animalRouter };
