@@ -13,6 +13,7 @@ export interface IEnclosure_Image_Props {
     id: number;
     title: string;
     path: string;
+    enclosureId: number;
 }
 
 export interface IEnclosure_Image_Creation_Props extends Optional<IEnclosure_Image_Props, "id"> {
@@ -38,6 +39,14 @@ export function enclosureImageCreator(sequelize: Sequelize): ModelCtor<IEnclosur
         path: {
             type: DataTypes.STRING,
         },
+        enclosureId: {
+            type: DataTypes.BIGINT,
+            allowNull: false,
+            references: {
+                model: "Enclosure",
+                key: "id"
+            }
+        }
     }, {
         freezeTableName: true,
         underscored: true,

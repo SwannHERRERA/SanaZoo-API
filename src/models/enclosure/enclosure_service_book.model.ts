@@ -11,9 +11,10 @@ import { IEnclosure_Instance } from "..";
 import { IUser_Instance } from "..";
 
 export interface IEnclosure_Service_Book_Props {
-  id: number;
-  date: Date;
-  description: string;
+    id: number;
+    date: Date;
+    description: string;
+    enclosureId: number;
 }
 
 export interface IEnclosure_Service_Book_Creation_Props
@@ -32,30 +33,36 @@ export interface IEnclosure_Service_Book_Instance
   getUser: BelongsToGetAssociationMixin<IUser_Instance>;
 }
 
-export function enclosureServiceBookCreator(
-  sequelize: Sequelize
-): ModelCtor<IEnclosure_Service_Book_Instance> {
-  return sequelize.define<IEnclosure_Service_Book_Instance>(
-    "Enclosure_Service_Book",
-    {
-      id: {
-        type: DataTypes.BIGINT,
-        primaryKey: true,
-        autoIncrement: true,
-      },
-      date: {
-        type: DataTypes.DATE,
-        unique: true,
-      },
-      description: {
-        type: DataTypes.TEXT,
-      },
-    },
-    {
-      freezeTableName: true,
-      underscored: true,
-      paranoid: true,
-      timestamps: true,
-    }
-  );
+export function enclosureServiceBookCreator(sequelize: Sequelize): ModelCtor<IEnclosure_Service_Book_Instance> {
+    return sequelize.define<IEnclosure_Service_Book_Instance>(
+        "Enclosure_Service_Book",
+        {
+            id: {
+                type: DataTypes.BIGINT,
+                primaryKey: true,
+                autoIncrement: true,
+            },
+            date: {
+                type: DataTypes.DATE,
+                unique: true,
+            },
+            description: {
+                type: DataTypes.TEXT,
+            },
+            enclosureId: {
+                type: DataTypes.BIGINT,
+                allowNull: false,
+                references: {
+                    model: "Enclosure",
+                    key: "id"
+                }
+            }
+        },
+        {
+            freezeTableName: true,
+            underscored: true,
+            paranoid: true,
+            timestamps: true,
+        }
+    );
 }

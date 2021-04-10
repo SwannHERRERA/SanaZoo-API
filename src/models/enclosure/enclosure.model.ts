@@ -16,13 +16,14 @@ import { IEntry_Instance } from "..";
 import { IPass_Enclosure_Access_Instance } from "..";
 
 export interface IEnclosure_Props {
-  id: number;
-  name: string;
-  capacity: number;
-  description: string;
-  visit_duration: string;
-  handicap_access: boolean;
-  maintenance: boolean;
+    id: number;
+    name: string;
+    capacity: number;
+    description: string;
+    visitDuration: number;
+    handicapAccess: boolean;
+    maintenance: boolean;
+    enclosureTypeId: number;
 }
 
 export interface IEnclosure_Creation_Props
@@ -62,42 +63,44 @@ export interface IEnclosure_Instance
   >;
 }
 
-export function enclosureCreator(
-  sequelize: Sequelize
-): ModelCtor<IEnclosure_Instance> {
-  return sequelize.define<IEnclosure_Instance>(
-    "Enclosure",
-    {
-      id: {
-        type: DataTypes.BIGINT,
-        primaryKey: true,
-        autoIncrement: true,
-      },
-      name: {
-        type: DataTypes.STRING,
-        unique: true,
-      },
-      description: {
-        type: DataTypes.STRING,
-      },
-      capacity: {
-        type: DataTypes.INTEGER,
-      },
-      visit_duration: {
-        type: DataTypes.DATE,
-      },
-      handicap_access: {
-        type: DataTypes.BOOLEAN,
-      },
-      maintenance: {
-        type: DataTypes.BOOLEAN,
-      },
-    },
-    {
-      freezeTableName: true,
-      underscored: true,
-      paranoid: true,
-      timestamps: true,
-    }
-  );
+export function enclosureCreator(sequelize: Sequelize): ModelCtor<IEnclosure_Instance> {
+    return sequelize.define<IEnclosure_Instance>("Enclosure", {
+        id: {
+            type: DataTypes.BIGINT,
+            primaryKey: true,
+            autoIncrement: true
+        },
+        name: {
+            type: DataTypes.STRING,
+            unique: true
+        },
+        description: {
+            type: DataTypes.STRING
+        },
+        capacity: {
+            type: DataTypes.INTEGER
+        },
+        visitDuration: {
+            type: DataTypes.INTEGER
+        },
+        handicapAccess: {
+            type: DataTypes.BOOLEAN
+        },
+        maintenance: {
+            type: DataTypes.BOOLEAN
+        },
+        enclosureTypeId: {
+            type: DataTypes.BIGINT,
+            allowNull: false,
+            references: {
+                model: 'Enclosure_Type',
+                key: 'id'
+            }
+        }
+    }, {
+        freezeTableName: true,
+        underscored: true,
+        paranoid: true,
+        timestamps: true
+    });
 }
