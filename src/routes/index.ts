@@ -31,6 +31,7 @@ export function buildRoutes(app: Express) {
     app.use("/pass/control", passControlRouter);
     app.use("/pass/escape-game", passEscapeGameRouter);
     app.use("/pass/night", passNightRouter);
+    app.use("/pass/type", passTypeRouter);
     app.use("/pass", passRouter);
 
     app.use("/monitoring/statistic", statisticRouter);
