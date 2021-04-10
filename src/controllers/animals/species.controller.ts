@@ -66,13 +66,13 @@ export class SpeciesController {
     }
     try {
       const { Specie } = await SequelizeManager.getInstance();
-      const [idUpdate] = await Specie.update(speciePost, {
-        where: { id },
-      });
-      if (idUpdate === 0) {
-        throw new Error("update fail");
+      const specie = await Specie.findByPk(id);
+      if (!specie) {
+        res.status(404).end();
+        return;
       }
-      res.json(speciePost);
+      const specieUpdated = await specie.update(speciePost);
+      res.json(specieUpdated);
     } catch (err) {
       console.error(err);
       res.status(500).end();

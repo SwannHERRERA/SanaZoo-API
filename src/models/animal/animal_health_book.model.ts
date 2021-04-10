@@ -14,8 +14,8 @@ export interface IAnimal_Health_Book_Props {
   id: number;
   description: string;
   date: string;
-  animalId: string;
-  userId: string;
+  animalId: number;
+  userId: number;
 }
 
 export interface IAnimal_Health_Book_Creation_Props

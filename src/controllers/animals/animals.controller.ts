@@ -52,7 +52,12 @@ export class AnimalsController {
       return;
     }
     try {
-      const { Animal } = await SequelizeManager.getInstance();
+      const { Animal, Specie } = await SequelizeManager.getInstance();
+      const specie = await Specie.findByPk(animalPost.specieId);
+      if (!specie) {
+        res.status(404).json({ message: "specie not found" }).end();
+        return;
+      }
       const animalCreate = await Animal.create(animalPost);
       res.json(animalCreate).status(201);
     } catch (err) {
@@ -70,11 +75,13 @@ export class AnimalsController {
     }
     try {
       const { Animal } = await SequelizeManager.getInstance();
-      const [idUpdate] = await Animal.update(animalPost, { where: { id } });
-      if (idUpdate === 0) {
-        throw new Error("update fail");
+      const animal = await Animal.findByPk(id);
+      if (!animal) {
+        res.status(404).end();
+        return;
       }
-      res.json(animalPost);
+      const animalUpdated = await animal.update(animalPost);
+      res.json(animalUpdated);
     } catch (err) {
       console.error(err);
       res.status(500).end();
