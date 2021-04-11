@@ -71,6 +71,13 @@ export class EntryController {
         res.status(200).json(entries).end();
     }
 
+    public async getEnclosureEntries(req: Request, res: Response): Promise<void> {
+        const enclosureId = req.params.id;
+        const entries: IEntry_Instance[] = await this.Entry.findAll({where: {enclosureId}});
+
+        res.status(200).json(entries).end();
+    }
+
     public async addEntry(req: Request, res: Response): Promise<void> {
         const passId = req.body.passId;
         const enclosureId = req.body.enclosureId;
