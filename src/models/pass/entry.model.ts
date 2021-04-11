@@ -4,15 +4,20 @@ import {
     BelongsToSetAssociationMixin,
     DataTypes,
     Model,
-    ModelCtor,
+    ModelCtor, Optional,
     Sequelize
 } from "sequelize";
 
 export interface IEntry_Props {
     id: number;
+    enclosureId: number;
+    passId: number;
 }
 
-export interface IEntry_Instance extends Model<IEntry_Props>, IEntry_Props {
+export interface IEntry_Creation_Props extends Optional<IEntry_Props, "id"> {
+}
+
+export interface IEntry_Instance extends Model<IEntry_Props, IEntry_Creation_Props>, IEntry_Props {
     setPass: BelongsToSetAssociationMixin<IPass_Instance, "id">;
     getPass: BelongsToGetAssociationMixin<IPass_Instance>;
 
@@ -29,6 +34,22 @@ export function entryCreator(sequelize: Sequelize): ModelCtor<IEntry_Instance> {
                 primaryKey: true,
                 autoIncrement: true,
             },
+            enclosureId: {
+                type: DataTypes.BIGINT,
+                allowNull: false,
+                references: {
+                    model: 'Enclosure',
+                    key: 'id',
+                }
+            },
+            passId: {
+                type: DataTypes.BIGINT,
+                allowNull: false,
+                references: {
+                    model: 'Pass',
+                    key: 'id',
+                }
+            }
         },
         {
             freezeTableName: true,
