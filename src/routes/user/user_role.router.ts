@@ -4,7 +4,7 @@ import controller from "../../controllers/user/userRole.controller";
 const userRoleRouter = express.Router();
 
 userRoleRouter.patch(
-  "/:id/affect/:userId",
+  "/:id/affect-user/:userId",
   adminMiddleware,
   controller.affectUser
 );

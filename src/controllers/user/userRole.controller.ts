@@ -20,8 +20,8 @@ export class UserRoleController {
   async getAll(req: Request, res: Response): Promise<void> {
     try {
       const { UserRole } = await SequelizeManager.getInstance();
-      const users = await UserRole.findAll();
-      res.json(users);
+      const roles = await UserRole.findAll();
+      res.json(roles);
     } catch (err) {
       res.status(ErrorCode.SERVER_ERROR).end();
     }
@@ -115,8 +115,10 @@ export class UserRoleController {
         res.status(ErrorCode.BAD_REQUEST).end();
         return;
       }
-      user.setUserRole(role);
-      res.json(user);
+      user.userRoleId = role.id;
+      await user.save();
+      const updatedUser = await User.findByPk(user.id);
+      res.json(updatedUser);
     } catch (err) {
       console.error(err);
       res.status(ErrorCode.SERVER_ERROR).end();
