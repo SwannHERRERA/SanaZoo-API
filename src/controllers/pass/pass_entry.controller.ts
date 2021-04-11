@@ -1,4 +1,4 @@
-import {ModelCtor} from "sequelize";
+import sequelize, {ModelCtor, Op} from "sequelize";
 import {
     IEnclosure_Instance,
     IEntry_Instance,
@@ -102,6 +102,11 @@ export class EntryController {
         const passId = req.body.passId;
         const enclosureId = req.body.enclosureId;
 
+        if (!passId || !enclosureId) {
+            res.status(400).end();
+            return;
+        }
+
         const pass: IPass_Instance | null = await this.Pass.findByPk(passId);
         const enclosure: IEnclosure_Instance | null = await this.Enclosure.findByPk(enclosureId);
         const passEnclosureAccessList: IPass_Enclosure_Access_Instance[] = await this.PassEnclosureAccess.findAll({where: {passId}});
@@ -126,20 +131,19 @@ export class EntryController {
 
         switch (pass.passTypeId) {
             case PassType.DAY:
-                res.status(500).json('todo').end();
+                await this.dayEntry(res, date, pass, enclosure);
                 break;
             case PassType.WEEKEND:
-                res.status(500).json('todo').end();
+                await this.weekendEntry(res, date, pass, enclosure);
                 break;
             case PassType.ANNUAL:
-                res.status(500).json('todo').end();
+                await this.yearEntry(res, date, pass, enclosure);
                 break;
             case PassType.ONEDAYMONTH:
-                res.status(500).json('todo').end();
+                await this.oneDayMonthEntry(res, date, pass, enclosure);
                 break;
             case PassType.ESCAPE_GAME:
-                await this.escapeGameEntry(res, pass, enclosure, passEnclosureAccessList);
-                res.status(500).json('todo').end();
+                await this.escapeGameEntry(res, date, pass, enclosure, passEnclosureAccessList);
                 break;
             case PassType.NIGHT:
                 //TODO night (verify pas date is valid with pass night availability)
@@ -153,8 +157,71 @@ export class EntryController {
         // res.status(200).json(entry).end();
     }
 
-    public async escapeGameEntry(res: Response, pass: IPass_Instance, enclosure: IEnclosure_Instance, passEnclosureAccessList: IPass_Enclosure_Access_Instance[]) {
+    private async dayEntry(res: Response, currentDate: Date, pass: IPass_Instance, enclosure: IEnclosure_Instance) {
+        if (currentDate.getDate() != pass.validDate.getDate() ||
+            currentDate.getMonth() != pass.validDate.getMonth() ||
+            currentDate.getFullYear() != pass.validDate.getFullYear()) {
+            res.status(403).json('invalid pass valid date').end();
+            return;
+        }
+        await this.createEntry(pass.id, enclosure.id, res);
+    }
+
+    private async weekendEntry(res: Response, currentDate: Date, pass: IPass_Instance, enclosure: IEnclosure_Instance) {
+        //Test if valid date is below 7 days
+        if ((currentDate.getTime() - pass.validDate.getTime()) / (1000 * 60 * 60 * 24) > 7) {
+            res.status(403).json('Your week-end pass is not longer valid').end();
+            return;
+        }
+        if (currentDate.getDay() != 0 && currentDate.getDay() != 6) {
+            res.status(403).json('Your pass is only valid for a week-end !');
+            return;
+        }
+
+        await this.createEntry(pass.id, enclosure.id, res);
+    }
+
+    private async yearEntry(res: Response, currentDate: Date, pass: IPass_Instance, enclosure: IEnclosure_Instance) {
+        //Test if valid date is below 365 days
+        if ((currentDate.getTime() - pass.validDate.getTime()) / (1000 * 60 * 60 * 24) > 365) {
+            res.status(403).json('Your year pass is not longer valid').end();
+        }
+
+        await this.createEntry(pass.id, enclosure.id, res);
+    }
+
+    private async oneDayMonthEntry(res: Response, currentDate: Date, pass: IPass_Instance, enclosure: IEnclosure_Instance) {
+        //Test if valid date is below 365 days
+        if ((currentDate.getTime() - pass.validDate.getTime()) / (1000 * 60 * 60 * 24) > 365) {
+            res.status(403).json('Your one day month pass is not longer valid').end();
+        }
+        const passEntries: IEntry_Instance[] = await this.Entry.findAll({
+            where: {
+                passId: pass.id,
+            }
+        });
+
+        if (passEntries.find((e) => {
+            return e.createdAt.getMonth() == currentDate.getMonth() &&
+                e.createdAt.getFullYear() == currentDate.getFullYear() &&
+                e.createdAt.getDate() != currentDate.getDate();
+        })) {
+            res.status(403).json('Your already have an entry for this month at another day').end();
+            return;
+        }
+        await this.createEntry(pass.id, enclosure.id, res);
+    }
+
+    private async escapeGameEntry(res: Response, currentDate: Date, pass: IPass_Instance, enclosure: IEnclosure_Instance, passEnclosureAccessList: IPass_Enclosure_Access_Instance[]) {
         //Normalement, toute les autres vérification de validité ont été vérifié
+        if (currentDate.getDate() != pass.validDate.getDate() ||
+            currentDate.getMonth() != pass.validDate.getMonth() ||
+            currentDate.getFullYear() != pass.validDate.getFullYear()) {
+            res.status(403).json('invalid pass valid date').end();
+            return;
+        }
+
+        // TODO check if already composed or none
         const enclosureAccess: IPass_Enclosure_Access_Instance | undefined = passEnclosureAccessList.find((e) => {
             return e.enclosureId == enclosure.id;
         });
@@ -176,14 +243,23 @@ export class EntryController {
                 res.status(404).json('Can\'t find previous enclosure access in this escape pass');
                 return;
             }
-            const previousEntry: IEntry_Instance | null = await this.Entry.findOne({where: {enclosureId: previousEnclosure?.enclosureId}});
+            const previousEntry: IEntry_Instance | null = await this.Entry.findOne({
+                where: {
+                    passId: pass.id,
+                    enclosureId: previousEnclosure?.enclosureId
+                }
+            });
             if (!previousEntry) {
                 res.status(403).json('You must enter enclosure by order ! Missing entry for previous enclosure').end();
                 return;
             }
         }
 
-        const entry: IEntry_Instance = await this.Entry.create({passId: pass.id, enclosureId: enclosure.id});
+        await this.createEntry(pass.id, enclosure.id, res);
+    }
+
+    private async createEntry(passId: number, enclosureId: number, res: Response) {
+        const entry: IEntry_Instance = await this.Entry.create({passId, enclosureId});
         res.status(200).json(entry).end();
     }
 

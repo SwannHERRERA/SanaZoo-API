@@ -40,6 +40,13 @@ passEntryRouter.get('/', employeeMiddleware, async (req, res) => {
     await (await getEntryController()).getAllEntries(req, res);
 });
 
+/**
+ * Add entry
+ */
+passEntryRouter.post('/', employeeMiddleware, async (req, res) => {
+    await (await getEntryController()).addEntry(req, res);
+});
+
 
 export {
     passEntryRouter
