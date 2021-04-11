@@ -16,8 +16,6 @@ app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerJSON));
 
 buildRoutes(app);
 
-const sequelize = SequelizeManager.getInstance();
-
 /**
  * Just testing routes, will be deleted in final release
  */

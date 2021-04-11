@@ -1,4 +1,14 @@
+import * as yup from "yup";
+
 export class UserController {
+  userSchema = yup.object().shape({
+    lastName: yup.string().required(),
+    firstName: yup.string().required(),
+    email: yup.string().email().required(),
+    birthdate: yup.date(),
+    userRole: yup.number(),
+  });
+
   async me() {
     throw new Error("Not implemented !");
     // get user By cookie
