@@ -96,19 +96,17 @@ export class Enclosure_Controller {
         });
     }
 
-    public async getImages(id: number): Promise<IEnclosure_Image_Instance[] | null> {
-        return this.EnclosureImage.findAll({
+    public async getAllByState(state: boolean, params? : IEnclosure_Get_All_Params): Promise<IEnclosure_Instance[] | null> {
+        const limit = params?.limit || 20;
+        const offset = params?.offset || 0;
+
+        return this.Enclosure.findAll({
+            limit,
+            offset,
             where: {
-                enclosureId: id
+                maintenance: state
             }
         });
     }
 
-    public async getServiceBook(id: number): Promise<IEnclosure_Service_Book_Instance[] | null> {
-        return this.EnclosureServiceBook.findAll({
-            where: {
-                enclosureId: id
-            }
-        });
-    }
 }
