@@ -38,7 +38,7 @@ export class EntryController {
 
         const result = await this.Entry.findAll({
             order: [
-                ['valid_date', 'ASC']
+                ['created_at', 'DESC']
             ],
             limit, offset
         });
@@ -53,10 +53,16 @@ export class EntryController {
     public async getEntriesByUserId(req: Request, res: Response): Promise<void> {
         const userId = req.params.id;
         const entries: IEntry_Instance[] = [];
-        const passList: IPass_Instance[] = await this.Pass.findAll({where: {userId}});
+        const passList: IPass_Instance[] = await this.Pass.findAll({
+            where: {userId},
+        });
 
         for (let pass of passList) {
-            let foundEntries: IEntry_Instance[] = await this.Entry.findAll();
+            let foundEntries: IEntry_Instance[] = await this.Entry.findAll({
+                order: [
+                    ['created_at', 'DESC']
+                ]
+            });
             for (let entry of foundEntries) {
                 entries.push(entry);
             }
@@ -66,14 +72,24 @@ export class EntryController {
 
     public async getPassEntries(req: Request, res: Response): Promise<void> {
         const passId = req.params.id;
-        const entries: IEntry_Instance[] = await this.Entry.findAll({where: {passId}});
+        const entries: IEntry_Instance[] = await this.Entry.findAll({
+            where: {passId},
+            order: [
+                ['created_at', 'DESC']
+            ]
+        });
 
         res.status(200).json(entries).end();
     }
 
     public async getEnclosureEntries(req: Request, res: Response): Promise<void> {
         const enclosureId = req.params.id;
-        const entries: IEntry_Instance[] = await this.Entry.findAll({where: {enclosureId}});
+        const entries: IEntry_Instance[] = await this.Entry.findAll({
+            where: {enclosureId},
+            order: [
+                ['created_at', 'DESC']
+            ]
+        });
 
         res.status(200).json(entries).end();
     }

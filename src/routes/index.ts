@@ -6,7 +6,7 @@ import {animalHealthBookRouter} from "./animal/animal_health_book.router";
 import {employeePlanningRouter} from "./planning/employee_planning.router";
 import {zooOpeningRouter} from "./planning/zoo_opening.router";
 import {passRouter} from "./pass/pass.router";
-import {passControlRouter} from "./pass/pass_entry.router";
+import {passEntryRouter} from "./pass/pass_entry.router";
 import {passEscapeGameRouter} from "./pass/pass_escape_game.router";
 import {passNightRouter} from "./pass/pass_night.router";
 import {statisticRouter} from "./monitoring/statistic.router";
@@ -32,7 +32,7 @@ export function buildRoutes(app: Express) {
     app.use("/zoo", zooOpeningRouter);
 
     app.use("/pass/escape-game", passEscapeGameRouter);
-    app.use("/pass/entry", passControlRouter);
+    app.use("/pass/entry", passEntryRouter);
     app.use("/pass/night", passNightRouter);
     app.use("/pass/type", passTypeRouter);
     app.use("/pass", passRouter);
