@@ -1,4 +1,7 @@
 import * as yup from "yup";
+import { SequelizeManager } from "../../utils/db";
+import { ErrorCode } from "../../utils/errorCode";
+import { Response, Request } from "express";
 
 export class UserController {
   userSchema = yup.object().shape({
@@ -45,9 +48,14 @@ export class UserController {
     throw new Error("Not implemented !");
     // delete a user
   }
-  async getAll() {
-    throw new Error("Not implemented !");
-    // get all users
+  async getAll(req: Request, res: Response): Promise<void> {
+    try {
+      const { User } = await SequelizeManager.getInstance();
+      const users = await User.findAll();
+      res.json(users);
+    } catch (err) {
+      res.status(ErrorCode.SERVER_ERROR).end();
+    }
   }
 }
 export default new UserController();
