@@ -104,8 +104,6 @@ export class PassController {
         }
 
         if (pass.passTypeId == PassType.ESCAPE_GAME) {
-            //TODO ESCAPE GAME
-            console.log('RESCAPE GAME');
             await this.escapeGameEntry(res, pass, enclosure, passEnclosureAccessList);
             return;
         }
@@ -129,13 +127,23 @@ export class PassController {
             return;
         }
 
-        const enclosureEntries: IEntry_Instance[] = await this.Entry.findAll({where: {passId: pass.id}});
-        if (enclosureAccess.order > 1 && !passEnclosureAccessList.find((e) => {
-            return e.order && enclosureAccess.order && e.order == enclosureAccess.order - 1;
-        })) {
-            res.status(403).json('Wrong order to access this enclosure');
+        if (enclosureAccess.order > 1) {
+            const previousEnclosure: IPass_Enclosure_Access_Instance | undefined = passEnclosureAccessList.find((e) => {
+                return e.order && enclosureAccess.order && e.order == enclosureAccess.order - 1;
+            });
+            if (!previousEnclosure) {
+                res.status(404).json('Can\'t find previous enclosure access in this escape pass');
+                return;
+            }
+            const previousEntry: IEntry_Instance | null = await this.Entry.findOne({where: {enclosureId: previousEnclosure?.enclosureId}});
+            if (!previousEntry) {
+                res.status(403).json('You must enter enclosure by order ! Missing entry for previous enclosure').end();
+                return;
+            }
         }
 
+        const entry: IEntry_Instance = await this.Entry.create({passId: pass.id, enclosureId: enclosure.id});
+        res.status(200).json(entry).end();
     }
 
     constructor(Enclosure: ModelCtor<IEnclosure_Instance>, PassType: ModelCtor<IPass_Type_Instance>, Pass: ModelCtor<IPass_Instance>, Entry: ModelCtor<IEntry_Instance>, PassEnclosureAccess: ModelCtor<IPass_Enclosure_Access_Instance>) {
