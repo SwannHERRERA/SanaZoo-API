@@ -3,9 +3,9 @@ import {
     IEntry_Instance,
     IPass_Creation_Props,
     IPass_Enclosure_Access_Instance,
-    IPass_Instance,
+    IPass_Instance, IPass_Night_Availability_Instance,
     IPass_Type_Instance,
-    IUser_Instance
+    IUser_Instance, PassType
 } from "../../models";
 import {SequelizeManager} from "../../utils/db";
 import {Request, Response} from "express";
@@ -18,6 +18,7 @@ export class PassController {
     User: ModelCtor<IUser_Instance>;
     Entry: ModelCtor<IEntry_Instance>;
     PassEnclosureAccess: ModelCtor<IPass_Enclosure_Access_Instance>;
+    PassNightAvailability: ModelCtor<IPass_Night_Availability_Instance>;
 
     passCreateSchema = yup.object().shape({
         validDate: yup.date().required(),
@@ -41,7 +42,7 @@ export class PassController {
     public static async getInstance(): Promise<PassController> {
         if (this.instance === undefined) {
             const manager = await SequelizeManager.getInstance();
-            PassController.instance = new PassController(manager.PassType, manager.Pass, manager.User, manager.Entry, manager.PassEnclosureAccess);
+            PassController.instance = new PassController(manager.PassType, manager.Pass, manager.User, manager.Entry, manager.PassEnclosureAccess, manager.PassNightAvailability);
         }
         return PassController.instance;
     }
@@ -77,16 +78,40 @@ export class PassController {
             enclosureAccessList
         }).then(async () => {
             //create
-            const pass: IPass_Instance = await this.Pass.create({passTypeId, validDate, userId});
-            const enclosureAccess = [];
-            for (let enclosureId of enclosureAccessList) {
-                const access = await this.PassEnclosureAccess.create({passId: pass.id, enclosureId})
-                enclosureAccess.push(access);
+            if (passTypeId === PassType.NIGHT) {
+                await this.nightPass(res, passTypeId, new Date(validDate), userId, enclosureAccessList);
+                return;
             }
+            const pass: IPass_Instance = await this.Pass.create({passTypeId, validDate, userId});
+            const enclosureAccess: IPass_Enclosure_Access_Instance[] = await this.createEnclosureAccess(enclosureAccessList, pass);
             res.status(200).json({pass, enclosureAccess}).end();
         }).catch((err) => {
             res.status(400).json(err.message).end();
         });
+    }
+
+    private async createEnclosureAccess(enclosureAccessList: number[], pass: IPass_Instance): Promise<IPass_Enclosure_Access_Instance[]> {
+        const enclosureAccess = [];
+        for (let enclosureId of enclosureAccessList) {
+            const access = await this.PassEnclosureAccess.create({passId: pass.id, enclosureId})
+            enclosureAccess.push(access);
+        }
+        return enclosureAccess;
+    }
+
+    private async nightPass(res: Response, passTypeId: number, validDate: Date, userId: number, enclosureAccessList: number[]): Promise<void> {
+        const passNightAvailabilityList: IPass_Night_Availability_Instance[] = await this.PassNightAvailability.findAll({where: {passTypeId}});
+        if (!passNightAvailabilityList.find((passNightAvailability) => {
+            return passNightAvailability.date.getMonth() == validDate.getMonth() &&
+                passNightAvailability.date.getDate() == validDate.getDate() &&
+                passNightAvailability.date.getFullYear() == validDate.getFullYear();
+        })) {
+            res.status(403).json('Can\'t create pass night this day !').end();
+            return;
+        }
+        const pass: IPass_Instance = await this.Pass.create({passTypeId, validDate, userId});
+        const enclosureAccess: IPass_Enclosure_Access_Instance[] = await this.createEnclosureAccess(enclosureAccessList, pass);
+        res.status(200).json({pass, enclosureAccess}).end();
     }
 
     public async getPassById(req: Request, res: Response): Promise<void> {
@@ -186,11 +211,13 @@ export class PassController {
     }
 
 
-    constructor(PassType: ModelCtor<IPass_Type_Instance>, Pass: ModelCtor<IPass_Instance>, User: ModelCtor<IUser_Instance>, Entry: ModelCtor<IEntry_Instance>, PassEnclosureAccess: ModelCtor<IPass_Enclosure_Access_Instance>) {
+    constructor(PassType: ModelCtor<IPass_Type_Instance>, Pass: ModelCtor<IPass_Instance>, User: ModelCtor<IUser_Instance>,
+                Entry: ModelCtor<IEntry_Instance>, PassEnclosureAccess: ModelCtor<IPass_Enclosure_Access_Instance>, PassNightAvailability: ModelCtor<IPass_Night_Availability_Instance>) {
         this.PassType = PassType;
         this.Pass = Pass;
         this.User = User;
         this.Entry = Entry;
         this.PassEnclosureAccess = PassEnclosureAccess;
+        this.PassNightAvailability = PassNightAvailability;
     }
 }

@@ -1,22 +1,14 @@
-import sequelize, {ModelCtor, Op} from "sequelize";
+import {ModelCtor} from "sequelize";
 import {
     IEnclosure_Instance,
     IEntry_Instance,
     IPass_Enclosure_Access_Instance,
     IPass_Instance,
-    IPass_Type_Instance
+    IPass_Type_Instance,
+    PassType
 } from "../../models";
 import {SequelizeManager} from "../../utils/db";
 import {Request, Response} from "express";
-
-enum PassType {
-    DAY = 1,
-    WEEKEND = 2,
-    ANNUAL = 3,
-    ONEDAYMONTH = 4,
-    ESCAPE_GAME = 5,
-    NIGHT = 6
-}
 
 
 export class EntryController {

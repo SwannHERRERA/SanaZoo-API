@@ -52,3 +52,12 @@ export function passTypeCreator(sequelize: Sequelize): ModelCtor<IPass_Type_Inst
             timestamps: true,
         });
 }
+
+export enum PassType {
+    DAY = 1,
+    WEEKEND = 2,
+    ANNUAL = 3,
+    ONEDAYMONTH = 4,
+    ESCAPE_GAME = 5,
+    NIGHT = 6
+}
