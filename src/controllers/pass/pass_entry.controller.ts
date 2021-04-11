@@ -227,6 +227,17 @@ export class EntryController {
             return;
         }
 
+        const alreadyEntry: IEntry_Instance | null = await this.Entry.findOne({
+            where: {
+                passId: pass.id,
+                enclosureId: enclosure.id
+            }
+        });
+        if (alreadyEntry) {
+            res.status(403).json('You already entered in this enclosure').end();
+            return;
+        }
+
         if (enclosureAccess.order > 1) {
             const previousEnclosure: IPass_Enclosure_Access_Instance | undefined = passEnclosureAccessList.find((e) => {
                 return e.order && enclosureAccess.order && e.order == enclosureAccess.order - 1;
