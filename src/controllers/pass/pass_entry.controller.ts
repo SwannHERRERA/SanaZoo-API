@@ -10,6 +10,10 @@ import {SequelizeManager} from "../../utils/db";
 import {Request, Response} from "express";
 
 enum PassType {
+    DAY = 1,
+    WEEKEND = 2,
+    ANNUAL = 3,
+    ONEDAYMONTH = 4,
     ESCAPE_GAME = 5,
     NIGHT = 6
 }
@@ -115,23 +119,38 @@ export class EntryController {
             return;
         }
 
-        if (pass.validDate < date) {
-            res.status(403).json("Pass is expired").end();
+        if (pass.validDate > date) {
+            res.status(403).json("Pass is not yet active").end();
             return;
         }
 
-        if (pass.passTypeId == PassType.ESCAPE_GAME) {
-            await this.escapeGameEntry(res, pass, enclosure, passEnclosureAccessList);
-            return;
+        switch (pass.passTypeId) {
+            case PassType.DAY:
+                res.status(500).json('todo').end();
+                break;
+            case PassType.WEEKEND:
+                res.status(500).json('todo').end();
+                break;
+            case PassType.ANNUAL:
+                res.status(500).json('todo').end();
+                break;
+            case PassType.ONEDAYMONTH:
+                res.status(500).json('todo').end();
+                break;
+            case PassType.ESCAPE_GAME:
+                await this.escapeGameEntry(res, pass, enclosure, passEnclosureAccessList);
+                res.status(500).json('todo').end();
+                break;
+            case PassType.NIGHT:
+                //TODO night (verify pas date is valid with pass night availability)
+                console.log("Pass night");
+                break;
+            default:
+                res.status(500).json('unknown pass type !').end();
         }
 
-        if (pass.passTypeId == PassType.NIGHT) {
-            //TODO night (verify pas date is valid with pass night availability)
-            console.log("Pass night");
-        }
-
-        const entry: IEntry_Instance = await this.Entry.create({passId, enclosureId});
-        res.status(200).json(entry).end();
+        // const entry: IEntry_Instance = await this.Entry.create({passId, enclosureId});
+        // res.status(200).json(entry).end();
     }
 
     public async escapeGameEntry(res: Response, pass: IPass_Instance, enclosure: IEnclosure_Instance, passEnclosureAccessList: IPass_Enclosure_Access_Instance[]) {
