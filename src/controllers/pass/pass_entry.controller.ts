@@ -15,21 +15,21 @@ enum PassType {
 }
 
 
-export class PassController {
+export class EntryController {
     PassType: ModelCtor<IPass_Type_Instance>
     Pass: ModelCtor<IPass_Instance>;
     Enclosure: ModelCtor<IEnclosure_Instance>;
     Entry: ModelCtor<IEntry_Instance>;
     PassEnclosureAccess: ModelCtor<IPass_Enclosure_Access_Instance>;
 
-    private static instance: PassController;
+    private static instance: EntryController;
 
-    public static async getInstance(): Promise<PassController> {
+    public static async getInstance(): Promise<EntryController> {
         if (this.instance === undefined) {
             const manager = await SequelizeManager.getInstance();
-            PassController.instance = new PassController(manager.Enclosure, manager.PassType, manager.Pass, manager.Entry, manager.PassEnclosureAccess);
+            EntryController.instance = new EntryController(manager.Enclosure, manager.PassType, manager.Pass, manager.Entry, manager.PassEnclosureAccess);
         }
-        return PassController.instance;
+        return EntryController.instance;
     }
 
     public async getAllEntries(req: Request, res: Response): Promise<void> {
