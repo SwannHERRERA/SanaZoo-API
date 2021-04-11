@@ -97,7 +97,7 @@ export class PassController {
             return;
         }
         const enclosureAccess: IPass_Enclosure_Access_Instance[] = await this.PassEnclosureAccess.findAll({where: {passId}});
-        const enclosureEntries: IPass_Enclosure_Access_Instance[] = await this.Entry.findAll({where: {passId}});
+        const enclosureEntries: IEntry_Instance[] = await this.Entry.findAll({where: {passId}});
 
         res.status(200).json({pass, enclosureAccess, enclosureEntries}).end();
     }
