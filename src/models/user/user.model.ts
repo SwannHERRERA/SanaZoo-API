@@ -20,8 +20,8 @@ import { IUser_Role_Instance } from "./user_role.model";
 
 export interface IUser_Props {
   id: number;
-  first_name: string;
-  last_name: string;
+  firstName: string;
+  lastName: string;
   email: string;
   birthdate: string;
   password: string;
@@ -70,11 +70,10 @@ export function userCreator(sequelize: Sequelize): ModelCtor<IUser_Instance> {
         primaryKey: true,
         autoIncrement: true,
       },
-      first_name: {
+      firstName: {
         type: DataTypes.STRING,
-        unique: true,
       },
-      last_name: {
+      lastName: {
         type: DataTypes.STRING,
       },
       email: {

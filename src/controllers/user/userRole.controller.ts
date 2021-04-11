@@ -7,6 +7,7 @@ export class UserRoleController {
   userRoleScheme = yup.object().shape({
     name: yup.string().required(),
   });
+
   async validate(role: unknown, res: Response): Promise<boolean> {
     return this.userRoleScheme
       .validate(role)
@@ -48,8 +49,8 @@ export class UserRoleController {
       return;
     }
     res.json(find).end();
-    // get user By params.io
   };
+
   create = async (req: Request, res: Response): Promise<void> => {
     const role = req.body;
     const isValid = await this.validate(role, res);
@@ -63,6 +64,7 @@ export class UserRoleController {
       res.status(ErrorCode.SERVER_ERROR).end();
     }
   };
+
   update = async (req: Request, res: Response): Promise<void> => {
     const id = Number(req.params.id);
     const newRole = req.body;
