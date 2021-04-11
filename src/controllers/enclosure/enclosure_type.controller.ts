@@ -1,7 +1,6 @@
 import {ModelCtor} from "sequelize";
 import {IEnclosure_Instance, IEnclosure_Type_Creation_Props, IEnclosure_Type_Instance} from "../../models";
 import {SequelizeManager} from "../../utils/db";
-import {IEnclosure_Get_All_Params} from "./enclosure.controller";
 
 export interface IGetAllParams {
     limit: number;

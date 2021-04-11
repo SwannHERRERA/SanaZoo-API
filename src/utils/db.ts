@@ -30,7 +30,9 @@ import {
     passNightAvailabilityCreator,
     passTypeCreator,
     sessionCreator,
-    specieCreator, userCreator, userRoleCreator
+    specieCreator,
+    userCreator,
+    userRoleCreator
 } from "../models";
 
 export interface SequelizeManagerProps {

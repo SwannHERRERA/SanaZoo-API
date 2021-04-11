@@ -2,6 +2,7 @@ import express from "express";
 import {adminMiddleware} from "../../middlewares/admin.middleware";
 import * as yup from "yup";
 import {Enclosure_Controller} from "../../controllers/enclosure/enclosure.controller";
+import {Enclosure_Service_Book_Controller} from "../../controllers/enclosure/enclosure_service_book.controller";
 
 const enclosureRouter = express.Router();
 
@@ -63,10 +64,15 @@ enclosureRouter.get("/", async function(req, res) {
 
 enclosureRouter.delete("/:id", adminMiddleware, async function(req, res){
     const controller = await Enclosure_Controller.getInstance();
-    const number = await controller.remove(Number.parseInt(req.params.id));
+    const id = Number.parseInt(req.params.id);
+    const current = await controller.getOne(id);
 
-    if (number === 0)
+    if (current === null) {
         res.status(404).end();
+    }
+    const controllerService = await Enclosure_Service_Book_Controller.getInstance();
+    await controllerService.removeFromEnclosure(id);
+    await controller.remove(id);
     res.status(204).end();
 });
 
