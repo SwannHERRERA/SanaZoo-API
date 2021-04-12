@@ -2,11 +2,12 @@ import express from "express";
 import {adminMiddleware} from "../../middlewares/admin.middleware";
 import {Enclosure_Image_Controller} from "../../controllers/enclosure/enclosure_image.controller";
 import * as yup from "yup";
+import {employeeMiddleware} from "../../middlewares/employee.middleware";
 
 
-const enclosureRouter = express.Router();
+const enclosureImageRouter = express.Router();
 
-enclosureRouter.delete("/:id", adminMiddleware, async function(req, res) {
+enclosureImageRouter.delete("/:id", adminMiddleware, async function(req, res) {
     const id = Number.parseInt(req.params.id);
     if (id === undefined) {
         res.status(404).end();
@@ -21,7 +22,7 @@ enclosureRouter.delete("/:id", adminMiddleware, async function(req, res) {
     res.status(204).end();
 });
 
-enclosureRouter.get("/enclosure/:id", async function(req, res) {
+enclosureImageRouter.get("/enclosure/:id", async function(req, res) {
     const id = Number.parseInt(req.params.id);
     if (id === undefined) {
         res.status(404).end();
@@ -32,7 +33,7 @@ enclosureRouter.get("/enclosure/:id", async function(req, res) {
     res.status(200).json(result).end();
 });
 
-enclosureRouter.get("/:id", async function(req, res) {
+enclosureImageRouter.get("/:id", async function(req, res) {
     const id = Number.parseInt(req.params.id);
     if (id === undefined) {
         res.status(404).end();
@@ -43,7 +44,7 @@ enclosureRouter.get("/:id", async function(req, res) {
     res.status(200).json(result).end();
 });
 
-enclosureRouter.get("/", async function (req, res) {
+enclosureImageRouter.get("/", async function (req, res) {
    const offset = req.body.offset;
    const limit = req.body.limit;
 
@@ -55,7 +56,7 @@ enclosureRouter.get("/", async function (req, res) {
    res.status(200).json(result).end();
 });
 
-enclosureRouter.put("/:id", adminMiddleware, async function (req, res) {
+enclosureImageRouter.put("/:id", employeeMiddleware, async function (req, res) {
     const id = Number.parseInt(req.params.id);
     if (id === undefined) {
         res.status(404).end();
@@ -76,7 +77,32 @@ enclosureRouter.put("/:id", adminMiddleware, async function (req, res) {
        enclosureId
     }).then(async function () {
 
-        const result = controller.update(id, {
+        const result = await controller.update(id, {
+            title,
+            path,
+            enclosureId
+        });
+        res.status(200).json(result).end();
+    }).catch((Err) => {
+        res.status(500).json(Err.message).end();
+    });
+
+});
+
+enclosureImageRouter.post("/", employeeMiddleware, async function (req, res) {
+
+    const controller = await Enclosure_Image_Controller.getInstance();
+
+    const title =  req.body.title;
+    const path = req.body.path;
+    const enclosureId = Number.parseInt(req.body.enclosureId);
+    SchemaImageCreat.validate({
+        title,
+        path,
+        enclosureId
+    }).then(async function () {
+
+        const result = await controller.add( {
             title,
             path,
             enclosureId
@@ -96,5 +122,5 @@ const SchemaImageCreat = yup.object().shape({
 });
 
 export {
-    enclosureRouter
+    enclosureImageRouter
 }
