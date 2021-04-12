@@ -72,4 +72,11 @@ export class Enclosure_Image_Controller {
             }
         });
     }
+
+    public async removeFromEnclosure(id: number): Promise<number> {
+        return this.EnclosureImage.destroy({where:{
+                enclosureId: id
+            }
+        })
+    }
 }
