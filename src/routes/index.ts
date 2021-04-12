@@ -7,7 +7,6 @@ import {employeePlanningRouter} from "./planning/employee_planning.router";
 import {zooOpeningRouter} from "./planning/zoo_opening.router";
 import {passRouter} from "./pass/pass.router";
 import {passEntryRouter} from "./pass/pass_entry.router";
-import {passEscapeGameRouter} from "./pass/pass_escape_game.router";
 import {passNightRouter} from "./pass/pass_night.router";
 import {statisticRouter} from "./monitoring/statistic.router";
 import {affluenceRouter} from "./monitoring/affluence.router";
@@ -31,7 +30,6 @@ export function buildRoutes(app: Express) {
     app.use("/planning", employeePlanningRouter);
     app.use("/zoo", zooOpeningRouter);
 
-    app.use("/pass/escape-game", passEscapeGameRouter);
     app.use("/pass/entry", passEntryRouter);
     app.use("/pass/night", passNightRouter);
     app.use("/pass/type", passTypeRouter);

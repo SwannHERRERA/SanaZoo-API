@@ -40,7 +40,7 @@ export class PassController {
     private static instance: PassController;
 
     public static async getInstance(): Promise<PassController> {
-        if (this.instance === undefined) {
+        if (PassController.instance === undefined) {
             const manager = await SequelizeManager.getInstance();
             PassController.instance = new PassController(manager.PassType, manager.Pass, manager.User, manager.Entry, manager.PassEnclosureAccess, manager.PassNightAvailability);
         }
@@ -53,7 +53,7 @@ export class PassController {
 
         const result = await this.Pass.findAll({
             order: [
-                ['valid_date', 'ASC']
+                ['valid_date', 'DESC']
             ],
             limit, offset
         });
@@ -78,7 +78,7 @@ export class PassController {
             enclosureAccessList
         }).then(async () => {
             //create
-            if (passTypeId === PassType.NIGHT) {
+            if (passTypeId == PassType.NIGHT) {
                 await this.nightPass(res, passTypeId, new Date(validDate), userId, enclosureAccessList);
                 return;
             }
