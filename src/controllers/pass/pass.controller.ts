@@ -1,11 +1,12 @@
 import {ModelCtor} from "sequelize";
 import {
     IEntry_Instance,
-    IPass_Creation_Props,
     IPass_Enclosure_Access_Instance,
-    IPass_Instance, IPass_Night_Availability_Instance,
+    IPass_Instance,
+    IPass_Night_Availability_Instance,
     IPass_Type_Instance,
-    IUser_Instance, PassType
+    IUser_Instance,
+    PassType
 } from "../../models";
 import {SequelizeManager} from "../../utils/db";
 import {Request, Response} from "express";

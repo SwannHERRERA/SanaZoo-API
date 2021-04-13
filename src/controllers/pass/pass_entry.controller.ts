@@ -266,6 +266,17 @@ export class EntryController {
         res.status(200).json(entry).end();
     }
 
+    public async deleteEntry(req: Request, res: Response) {
+        const entryId = req.params.id;
+        const entry: IEntry_Instance | null = await this.Entry.findByPk(entryId);
+        if (!pass) {
+            res.status(404).end();
+            return;
+        }
+        await entry?.destroy();
+        res.status(204).json('deleted').end();
+    }
+
     constructor(Enclosure: ModelCtor<IEnclosure_Instance>, PassType: ModelCtor<IPass_Type_Instance>, Pass: ModelCtor<IPass_Instance>, Entry: ModelCtor<IEntry_Instance>, PassEnclosureAccess: ModelCtor<IPass_Enclosure_Access_Instance>) {
         this.PassType = PassType;
         this.Pass = Pass;
