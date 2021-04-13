@@ -269,11 +269,11 @@ export class EntryController {
     public async deleteEntry(req: Request, res: Response) {
         const entryId = req.params.id;
         const entry: IEntry_Instance | null = await this.Entry.findByPk(entryId);
-        if (!pass) {
+        if (!entry) {
             res.status(404).end();
             return;
         }
-        await entry?.destroy();
+        await entry.destroy();
         res.status(204).json('deleted').end();
     }
 
