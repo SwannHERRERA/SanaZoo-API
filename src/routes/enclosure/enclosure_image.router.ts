@@ -29,7 +29,7 @@ enclosureImageRouter.get("/enclosure/:id", async function(req, res) {
         return;
     }
     const controller = await Enclosure_Image_Controller.getInstance();
-    const result = await controller.getAllFromImage(id);
+    const result = await controller.getAllFromEnclosure(id);
     res.status(200).json(result).end();
 });
 

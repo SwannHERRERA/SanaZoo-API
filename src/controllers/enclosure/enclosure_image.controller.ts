@@ -65,7 +65,7 @@ export class Enclosure_Image_Controller {
         });
     }
 
-    public async getAllFromImage(id: number): Promise<IEnclosure_Image_Instance[] | null> {
+    public async getAllFromEnclosure(id: number): Promise<IEnclosure_Image_Instance[] | null> {
         return this.EnclosureImage.findAll({
             where: {
                 enclosureId: id
