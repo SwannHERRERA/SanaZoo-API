@@ -51,6 +51,10 @@ export class PassTypeController {
         if (!passType) {
             return false;
         }
+        const pass: IPass_Instance[] = await this.Pass.findAll({where: {passTypeId: id}});
+        if (pass.length) {
+            return false;
+        }
         await passType.destroy();
         return true;
     }
