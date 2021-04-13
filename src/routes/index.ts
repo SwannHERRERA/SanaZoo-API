@@ -16,11 +16,13 @@ import {animalSpecieRouter} from "./animal/animal_specie.router";
 import {enclosureTypeRouter} from "./enclosure/enclosure_type.router";
 import {enclosureServiceBookRouter} from "./enclosure/enclosure_service_book.router";
 import {passTypeRouter} from "./pass/pass_type.router";
+import {enclosureImageRouter} from "./enclosure/enclosure_image.router";
 
 export function buildRoutes(app: Express) {
     app.use("/enclosure/maintenance", enclosureMaintenanceRouter);
     app.use("/enclosure/service-book", enclosureServiceBookRouter);
-    app.use("/enclosure/type", enclosureTypeRouter)
+    app.use("/enclosure/type", enclosureTypeRouter);
+    app.use("/enclosure/image", enclosureImageRouter);
     app.use("/enclosure", enclosureRouter);
 
     app.use("/animal/specie", animalSpecieRouter);

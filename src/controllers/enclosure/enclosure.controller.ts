@@ -1,6 +1,6 @@
 import {ModelCtor} from "sequelize";
 import {
-    IAnimal_Instance, IEnclosure_Creation_Props, IEnclosure_Image_Instance,
+    IAnimal_Instance, IEnclosure_Creation_Props, IEnclosure_Image_Creation_Props, IEnclosure_Image_Instance,
     IEnclosure_Instance, IEnclosure_Service_Book_Instance,
     IEnclosure_Type_Instance,
     IEntry_Instance,
@@ -51,7 +51,7 @@ export class Enclosure_Controller {
     }
 
     public async add(props: IEnclosure_Creation_Props): Promise<IEnclosure_Instance | null> {
-        return this.Enclosure.create({
+       return this.Enclosure.create({
             ...props
         });
     }
