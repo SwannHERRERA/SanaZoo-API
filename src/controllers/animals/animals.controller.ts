@@ -14,7 +14,7 @@ export class AnimalsController extends Controller {
     enclosureId: yup.number().required(),
   });
 
-  async getOneById(req: Request, res: Response): Promise<void> {
+  public async getOneById(req: Request, res: Response): Promise<void> {
     try {
       const id = Number(req.params.id);
       const { Animal } = await SequelizeManager.getInstance();
@@ -30,7 +30,7 @@ export class AnimalsController extends Controller {
     }
   }
 
-  async getAll(req: Request, res: Response): Promise<void> {
+  public async getAll(req: Request, res: Response): Promise<void> {
     try {
       const { Animal } = await SequelizeManager.getInstance();
       const animals = await Animal.findAll();
@@ -65,7 +65,7 @@ export class AnimalsController extends Controller {
     }
   }
 
-  updateOne = async (req: Request, res: Response): Promise<void> => {
+  public async updateOne(req: Request, res: Response): Promise<void> {
     const id = Number(req.params.id);
     const animalPost = req.body;
     const isValid = await this.validate(animalPost, res);
@@ -85,8 +85,8 @@ export class AnimalsController extends Controller {
       console.error(err);
       res.status(StatusCode.SERVER_ERROR).end();
     }
-  };
-  async deleteOne(req: Request, res: Response): Promise<void> {
+  }
+  public async deleteOne(req: Request, res: Response): Promise<void> {
     const id = Number(req.params.id);
     try {
       const { Animal } = await SequelizeManager.getInstance();
@@ -102,7 +102,10 @@ export class AnimalsController extends Controller {
     }
   }
 
-  async moveEnclosureVerif(req: Request, res: Response): Promise<boolean> {
+  private async moveEnclosureVerif(
+    req: Request,
+    res: Response
+  ): Promise<boolean> {
     const animalId = Number(req.params.id);
     const moveEnclosureSchema = yup.object().shape({
       animalId: yup.number().required(),
@@ -121,7 +124,7 @@ export class AnimalsController extends Controller {
     }
   }
 
-  moveEnclosure = async (req: Request, res: Response): Promise<void> => {
+  public async moveEnclosure(req: Request, res: Response): Promise<void> {
     const reqIsValid = await this.moveEnclosureVerif(req, res);
     if (!reqIsValid) {
       return;
@@ -138,7 +141,7 @@ export class AnimalsController extends Controller {
       console.error(err);
       res.status(StatusCode.SERVER_ERROR).end();
     }
-  };
+  }
 }
 
 export default new AnimalsController();

@@ -11,7 +11,7 @@ export class SpeciesController extends Controller {
     description: yup.string(),
   });
 
-  async getOneById(req: Request, res: Response): Promise<void> {
+  public async getOneById(req: Request, res: Response): Promise<void> {
     try {
       const id = Number(req.params.id);
       const { Specie } = await SequelizeManager.getInstance();
@@ -27,7 +27,7 @@ export class SpeciesController extends Controller {
     }
   }
 
-  async getAll(req: Request, res: Response): Promise<void> {
+  public async getAll(req: Request, res: Response): Promise<void> {
     try {
       const { Specie } = await SequelizeManager.getInstance();
       const species = await Specie.findAll();
@@ -38,7 +38,7 @@ export class SpeciesController extends Controller {
     }
   }
 
-  create = async (req: Request, res: Response): Promise<void> => {
+  public async create(req: Request, res: Response): Promise<void> {
     const speciePost = req.body;
     const isValid = await this.validate(speciePost, res);
     if (isValid === false) {
@@ -52,9 +52,9 @@ export class SpeciesController extends Controller {
       console.error(err);
       res.status(StatusCode.SERVER_ERROR).end();
     }
-  };
+  }
 
-  updateOne = async (req: Request, res: Response): Promise<void> => {
+  public async updateOne(req: Request, res: Response): Promise<void> {
     const id = Number(req.params.id);
     const speciePost = req.body;
     const isValid = await this.validate(speciePost, res);
@@ -74,9 +74,9 @@ export class SpeciesController extends Controller {
       console.error(err);
       res.status(StatusCode.SERVER_ERROR).end();
     }
-  };
+  }
 
-  async deleteOne(req: Request, res: Response): Promise<void> {
+  public async deleteOne(req: Request, res: Response): Promise<void> {
     const id = Number(req.params.id);
     try {
       const { Specie, Animal } = await SequelizeManager.getInstance();
@@ -100,7 +100,7 @@ export class SpeciesController extends Controller {
     }
   }
 
-  async getAllAnimals(req: Request, res: Response): Promise<void> {
+  public async getAllAnimals(req: Request, res: Response): Promise<void> {
     try {
       const specieId = Number(req.params.specieId);
       const { Animal } = await SequelizeManager.getInstance();

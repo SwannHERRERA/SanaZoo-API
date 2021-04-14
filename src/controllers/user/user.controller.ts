@@ -14,7 +14,7 @@ export class UserController extends Controller {
     userRoleId: yup.number().required(),
   });
 
-  private async findOne(id: number): Promise<IUser_Instance | StatusCode> {
+  public async findOne(id: number): Promise<IUser_Instance | StatusCode> {
     try {
       const { User } = await SequelizeManager.getInstance();
       const user = await User.findByPk(id);
@@ -27,11 +27,11 @@ export class UserController extends Controller {
     }
   }
 
-  async me() {
+  public async me() {
     throw new Error("Not implemented !");
     // get user By cookie
   }
-  getOne = async (req: Request, res: Response): Promise<void> => {
+  public async getOne(req: Request, res: Response): Promise<void> {
     const id = Number(req.params.id);
     const find = await this.findOne(id);
     if (typeof find === "number") {
@@ -39,12 +39,12 @@ export class UserController extends Controller {
       return;
     }
     res.json(find).end();
-  };
+  }
 
-  private insert = async (
+  private async insert(
     user: IUser_Creation_Props,
     res: Response
-  ): Promise<void> => {
+  ): Promise<void> {
     try {
       const { User } = await SequelizeManager.getInstance();
       const userCreate = await User.create(user);
@@ -53,36 +53,36 @@ export class UserController extends Controller {
       console.error(err);
       res.status(StatusCode.SERVER_ERROR).end();
     }
-  };
+  }
 
-  create = async (req: Request, res: Response): Promise<void> => {
+  public async create(req: Request, res: Response): Promise<void> {
     const user = req.body;
     const isValid = await this.validate(user, res);
     if (isValid === false) return;
     this.insert(user, res);
-  };
+  }
 
-  async register() {
+  public async register() {
     throw new Error("Not implemented !");
     // create user (the user way)
   }
 
-  async login() {
+  public async login() {
     throw new Error("Not implemented !");
     // login user
   }
 
-  async logout() {
+  public async logout() {
     throw new Error("Not implemented !");
     // logout user
   }
 
-  async changePassword() {
+  public async changePassword() {
     throw new Error("Not implemented !");
     // change password of a user
   }
 
-  update = async (req: Request, res: Response): Promise<void> => {
+  public async update(req: Request, res: Response): Promise<void> {
     try {
       const id = Number(req.params.id);
       const newUser = req.body;
@@ -100,9 +100,9 @@ export class UserController extends Controller {
       console.error(err);
       res.status(StatusCode.SERVER_ERROR).end();
     }
-  };
+  }
 
-  async deleteOne(req: Request, res: Response): Promise<void> {
+  public async deleteOne(req: Request, res: Response): Promise<void> {
     try {
       const id = Number(req.params.id);
       const { User } = await SequelizeManager.getInstance();

@@ -14,7 +14,7 @@ export class AnimalsHealsBookController extends Controller {
     userId: yup.number().required(),
   });
 
-  async getOneById(req: Request, res: Response): Promise<void> {
+  public async getOneById(req: Request, res: Response): Promise<void> {
     try {
       const healsId = Number(req.body.id);
       const { AnimalHealthBook } = await SequelizeManager.getInstance();
@@ -29,7 +29,7 @@ export class AnimalsHealsBookController extends Controller {
       res.status(StatusCode.SERVER_ERROR).end();
     }
   }
-  async getAll(req: Request, res: Response): Promise<void> {
+  public async getAll(req: Request, res: Response): Promise<void> {
     try {
       const { AnimalHealthBook } = await SequelizeManager.getInstance();
       const healsBooks = await AnimalHealthBook.findAll();
@@ -40,7 +40,7 @@ export class AnimalsHealsBookController extends Controller {
     }
   }
 
-  async checkFKError(
+  private async checkFKError(
     res: Response,
     Animal: ModelCtor<IAnimal_Instance>,
     User: ModelCtor<IUser_Instance>,
@@ -61,7 +61,7 @@ export class AnimalsHealsBookController extends Controller {
     return true;
   }
 
-  create = async (req: Request, res: Response): Promise<void> => {
+  public async create(req: Request, res: Response): Promise<void> {
     const heals = req.body;
     const isValid = await this.validate(heals, res);
     if (isValid === false) {
@@ -91,9 +91,9 @@ export class AnimalsHealsBookController extends Controller {
       console.error(err);
       res.status(StatusCode.SERVER_ERROR).end();
     }
-  };
+  }
 
-  updateOne = async (req: Request, res: Response): Promise<void> => {
+  public async updateOne(req: Request, res: Response): Promise<void> {
     const healsId = Number(req.body.id);
     const heals = req.body;
     const isValid = await this.validate(heals, res);
@@ -125,8 +125,8 @@ export class AnimalsHealsBookController extends Controller {
       console.error(err);
       res.status(StatusCode.SERVER_ERROR).end();
     }
-  };
-  async deleteOne(req: Request, res: Response): Promise<void> {
+  }
+  public async deleteOne(req: Request, res: Response): Promise<void> {
     const id = Number(req.body.id);
     try {
       const { AnimalHealthBook } = await SequelizeManager.getInstance();
@@ -142,7 +142,7 @@ export class AnimalsHealsBookController extends Controller {
     }
   }
 
-  async getAllByAnimal(req: Request, res: Response): Promise<void> {
+  public async getAllByAnimal(req: Request, res: Response): Promise<void> {
     try {
       const animalId = Number(req.params.animalId);
       const { AnimalHealthBook, Animal } = await SequelizeManager.getInstance();

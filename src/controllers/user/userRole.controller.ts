@@ -32,7 +32,7 @@ export class UserRoleController extends Controller {
     }
   }
 
-  getOne = async (req: Request, res: Response): Promise<void> => {
+  public async getOne(req: Request, res: Response): Promise<void> {
     const id = Number(req.params.id);
     const find = await this.findOne(id);
     if (typeof find === "number") {
@@ -40,9 +40,9 @@ export class UserRoleController extends Controller {
       return;
     }
     res.json(find).end();
-  };
+  }
 
-  create = async (req: Request, res: Response): Promise<void> => {
+  public async create(req: Request, res: Response): Promise<void> {
     const role = req.body;
     const isValid = await this.validate(role, res);
     if (isValid === false) return;
@@ -54,9 +54,9 @@ export class UserRoleController extends Controller {
       console.error(err);
       res.status(StatusCode.SERVER_ERROR).end();
     }
-  };
+  }
 
-  update = async (req: Request, res: Response): Promise<void> => {
+  public async update(req: Request, res: Response): Promise<void> {
     const id = Number(req.params.id);
     const newRole = req.body;
     const isValid = await this.validate(newRole, res);
@@ -74,8 +74,9 @@ export class UserRoleController extends Controller {
       console.error(err);
       res.status(StatusCode.SERVER_ERROR).end();
     }
-  };
-  async deleteOne(req: Request, res: Response): Promise<void> {
+  }
+
+  public async deleteOne(req: Request, res: Response): Promise<void> {
     const id = Number(req.params.id);
     try {
       const { User, UserRole } = await SequelizeManager.getInstance();
@@ -97,7 +98,8 @@ export class UserRoleController extends Controller {
       res.status(StatusCode.SERVER_ERROR).end();
     }
   }
-  async affectUser(req: Request, res: Response): Promise<void> {
+
+  public async affectUser(req: Request, res: Response): Promise<void> {
     const userId = Number(req.params.userId);
     const roleId = Number(req.params.id);
     try {
