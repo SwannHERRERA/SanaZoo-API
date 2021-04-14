@@ -17,6 +17,7 @@ export interface IAnimal_Props {
     description: string;
     birthdate: string;
     image: string;
+    enclosureId: number;
 }
 
 export interface IAnimal_Creation_Props extends Optional<IAnimal_Props, "id"> {
@@ -52,6 +53,9 @@ export function animalCreator(sequelize: Sequelize): ModelCtor<IAnimal_Instance>
         },
         image: {
             type: DataTypes.STRING
+        },
+        enclosureId: {
+            type: DataTypes.BIGINT
         }
     }, {
         freezeTableName: true,
