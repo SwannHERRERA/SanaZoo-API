@@ -1,6 +1,6 @@
 import * as yup from "yup";
 import { SequelizeManager } from "../../utils/db";
-import { ErrorCode } from "../../utils/errorCode";
+import { StatusCode } from "../../utils/statusCode";
 import { Response, Request } from "express";
 import { IUser_Creation_Props, IUser_Instance } from "../../models";
 
@@ -18,21 +18,21 @@ export class UserController {
       .validate(user)
       .then(() => true)
       .catch((err) => {
-        res.status(ErrorCode.BAD_REQUEST).json(err.message).end();
+        res.status(StatusCode.BAD_REQUEST).json(err.message).end();
         return false;
       });
   }
 
-  private async findOne(id: number): Promise<IUser_Instance | ErrorCode> {
+  private async findOne(id: number): Promise<IUser_Instance | StatusCode> {
     try {
       const { User } = await SequelizeManager.getInstance();
       const user = await User.findByPk(id);
       if (!user) {
-        return ErrorCode.NOT_FOUND;
+        return StatusCode.NOT_FOUND;
       }
       return user;
     } catch (err) {
-      return ErrorCode.SERVER_ERROR;
+      return StatusCode.SERVER_ERROR;
     }
   }
 
@@ -57,10 +57,10 @@ export class UserController {
     try {
       const { User } = await SequelizeManager.getInstance();
       const userCreate = await User.create(user);
-      res.json(userCreate).status(ErrorCode.CREATED).end();
+      res.json(userCreate).status(StatusCode.CREATED).end();
     } catch (err) {
       console.error(err);
-      res.status(ErrorCode.SERVER_ERROR).end();
+      res.status(StatusCode.SERVER_ERROR).end();
     }
   };
 
@@ -100,14 +100,14 @@ export class UserController {
       const { User } = await SequelizeManager.getInstance();
       const user = await User.findByPk(id);
       if (user === null) {
-        res.status(ErrorCode.NOT_FOUND).end();
+        res.status(StatusCode.NOT_FOUND).end();
         return;
       }
       const userUpdated = await user.update(newUser);
       res.json(userUpdated);
     } catch (err) {
       console.error(err);
-      res.status(ErrorCode.SERVER_ERROR).end();
+      res.status(StatusCode.SERVER_ERROR).end();
     }
   };
 
@@ -117,12 +117,12 @@ export class UserController {
       const { User } = await SequelizeManager.getInstance();
       const isDestroyed = await User.destroy({ where: { id } });
       if (isDestroyed) {
-        res.status(ErrorCode.DELETED).end();
+        res.status(StatusCode.DELETED).end();
       } else {
-        res.status(ErrorCode.NOT_FOUND).end();
+        res.status(StatusCode.NOT_FOUND).end();
       }
     } catch (err) {
-      res.status(ErrorCode.SERVER_ERROR).end();
+      res.status(StatusCode.SERVER_ERROR).end();
     }
   }
 
@@ -132,7 +132,7 @@ export class UserController {
       const users = await User.findAll();
       res.json(users);
     } catch (err) {
-      res.status(ErrorCode.SERVER_ERROR).end();
+      res.status(StatusCode.SERVER_ERROR).end();
     }
   }
 }

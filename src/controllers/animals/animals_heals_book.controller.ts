@@ -3,6 +3,7 @@ import { SequelizeManager } from "../../utils/db";
 import * as yup from "yup";
 import { ModelCtor } from "sequelize/types";
 import { IAnimal_Instance, IUser_Instance } from "../../models";
+import { StatusCode } from "../../utils/statusCode";
 
 export class AnimalsHealsBookController {
   animalHealsBookSchema = yup.object().shape({
@@ -17,7 +18,7 @@ export class AnimalsHealsBookController {
       .validate(animal)
       .then(() => true)
       .catch((err) => {
-        res.status(400).json(err.message).end();
+        res.status(StatusCode.BAD_REQUEST).json(err.message).end();
         return false;
       });
   }
@@ -27,10 +28,14 @@ export class AnimalsHealsBookController {
       const healsId = Number(req.body.id);
       const { AnimalHealthBook } = await SequelizeManager.getInstance();
       const healsBook = await AnimalHealthBook.findByPk(healsId);
+      if (healsBook === null) {
+        res.status(StatusCode.NOT_FOUND).end();
+        return;
+      }
       res.json(healsBook);
     } catch (err) {
       console.error(err);
-      res.status(500).end();
+      res.status(StatusCode.SERVER_ERROR).end();
     }
   }
   async getAll(req: Request, res: Response): Promise<void> {
@@ -40,7 +45,7 @@ export class AnimalsHealsBookController {
       res.json(healsBooks);
     } catch (err) {
       console.error(err);
-      res.status(500).end();
+      res.status(StatusCode.SERVER_ERROR).end();
     }
   }
 
@@ -54,10 +59,10 @@ export class AnimalsHealsBookController {
     const user = await User.findByPk(userId);
     const animal = await Animal.findByPk(animalId);
     if (!user) {
-      res.status(404).send("the user does not exist").end();
+      res.status(StatusCode.NOT_FOUND).send("the user does not exist").end();
     }
     if (!animal) {
-      res.status(404).send("the animal does not exist").end();
+      res.status(StatusCode.NOT_FOUND).send("the animal does not exist").end();
     }
     if (!animal || !user) {
       return false;
@@ -90,10 +95,10 @@ export class AnimalsHealsBookController {
       }
 
       const healsBookCreate = await AnimalHealthBook.create(heals);
-      res.json(healsBookCreate).status(201);
+      res.json(healsBookCreate).status(StatusCode.CREATED);
     } catch (err) {
       console.error(err);
-      res.status(500).end();
+      res.status(StatusCode.SERVER_ERROR).end();
     }
   };
 
@@ -119,7 +124,7 @@ export class AnimalsHealsBookController {
       );
       const animalHealsBook = await AnimalHealthBook.findByPk(healsId);
       if (isUpadatable === false || !animalHealsBook) {
-        res.send(404).end(); // for animalHealsBook === null
+        res.send(StatusCode.NOT_FOUND).end(); // for animalHealsBook === null
         return;
       }
       const animalHealsBookUpdated = await animalHealsBook.update(heals);
@@ -127,7 +132,7 @@ export class AnimalsHealsBookController {
       res.json(animalHealsBookUpdated);
     } catch (err) {
       console.error(err);
-      res.status(500).end();
+      res.status(StatusCode.SERVER_ERROR).end();
     }
   };
   async deleteOne(req: Request, res: Response): Promise<void> {
@@ -136,13 +141,13 @@ export class AnimalsHealsBookController {
       const { AnimalHealthBook } = await SequelizeManager.getInstance();
       const isDestroyed = await AnimalHealthBook.destroy({ where: { id } });
       if (isDestroyed) {
-        res.status(204).end();
+        res.status(StatusCode.CREATED).end();
       } else {
-        res.status(404).end();
+        res.status(StatusCode.NOT_FOUND).end();
       }
     } catch (err) {
       console.error(err);
-      res.status(500).end();
+      res.status(StatusCode.SERVER_ERROR).end();
     }
   }
 
@@ -152,13 +157,16 @@ export class AnimalsHealsBookController {
       const { AnimalHealthBook, Animal } = await SequelizeManager.getInstance();
       const animal = await Animal.findByPk(animalId);
       if (!animal) {
-        res.status(404).send("the animal does not exist").end();
+        res
+          .status(StatusCode.NOT_FOUND)
+          .send("the animal does not exist")
+          .end();
         return;
       }
       AnimalHealthBook.findAll({ where: { animalId } });
     } catch (err) {
       console.error(err);
-      res.status(500).end();
+      res.status(StatusCode.SERVER_ERROR).end();
     }
   }
 }

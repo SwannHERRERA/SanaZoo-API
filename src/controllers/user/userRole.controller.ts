@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import * as yup from "yup";
 import { IUser_Role_Instance } from "../../models";
 import { SequelizeManager } from "../../utils/db";
-import { ErrorCode } from "../../utils/errorCode";
+import { StatusCode } from "../../utils/statusCode";
 export class UserRoleController {
   userRoleScheme = yup.object().shape({
     name: yup.string().required(),
@@ -13,7 +13,7 @@ export class UserRoleController {
       .validate(role)
       .then(() => true)
       .catch((err) => {
-        res.status(ErrorCode.BAD_REQUEST).json(err.message).end();
+        res.status(StatusCode.BAD_REQUEST).json(err.message).end();
         return false;
       });
   }
@@ -24,20 +24,20 @@ export class UserRoleController {
       const roles = await UserRole.findAll();
       res.json(roles);
     } catch (err) {
-      res.status(ErrorCode.SERVER_ERROR).end();
+      res.status(StatusCode.SERVER_ERROR).end();
     }
   }
 
-  private async findOne(id: number): Promise<IUser_Role_Instance | ErrorCode> {
+  private async findOne(id: number): Promise<IUser_Role_Instance | StatusCode> {
     try {
       const { UserRole } = await SequelizeManager.getInstance();
       const user = await UserRole.findByPk(id);
       if (!user) {
-        return ErrorCode.NOT_FOUND;
+        return StatusCode.NOT_FOUND;
       }
       return user;
     } catch (err) {
-      return ErrorCode.SERVER_ERROR;
+      return StatusCode.SERVER_ERROR;
     }
   }
 
@@ -58,10 +58,10 @@ export class UserRoleController {
     try {
       const { UserRole } = await SequelizeManager.getInstance();
       const userRoleCreate = await UserRole.create(role);
-      res.json(userRoleCreate).status(ErrorCode.CREATED).end();
+      res.json(userRoleCreate).status(StatusCode.CREATED).end();
     } catch (err) {
       console.error(err);
-      res.status(ErrorCode.SERVER_ERROR).end();
+      res.status(StatusCode.SERVER_ERROR).end();
     }
   };
 
@@ -74,14 +74,14 @@ export class UserRoleController {
       const { UserRole } = await SequelizeManager.getInstance();
       const role = await UserRole.findByPk(id);
       if (role === null) {
-        res.status(ErrorCode.NOT_FOUND).end();
+        res.status(StatusCode.NOT_FOUND).end();
         return;
       }
       const roleUpdated = await role.update(newRole);
       res.json(roleUpdated);
     } catch (err) {
       console.error(err);
-      res.status(ErrorCode.SERVER_ERROR).end();
+      res.status(StatusCode.SERVER_ERROR).end();
     }
   };
   async deleteOne(req: Request, res: Response): Promise<void> {
@@ -91,19 +91,19 @@ export class UserRoleController {
       const user = await User.findOne({ where: { userRoleId: id } });
       if (user !== null) {
         res
-          .status(ErrorCode.CONFLICT)
+          .status(StatusCode.CONFLICT)
           .json({ message: "this role has user you can't remove it" })
           .end();
         return;
       }
       const isDestroyed = await UserRole.destroy({ where: { id } });
       if (isDestroyed) {
-        res.status(ErrorCode.DELETED).end();
+        res.status(StatusCode.DELETED).end();
       } else {
-        res.status(ErrorCode.NOT_FOUND).end();
+        res.status(StatusCode.NOT_FOUND).end();
       }
     } catch (err) {
-      res.status(ErrorCode.SERVER_ERROR).end();
+      res.status(StatusCode.SERVER_ERROR).end();
     }
   }
   async affectUser(req: Request, res: Response): Promise<void> {
@@ -114,7 +114,7 @@ export class UserRoleController {
       const user = await User.findByPk(userId);
       const role = await UserRole.findByPk(roleId);
       if (user === null || role === null) {
-        res.status(ErrorCode.BAD_REQUEST).end();
+        res.status(StatusCode.BAD_REQUEST).end();
         return;
       }
       user.userRoleId = role.id;
@@ -123,7 +123,7 @@ export class UserRoleController {
       res.json(updatedUser);
     } catch (err) {
       console.error(err);
-      res.status(ErrorCode.SERVER_ERROR).end();
+      res.status(StatusCode.SERVER_ERROR).end();
     }
   }
 }

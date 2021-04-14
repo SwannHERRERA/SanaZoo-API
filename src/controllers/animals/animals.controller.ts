@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { SequelizeManager } from "../../utils/db";
 import * as yup from "yup";
+import { StatusCode } from "../../utils/statusCode";
 
 export class AnimalsController {
   animalSchema = yup.object().shape({
@@ -27,10 +28,14 @@ export class AnimalsController {
       const id = Number(req.params.id);
       const { Animal } = await SequelizeManager.getInstance();
       const animal = await Animal.findByPk(id);
+      if (animal === null) {
+        res.status(StatusCode.NOT_FOUND).end();
+        return;
+      }
       res.json(animal);
     } catch (err) {
       console.error(err);
-      res.status(500).end();
+      res.status(StatusCode.SERVER_ERROR).end();
     }
   }
 
@@ -41,7 +46,7 @@ export class AnimalsController {
       res.json(animals);
     } catch (err) {
       console.error(err);
-      res.status(500).end();
+      res.status(StatusCode.SERVER_ERROR).end();
     }
   }
 
@@ -55,14 +60,17 @@ export class AnimalsController {
       const { Animal, Specie } = await SequelizeManager.getInstance();
       const specie = await Specie.findByPk(animalPost.specieId);
       if (!specie) {
-        res.status(404).json({ message: "specie not found" }).end();
+        res
+          .status(StatusCode.NOT_FOUND)
+          .json({ message: "specie not found" })
+          .end();
         return;
       }
       const animalCreate = await Animal.create(animalPost);
-      res.json(animalCreate).status(201);
+      res.json(animalCreate).status(StatusCode.CREATED);
     } catch (err) {
       console.error(err);
-      res.status(500).end();
+      res.status(StatusCode.SERVER_ERROR).end();
     }
   };
 
@@ -77,14 +85,14 @@ export class AnimalsController {
       const { Animal } = await SequelizeManager.getInstance();
       const animal = await Animal.findByPk(id);
       if (!animal) {
-        res.status(404).end();
+        res.status(StatusCode.NOT_FOUND).end();
         return;
       }
       const animalUpdated = await animal.update(animalPost);
       res.json(animalUpdated);
     } catch (err) {
       console.error(err);
-      res.status(500).end();
+      res.status(StatusCode.SERVER_ERROR).end();
     }
   };
   async deleteOne(req: Request, res: Response): Promise<void> {
@@ -93,13 +101,13 @@ export class AnimalsController {
       const { Animal } = await SequelizeManager.getInstance();
       const isDestroyed = await Animal.destroy({ where: { id } });
       if (isDestroyed) {
-        res.status(204).end();
+        res.status(StatusCode.DELETED).end();
       } else {
-        res.status(404).end();
+        res.status(StatusCode.NOT_FOUND).end();
       }
     } catch (err) {
       console.error(err);
-      res.status(500).end();
+      res.status(StatusCode.SERVER_ERROR).end();
     }
   }
 
@@ -110,14 +118,14 @@ export class AnimalsController {
       enclosureId: yup.number().required(),
     });
     if (animalId !== req.body.animalId) {
-      res.status(400).end();
+      res.status(StatusCode.BAD_REQUEST).end();
       return false;
     }
     try {
       await moveEnclosureSchema.validate(req.body);
       return true;
     } catch (err) {
-      res.status(400).json(err.message).end();
+      res.status(StatusCode.BAD_REQUEST).json(err.message).end();
       return false;
     }
   }
@@ -137,7 +145,7 @@ export class AnimalsController {
       res.json(animalUpdated);
     } catch (err) {
       console.error(err);
-      res.status(500).end();
+      res.status(StatusCode.SERVER_ERROR).end();
     }
   };
 }
