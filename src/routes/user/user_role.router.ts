@@ -10,8 +10,8 @@ userRoleRouter.patch(
 );
 userRoleRouter.get("/", employeeMiddleware, controller.getAll);
 userRoleRouter.get("/:id", employeeMiddleware, controller.getOne);
-userRoleRouter.post("/", employeeMiddleware, controller.create);
-userRoleRouter.put("/:id", employeeMiddleware, controller.update);
-userRoleRouter.delete("/:id", employeeMiddleware, controller.deleteOne);
+userRoleRouter.post("/", adminMiddleware, controller.create);
+userRoleRouter.put("/:id", adminMiddleware, controller.update);
+userRoleRouter.delete("/:id", adminMiddleware, controller.deleteOne);
 
 export { userRoleRouter };
