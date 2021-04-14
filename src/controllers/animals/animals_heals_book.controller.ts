@@ -4,24 +4,15 @@ import * as yup from "yup";
 import { ModelCtor } from "sequelize/types";
 import { IAnimal_Instance, IUser_Instance } from "../../models";
 import { StatusCode } from "../../utils/statusCode";
+import { Controller } from "../../core/controller";
 
-export class AnimalsHealsBookController {
-  animalHealsBookSchema = yup.object().shape({
+export class AnimalsHealsBookController extends Controller {
+  schema = yup.object().shape({
     description: yup.string().required(),
     date: yup.date().required(),
     animalId: yup.number().required(),
     userId: yup.number().required(),
   });
-
-  async validate(animal: unknown, res: Response): Promise<boolean> {
-    return this.animalHealsBookSchema
-      .validate(animal)
-      .then(() => true)
-      .catch((err) => {
-        res.status(StatusCode.BAD_REQUEST).json(err.message).end();
-        return false;
-      });
-  }
 
   async getOneById(req: Request, res: Response): Promise<void> {
     try {

@@ -2,22 +2,14 @@ import { Request, Response } from "express";
 import { SequelizeManager } from "../../utils/db";
 import * as yup from "yup";
 import { StatusCode } from "../../utils/statusCode";
+import { Controller } from "../../core/controller";
 
-export class SpeciesController {
-  specieSchema = yup.object().shape({
+export class SpeciesController extends Controller {
+  schema = yup.object().shape({
     name: yup.string().required(),
     origin: yup.string().required(),
     description: yup.string(),
   });
-  async validate(specie: unknown, res: Response): Promise<boolean> {
-    return this.specieSchema
-      .validate(specie)
-      .then(() => true)
-      .catch((err) => {
-        res.status(StatusCode.BAD_REQUEST).json(err.message).end();
-        return false;
-      });
-  }
 
   async getOneById(req: Request, res: Response): Promise<void> {
     try {

@@ -3,25 +3,16 @@ import { SequelizeManager } from "../../utils/db";
 import { StatusCode } from "../../utils/statusCode";
 import { Response, Request } from "express";
 import { IUser_Creation_Props, IUser_Instance } from "../../models";
+import { Controller } from "../../core/controller";
 
-export class UserController {
-  userSchema = yup.object().shape({
+export class UserController extends Controller {
+  schema = yup.object().shape({
     lastName: yup.string().required(),
     firstName: yup.string().required(),
     email: yup.string().email().required(),
     birthdate: yup.date(),
     userRoleId: yup.number().required(),
   });
-
-  async validate(user: unknown, res: Response): Promise<boolean> {
-    return this.userSchema
-      .validate(user)
-      .then(() => true)
-      .catch((err) => {
-        res.status(StatusCode.BAD_REQUEST).json(err.message).end();
-        return false;
-      });
-  }
 
   private async findOne(id: number): Promise<IUser_Instance | StatusCode> {
     try {

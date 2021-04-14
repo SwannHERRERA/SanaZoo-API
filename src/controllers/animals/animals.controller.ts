@@ -2,9 +2,10 @@ import { Request, Response } from "express";
 import { SequelizeManager } from "../../utils/db";
 import * as yup from "yup";
 import { StatusCode } from "../../utils/statusCode";
+import { Controller } from "../../core/controller";
 
-export class AnimalsController {
-  animalSchema = yup.object().shape({
+export class AnimalsController extends Controller {
+  schema = yup.object().shape({
     name: yup.string().required(),
     description: yup.string(),
     birthdate: yup.date().required(),
@@ -12,16 +13,6 @@ export class AnimalsController {
     specieId: yup.number().required(),
     enclosureId: yup.number().required(),
   });
-
-  async validate(animal: unknown, res: Response): Promise<boolean> {
-    return this.animalSchema
-      .validate(animal)
-      .then(() => true)
-      .catch((err) => {
-        res.status(400).json(err.message).end();
-        return false;
-      });
-  }
 
   async getOneById(req: Request, res: Response): Promise<void> {
     try {
@@ -50,7 +41,7 @@ export class AnimalsController {
     }
   }
 
-  create = async (req: Request, res: Response): Promise<void> => {
+  public async create(req: Request, res: Response): Promise<void> {
     const animalPost = req.body;
     const isValid = await this.validate(animalPost, res);
     if (isValid === false) {
@@ -72,7 +63,7 @@ export class AnimalsController {
       console.error(err);
       res.status(StatusCode.SERVER_ERROR).end();
     }
-  };
+  }
 
   updateOne = async (req: Request, res: Response): Promise<void> => {
     const id = Number(req.params.id);

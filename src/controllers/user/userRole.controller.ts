@@ -1,22 +1,13 @@
 import { Request, Response } from "express";
 import * as yup from "yup";
+import { Controller } from "../../core/controller";
 import { IUser_Role_Instance } from "../../models";
 import { SequelizeManager } from "../../utils/db";
 import { StatusCode } from "../../utils/statusCode";
-export class UserRoleController {
-  userRoleScheme = yup.object().shape({
+export class UserRoleController extends Controller {
+  schema = yup.object().shape({
     name: yup.string().required(),
   });
-
-  async validate(role: unknown, res: Response): Promise<boolean> {
-    return this.userRoleScheme
-      .validate(role)
-      .then(() => true)
-      .catch((err) => {
-        res.status(StatusCode.BAD_REQUEST).json(err.message).end();
-        return false;
-      });
-  }
 
   async getAll(req: Request, res: Response): Promise<void> {
     try {
