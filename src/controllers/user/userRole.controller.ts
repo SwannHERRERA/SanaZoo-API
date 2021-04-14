@@ -6,7 +6,7 @@ import { SequelizeManager } from "../../utils/db";
 import { StatusCode } from "../../utils/statusCode";
 export class UserRoleController extends Controller {
   schema = yup.object().shape({
-    name: yup.string().required(),
+    name: yup.string().max(50).required(),
   });
 
   async getAll(req: Request, res: Response): Promise<void> {

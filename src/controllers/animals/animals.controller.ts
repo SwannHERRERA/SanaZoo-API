@@ -6,7 +6,7 @@ import { Controller } from "../../core/controller";
 
 export class AnimalsController extends Controller {
   schema = yup.object().shape({
-    name: yup.string().required(),
+    name: yup.string().max(120).required(),
     description: yup.string(),
     birthdate: yup.date().required(),
     image: yup.string(),
@@ -31,9 +31,11 @@ export class AnimalsController extends Controller {
   }
 
   public async getAll(req: Request, res: Response): Promise<void> {
+    const limit = Number(req.query.limit) || 2000;
+    const offset = Number(req.query.offset) || 0;
     try {
       const { Animal } = await SequelizeManager.getInstance();
-      const animals = await Animal.findAll();
+      const animals = await Animal.findAll({ limit, offset });
       res.json(animals);
     } catch (err) {
       console.error(err);

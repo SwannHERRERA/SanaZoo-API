@@ -30,9 +30,11 @@ export class AnimalsHealsBookController extends Controller {
     }
   }
   public async getAll(req: Request, res: Response): Promise<void> {
+    const limit = Number(req.query.limit) || 2000;
+    const offset = Number(req.query.offset) || 0;
     try {
       const { AnimalHealthBook } = await SequelizeManager.getInstance();
-      const healsBooks = await AnimalHealthBook.findAll();
+      const healsBooks = await AnimalHealthBook.findAll({ limit, offset });
       res.json(healsBooks);
     } catch (err) {
       console.error(err);

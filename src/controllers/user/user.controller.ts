@@ -7,8 +7,8 @@ import { Controller } from "../../core/controller";
 
 export class UserController extends Controller {
   schema = yup.object().shape({
-    lastName: yup.string().required(),
-    firstName: yup.string().required(),
+    lastName: yup.string().max(120).required(),
+    firstName: yup.string().max(120).required(),
     email: yup.string().email().required(),
     birthdate: yup.date(),
     userRoleId: yup.number().required(),
@@ -118,9 +118,11 @@ export class UserController extends Controller {
   }
 
   async getAll(req: Request, res: Response): Promise<void> {
+    const limit = Number(req.query.limit) || 5000;
+    const offset = Number(req.query.offset) || 0;
     try {
       const { User } = await SequelizeManager.getInstance();
-      const users = await User.findAll();
+      const users = await User.findAll({ limit, offset });
       res.json(users);
     } catch (err) {
       res.status(StatusCode.SERVER_ERROR).end();
