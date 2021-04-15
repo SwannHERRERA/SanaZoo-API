@@ -1,13 +1,10 @@
 import { ModelCtor } from "sequelize";
 import {
-  IAnimal_Instance,
-  IEnclosure_Creation_Props,
-  IEnclosure_Image_Instance,
-  IEnclosure_Instance,
-  IEnclosure_Service_Book_Instance,
-  IEnclosure_Type_Instance,
-  IEntry_Instance,
-  IPass_Enclosure_Access_Instance,
+    IAnimal_Instance, IEnclosure_Creation_Props, IEnclosure_Image_Creation_Props, IEnclosure_Image_Instance,
+    IEnclosure_Instance, IEnclosure_Service_Book_Instance,
+    IEnclosure_Type_Instance,
+    IEntry_Instance,
+    IPass_Enclosure_Access_Instance
 } from "../../models";
 import { SequelizeManager } from "../../utils/db";
 
@@ -69,13 +66,11 @@ export class Enclosure_Controller {
     this.EnclosureImage = EnclosureImage;
   }
 
-  public async add(
-    props: IEnclosure_Creation_Props
-  ): Promise<IEnclosure_Instance | null> {
-    return this.Enclosure.create({
-      ...props,
-    });
-  }
+    public async add(props: IEnclosure_Creation_Props): Promise<IEnclosure_Instance | null> {
+       return this.Enclosure.create({
+            ...props
+        });
+    }
 
   public async remove(id: number): Promise<number> {
     return this.Enclosure.destroy({
@@ -122,29 +117,17 @@ export class Enclosure_Controller {
     });
   }
 
-  public async getImages(
-    id: number
-  ): Promise<IEnclosure_Image_Instance[] | null> {
-    return this.EnclosureImage.findAll({
-      where: {
-        enclosureId: id,
-      },
-    });
-  }
+    public async getAllByState(state: boolean, params? : IEnclosure_Get_All_Params): Promise<IEnclosure_Instance[] | null> {
+        const limit = params?.limit || 20;
+        const offset = params?.offset || 0;
 
-  public async getServiceBook(
-    id: number
-  ): Promise<IEnclosure_Service_Book_Instance[] | null> {
-    return this.EnclosureServiceBook.findAll({
-      where: {
-        enclosureId: id,
-      },
-    });
-  }
+        return this.Enclosure.findAll({
+            limit,
+            offset,
+            where: {
+                maintenance: state
+            }
+        });
+    }
 
-  public async getAllAnimals(
-    enclosureId: number
-  ): Promise<IAnimal_Instance[] | null> {
-    return await this.Animal.findAll({ where: { enclosureId } });
-  }
 }

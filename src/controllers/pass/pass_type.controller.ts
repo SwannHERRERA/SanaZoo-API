@@ -19,7 +19,7 @@ export class PassTypeController {
             const manager = await SequelizeManager.getInstance();
             PassTypeController.instance = new PassTypeController(manager.PassType, manager.Pass);
         }
-        return this.instance;
+        return PassTypeController.instance;
     }
 
     public async getAllPassTypes(): Promise<IPass_Type_Instance[]> {

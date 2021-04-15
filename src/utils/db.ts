@@ -30,7 +30,9 @@ import {
     passNightAvailabilityCreator,
     passTypeCreator,
     sessionCreator,
-    specieCreator, userCreator, userRoleCreator
+    specieCreator,
+    userCreator,
+    userRoleCreator
 } from "../models";
 
 export interface SequelizeManagerProps {
@@ -125,7 +127,7 @@ export class SequelizeManager implements SequelizeManagerProps {
             UserRole: userRoleCreator(sequelize),
         };
         SequelizeManager.associate(managerProps);
-        /*await sequelize.sync({
+/*        await sequelize.sync({
             force: false
         });*/
         return new SequelizeManager(managerProps);
