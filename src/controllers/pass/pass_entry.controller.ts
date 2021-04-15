@@ -116,6 +116,11 @@ export class EntryController {
             return;
         }
 
+        if (enclosure.maintenance) {
+            res.status(403).json('Cet enclos est en maintenance').end();
+                return;
+        }
+
         if (pass.validDate > date) {
             res.status(403).json("Pass is not yet active").end();
             return;
