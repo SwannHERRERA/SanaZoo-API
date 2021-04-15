@@ -62,22 +62,22 @@ export class UserController extends Controller {
     this.insert(user, res);
   };
 
-  public register = async () => {
+  public register = async (): Promise<never> => {
     throw new Error("Not implemented !");
     // create user (the user way)
   };
 
-  public login = async () => {
+  public login = async (): Promise<never> => {
     throw new Error("Not implemented !");
     // login user
   };
 
-  public logout = async () => {
+  public logout = async (): Promise<never> => {
     throw new Error("Not implemented !");
     // logout user
   };
 
-  public changePassword = async () => {
+  public changePassword = async (): Promise<never> => {
     throw new Error("Not implemented !");
     // change password of a user
   };
@@ -88,15 +88,19 @@ export class UserController extends Controller {
       const newUser = req.body;
       const isValid = await this.validate(newUser, res);
       if (isValid === false) return;
-      const { User } = await SequelizeManager.getInstance();
-      const user = await User.findByPk(id, { include: "UserRole" });
-      console.log(user);
-
+      const { User, UserRole } = await SequelizeManager.getInstance();
+      const user = await User.findByPk(id);
       if (user === null) {
         res.status(StatusCode.NOT_FOUND).end();
         return;
       }
-      if (user.userRole.name !== "CLIENT") {
+
+      const userRole = await UserRole.findByPk(user?.userRoleId);
+      if (userRole === null) {
+        res.status(StatusCode.SERVER_ERROR).end();
+        return;
+      }
+      if (userRole.name !== "CLIENT") {
         res.status(StatusCode.FORBIDDEN).end();
         return;
       }
