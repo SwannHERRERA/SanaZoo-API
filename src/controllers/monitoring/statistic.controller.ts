@@ -2,6 +2,7 @@ import {SequelizeManager} from "../../utils/db";
 import {ModelCtor, Op, Sequelize} from "sequelize";
 import {IAnimal_Instance, IEnclosure_Instance, IEntry_Instance, IPass_Instance, IUser_Instance} from "../../models";
 import {Request, Response} from "express";
+import moment from "moment";
 
 export class StatisticController {
     Pass: ModelCtor<IPass_Instance>;
@@ -51,10 +52,27 @@ export class StatisticController {
     }
 
     public async validPassStats(res: Response): Promise<void> {
+        const today = moment().startOf('day');
+        const count = this.Pass.findAll({where: Sequelize.where(Sequelize.col('valid_date'), '>=', today)});
+        res.status(200).json({
+            'validPass': count
+        });
+    }
 
+    public async expiredPassStats(res: Response): Promise<void> {
+        const today = moment().startOf('day');
+        const count = this.Pass.findAll({where: Sequelize.where(Sequelize.col('valid_date'), '<', today)});
+        res.status(200).json({
+            'expiredPass': count
+        });
     }
 
     public async allPassStats(res: Response): Promise<void> {
+        const today = moment().startOf('day');
+        const count = this.Pass.findAll();
+        res.status(200).json({
+            'totalPass': count
+        });
 
     }
 
