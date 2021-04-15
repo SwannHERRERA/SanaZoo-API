@@ -12,9 +12,10 @@ import {IUser_Instance} from "..";
 
 export interface IEmployee_Planning_Props {
     id: number;
+    userId: number;
     day_of_week: string;
-    start_time: string;
-    end_time: string;
+    start_time: Date;
+    end_time: Date;
 
 }
 
@@ -41,6 +42,14 @@ export function employeePlanningCreator(sequelize: Sequelize): ModelCtor<IEmploy
         },
         end_time: {
             type: DataTypes.DATE
+        },
+        userId: {
+            type: DataTypes.BIGINT,
+            allowNull: false,
+            references: {
+                model: 'User',
+                key: 'id',
+            }
         }
     }, {
         freezeTableName: true,
