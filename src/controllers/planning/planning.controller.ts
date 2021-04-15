@@ -1,4 +1,4 @@
-import {ModelCtor} from "sequelize";
+import {ModelCtor, Op, Sequelize} from "sequelize";
 import {IEmployee_Planning_Creation_Props, IEmployee_Planning_Instance} from "../../models";
 import {SequelizeManager} from "../../utils/db";
 import {GetAllOptions} from "../../utils/sequelize_options";
@@ -66,6 +66,22 @@ export class Planning_Controller {
             where: {
                 userId: id
             }
+        });
+    }
+
+    public async getCalendar(start?: Date, number_of_day?: number): Promise<IEmployee_Planning_Instance[] | null> {
+        const date_start = start || new Date(Date.now());
+        const duration = number_of_day || 7;
+        const date_end = new Date(date_start);
+        date_end.setDate(date_end.getDate() + duration);
+
+        return this.EmployeePlanning.findAll({
+            where: {
+                start_time: {
+                    [Op.between]: [date_start, date_end]
+                }
+            },
+            order: [['start_time', 'ASC']]
         });
     }
 

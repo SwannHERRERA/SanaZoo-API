@@ -3,9 +3,42 @@ import {employeeMiddleware} from "../../middlewares/employee.middleware";
 import {Planning_Controller} from "../../controllers/planning/planning.controller";
 import {adminMiddleware} from "../../middlewares/admin.middleware";
 import * as yup from "yup";
-import {date} from "yup";
 
 const employeePlanningRouter = express.Router();
+
+employeePlanningRouter.get("/calendar", employeeMiddleware, async function(req, res) {
+   const start_time = new Date(req.body.start_time);
+   const number_of_days = Number.parseInt(req.body.number_of_day);
+
+   if (number_of_days <= 0) {
+       res.status(500).end();
+       return;
+   }
+   const controller = await Planning_Controller.getInstance();
+   const result = await controller.getCalendar(start_time, number_of_days);
+    if (result === null) {
+        res.status(500).end();
+        return;
+    }
+    let calendar = new Array();
+
+
+    let date = result[0].start_time.toDateString();
+    let presence = new Array();
+    for await (let instance of result) {
+        if (instance.start_time.toDateString() !== date) {
+            await calendar.push({date: date, presence: JSON.parse(JSON.stringify(presence))});
+            date = instance.start_time.toDateString();
+            presence.length = 0;
+        }
+        await presence.push(instance);
+    }
+    await calendar.push({date: date, presence: JSON.parse(JSON.stringify(presence))});
+    console.log(calendar);
+
+
+    res.status(200).json(calendar).end();
+});
 
 employeePlanningRouter.get("/user/:id", employeeMiddleware, async function(req, res) {
     const id = Number.parseInt(req.params.id);
@@ -36,6 +69,7 @@ employeePlanningRouter.get("/", employeeMiddleware, async function(req, res) {
     const limit = req.body.limit;
     const controller = await Planning_Controller.getInstance();
     const result = await controller.getAll({offset, limit});
+
     res.status(200).json(result).end();
 });
 
