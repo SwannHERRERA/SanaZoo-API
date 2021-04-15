@@ -9,7 +9,7 @@ export class UserRoleController extends Controller {
     name: yup.string().max(50).required(),
   });
 
-  async getAll(req: Request, res: Response): Promise<void> {
+  public getAll = async (req: Request, res: Response): Promise<void> => {
     try {
       const { UserRole } = await SequelizeManager.getInstance();
       const roles = await UserRole.findAll();
@@ -17,9 +17,11 @@ export class UserRoleController extends Controller {
     } catch (err) {
       res.status(StatusCode.SERVER_ERROR).end();
     }
-  }
+  };
 
-  private async findOne(id: number): Promise<IUser_Role_Instance | StatusCode> {
+  private findOne = async (
+    id: number
+  ): Promise<IUser_Role_Instance | StatusCode> => {
     try {
       const { UserRole } = await SequelizeManager.getInstance();
       const user = await UserRole.findByPk(id);
@@ -30,9 +32,9 @@ export class UserRoleController extends Controller {
     } catch (err) {
       return StatusCode.SERVER_ERROR;
     }
-  }
+  };
 
-  public async getOne(req: Request, res: Response): Promise<void> {
+  public getOne = async (req: Request, res: Response): Promise<void> => {
     const id = Number(req.params.id);
     const find = await this.findOne(id);
     if (typeof find === "number") {
@@ -40,9 +42,9 @@ export class UserRoleController extends Controller {
       return;
     }
     res.json(find).end();
-  }
+  };
 
-  public async create(req: Request, res: Response): Promise<void> {
+  public create = async (req: Request, res: Response): Promise<void> => {
     const role = req.body;
     const isValid = await this.validate(role, res);
     if (isValid === false) return;
@@ -54,9 +56,9 @@ export class UserRoleController extends Controller {
       console.error(err);
       res.status(StatusCode.SERVER_ERROR).end();
     }
-  }
+  };
 
-  public async update(req: Request, res: Response): Promise<void> {
+  public update = async (req: Request, res: Response): Promise<void> => {
     const id = Number(req.params.id);
     const newRole = req.body;
     const isValid = await this.validate(newRole, res);
@@ -74,9 +76,9 @@ export class UserRoleController extends Controller {
       console.error(err);
       res.status(StatusCode.SERVER_ERROR).end();
     }
-  }
+  };
 
-  public async deleteOne(req: Request, res: Response): Promise<void> {
+  public deleteOne = async (req: Request, res: Response): Promise<void> => {
     const id = Number(req.params.id);
     try {
       const { User, UserRole } = await SequelizeManager.getInstance();
@@ -97,9 +99,9 @@ export class UserRoleController extends Controller {
     } catch (err) {
       res.status(StatusCode.SERVER_ERROR).end();
     }
-  }
+  };
 
-  public async affectUser(req: Request, res: Response): Promise<void> {
+  public affectUser = async (req: Request, res: Response): Promise<void> => {
     const userId = Number(req.params.userId);
     const roleId = Number(req.params.id);
     try {
@@ -118,7 +120,7 @@ export class UserRoleController extends Controller {
       console.error(err);
       res.status(StatusCode.SERVER_ERROR).end();
     }
-  }
+  };
 }
 
 export default new UserRoleController();

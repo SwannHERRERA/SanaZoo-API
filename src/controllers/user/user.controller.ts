@@ -14,7 +14,7 @@ export class UserController extends Controller {
     userRoleId: yup.number().required(),
   });
 
-  public async findOne(id: number): Promise<IUser_Instance | StatusCode> {
+  public findOne = async (id: number): Promise<IUser_Instance | StatusCode> => {
     try {
       const { User } = await SequelizeManager.getInstance();
       const user = await User.findByPk(id);
@@ -25,13 +25,13 @@ export class UserController extends Controller {
     } catch (err) {
       return StatusCode.SERVER_ERROR;
     }
-  }
+  };
 
-  public async me() {
+  public me = async (): Promise<void> => {
     throw new Error("Not implemented !");
     // get user By cookie
-  }
-  public async getOne(req: Request, res: Response): Promise<void> {
+  };
+  public getOne = async (req: Request, res: Response): Promise<void> => {
     const id = Number(req.params.id);
     const find = await this.findOne(id);
     if (typeof find === "number") {
@@ -39,12 +39,12 @@ export class UserController extends Controller {
       return;
     }
     res.json(find).end();
-  }
+  };
 
-  private async insert(
+  private insert = async (
     user: IUser_Creation_Props,
     res: Response
-  ): Promise<void> {
+  ): Promise<void> => {
     try {
       const { User } = await SequelizeManager.getInstance();
       const userCreate = await User.create(user);
@@ -53,36 +53,62 @@ export class UserController extends Controller {
       console.error(err);
       res.status(StatusCode.SERVER_ERROR).end();
     }
-  }
+  };
 
-  public async create(req: Request, res: Response): Promise<void> {
+  public create = async (req: Request, res: Response): Promise<void> => {
     const user = req.body;
     const isValid = await this.validate(user, res);
     if (isValid === false) return;
     this.insert(user, res);
-  }
+  };
 
-  public async register() {
+  public register = async () => {
     throw new Error("Not implemented !");
     // create user (the user way)
-  }
+  };
 
-  public async login() {
+  public login = async () => {
     throw new Error("Not implemented !");
     // login user
-  }
+  };
 
-  public async logout() {
+  public logout = async () => {
     throw new Error("Not implemented !");
     // logout user
-  }
+  };
 
-  public async changePassword() {
+  public changePassword = async () => {
     throw new Error("Not implemented !");
     // change password of a user
-  }
+  };
 
-  public async update(req: Request, res: Response): Promise<void> {
+  public updateClient = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const id = Number(req.params.id);
+      const newUser = req.body;
+      const isValid = await this.validate(newUser, res);
+      if (isValid === false) return;
+      const { User } = await SequelizeManager.getInstance();
+      const user = await User.findByPk(id, { include: "UserRole" });
+      console.log(user);
+
+      if (user === null) {
+        res.status(StatusCode.NOT_FOUND).end();
+        return;
+      }
+      if (user.userRole.name !== "CLIENT") {
+        res.status(StatusCode.FORBIDDEN).end();
+        return;
+      }
+      const userUpdated = await user.update(newUser);
+      res.json(userUpdated);
+    } catch (err) {
+      console.error(err);
+      res.status(StatusCode.SERVER_ERROR).end();
+    }
+  };
+
+  public update = async (req: Request, res: Response): Promise<void> => {
     try {
       const id = Number(req.params.id);
       const newUser = req.body;
@@ -100,9 +126,9 @@ export class UserController extends Controller {
       console.error(err);
       res.status(StatusCode.SERVER_ERROR).end();
     }
-  }
+  };
 
-  public async deleteOne(req: Request, res: Response): Promise<void> {
+  public deleteOne = async (req: Request, res: Response): Promise<void> => {
     try {
       const id = Number(req.params.id);
       const { User } = await SequelizeManager.getInstance();
@@ -115,9 +141,9 @@ export class UserController extends Controller {
     } catch (err) {
       res.status(StatusCode.SERVER_ERROR).end();
     }
-  }
+  };
 
-  async getAll(req: Request, res: Response): Promise<void> {
+  public getAll = async (req: Request, res: Response): Promise<void> => {
     const limit = Number(req.query.limit) || 5000;
     const offset = Number(req.query.offset) || 0;
     try {
@@ -127,6 +153,6 @@ export class UserController extends Controller {
     } catch (err) {
       res.status(StatusCode.SERVER_ERROR).end();
     }
-  }
+  };
 }
 export default new UserController();

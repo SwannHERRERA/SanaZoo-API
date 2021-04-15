@@ -5,4 +5,5 @@ export enum StatusCode {
   CONFLICT = 409,
   DELETED = 204,
   CREATED = 201,
+  FORBIDDEN = 403,
 }
