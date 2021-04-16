@@ -62,9 +62,18 @@ export class UserController extends Controller {
     this.insert(user, res);
   };
 
-  public register = async (): Promise<never> => {
-    throw new Error("Not implemented !");
-    // create user (the user way)
+  public register = async (req: Request, res: Response): Promise<void> => {
+    const newUser = req.body;
+    const { UserRole } = await SequelizeManager.getInstance();
+    const clientRole = await UserRole.findOne({ where: { name: "CLIENT" } });
+    if (clientRole === null) {
+      res.status(StatusCode.SERVER_ERROR).end();
+      return;
+    }
+    newUser.UserRoleId = clientRole.id;
+    const isValid = await this.validate(newUser, res);
+    if (isValid === false) return;
+    this.insert(newUser, res);
   };
 
   public login = async (): Promise<never> => {
