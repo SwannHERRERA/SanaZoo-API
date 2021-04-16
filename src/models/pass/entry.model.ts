@@ -12,9 +12,10 @@ export interface IEntry_Props {
     id: number;
     enclosureId: number;
     passId: number;
+    createdAt: Date;
 }
 
-export interface IEntry_Creation_Props extends Optional<IEntry_Props, "id"> {
+export interface IEntry_Creation_Props extends Optional<IEntry_Props, "id" | "createdAt">{
 }
 
 export interface IEntry_Instance extends Model<IEntry_Props, IEntry_Creation_Props>, IEntry_Props {
@@ -49,6 +50,9 @@ export function entryCreator(sequelize: Sequelize): ModelCtor<IEntry_Instance> {
                     model: 'Pass',
                     key: 'id',
                 }
+            },
+            createdAt: {
+                type: DataTypes.DATE
             }
         },
         {

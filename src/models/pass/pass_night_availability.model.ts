@@ -3,7 +3,7 @@ import {
     BelongsToSetAssociationMixin,
     DataTypes,
     Model,
-    ModelCtor,
+    ModelCtor, Optional,
     Sequelize,
 } from "sequelize";
 import {IPass_Type_Instance} from "./pass_type.model";
@@ -11,9 +11,15 @@ import {IPass_Type_Instance} from "./pass_type.model";
 export interface IPass_Night_Availability_Props {
     id: number;
     date: Date;
+    passTypeId: number;
 }
 
-export interface IPass_Night_Availability_Instance extends Model<IPass_Night_Availability_Props>,
+export interface IPass_Night_Availability_Creation_Props extends Optional<IPass_Night_Availability_Props, "id"> {
+
+}
+
+
+export interface IPass_Night_Availability_Instance extends Model<IPass_Night_Availability_Props, IPass_Night_Availability_Creation_Props>,
     IPass_Night_Availability_Props {
 
     setPassType: BelongsToSetAssociationMixin<IPass_Type_Instance, "id">;
@@ -33,5 +39,15 @@ export function passNightAvailabilityCreator(sequelize: Sequelize): ModelCtor<IP
                 type: DataTypes.DATE,
                 allowNull: false,
             },
+            passTypeId: {
+                type: DataTypes.BIGINT,
+                allowNull: false,
+            }
+        },
+        {
+            freezeTableName: true,
+            underscored: true,
+            paranoid: true,
+            timestamps: true,
         });
 }
