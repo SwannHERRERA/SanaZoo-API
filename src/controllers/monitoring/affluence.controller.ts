@@ -2,7 +2,7 @@ import {SequelizeManager} from "../../utils/db";
 import {ModelCtor, Op, Sequelize} from "sequelize";
 import {IAnimal_Instance, IEnclosure_Instance, IEntry_Instance, IPass_Instance, IUser_Instance} from "../../models";
 import {Request, Response} from "express";
-import moment, {Moment} from "moment";
+import * as dateFns from 'date-fns';
 
 export class StatisticController {
     Pass: ModelCtor<IPass_Instance>;
@@ -24,23 +24,30 @@ export class StatisticController {
         return StatisticController.instance;
     }
 
-    public async dailyAffluence(res: Response): Promise<void> {
-        const today = moment();
+    public async dailyAffluence(req: Request, res: Response): Promise<void> {
+        const argDate = new Date(req.body.date);
+        let date = new Date();
+        if (argDate) {
+            date = argDate;
+        }
         const count: number = await this.Entry.count({
             where: Sequelize.where(
                 Sequelize.fn('date', Sequelize.col('created_at')),
                 '=',
-                Sequelize.fn('current_date')
-            )
+                Sequelize.fn('date', date))
         });
         res.status(200).json({
-            'day': this.dayOfWeek[today.isoWeekday() - 1],
+            'day': this.dayOfWeek[dateFns.getISODay(date) - 1],
             'affuence': count
         }).end();
     }
 
     public async dailyEnclosureAffluence(req: Request, res: Response): Promise<void> {
-        const today = moment();
+        const argDate = new Date(req.body.date);
+        let date = new Date();
+        if (argDate) {
+            date = argDate;
+        }
         const enclosureId = req.params.id;
         const count: number = await this.Entry.count({
             where: {
@@ -49,49 +56,49 @@ export class StatisticController {
                     Sequelize.where(
                         Sequelize.fn('date', Sequelize.col('created_at')),
                         '=',
-                        Sequelize.fn('current_date')
+                        Sequelize.fn('date', date)
                     )
                 ]
             }
         });
         res.status(200).json({
             'enclosureId': enclosureId,
-            'day': this.dayOfWeek[today.isoWeekday() - 1],
+            'day': this.dayOfWeek[dateFns.getISODay(date) - 1],
             'affluence': count
         }).end();
     }
 
     public async weeklyAffluence(res: Response): Promise<void> {
-        const today = moment();
-        const fromDate = today.startOf('isoWeek');
-        const toDate = today.endOf('isoWeek');
+        let date = new Date();
+        const fromDate = dateFns.startOfISOWeek(date);
+        const toDate = dateFns.endOfISOWeek(date);
         const count: number = await this.Entry.count({
             where: {
                 [Op.and]: [
                     Sequelize.where(
                         Sequelize.col('created_at'),
                         '>=',
-                        fromDate
+                        fromDate.toISOString()
                     ),
                     Sequelize.where(
                         Sequelize.col('created_at'),
                         '<=',
-                        toDate
+                        toDate.toISOString()
                     )
                 ]
             }
         });
         res.status(200).json({
-            'week': today.isoWeek(),
+            'week': dateFns.getISOWeek(date),
             'affluence': count
         }).end();
     }
 
     public async weeklyEnclosureAffluence(req: Request, res: Response): Promise<void> {
         const enclosureId = req.params.id;
-        const today = moment();
-        const fromDate = today.startOf('isoWeek');
-        const toDate = today.endOf('isoWeek');
+        let date = new Date();
+        const fromDate = dateFns.startOfISOWeek(date);
+        const toDate = dateFns.endOfISOWeek(date);
         const count: number = await this.Entry.count({
             where: {
                 [Op.and]: [
@@ -99,53 +106,62 @@ export class StatisticController {
                     Sequelize.where(
                         Sequelize.col('created_at'),
                         '>=',
-                        fromDate
+                        fromDate.toISOString()
                     ),
                     Sequelize.where(
                         Sequelize.col('created_at'),
                         '<=',
-                        toDate
+                        toDate.toISOString()
                     )
                 ]
             }
         });
         res.status(200).json({
             'enclosureId': enclosureId,
+            'week': dateFns.getISOWeek(date),
             'thisWeekAffuence': count
         }).end();
     }
 
-    public async monthlyAffluence(res: Response): Promise<void> {
-        const today = moment();
-        const fromDate = today.startOf('month');
-        const toDate = today.endOf('month');
+    public async monthlyAffluence(req: Request, res: Response): Promise<void> {
+        const month: number = Number.parseInt(req.params.month);
+        let date = new Date();
+        if (!isNaN(month)) {
+            date = dateFns.setMonth(date, Math.min(12, Math.max(1, month)));
+        }
+        const fromDate = dateFns.startOfMonth(date);
+        const toDate = dateFns.endOfMonth(date);
         const count: number = await this.Entry.count({
             where: {
                 [Op.and]: [
                     Sequelize.where(
                         Sequelize.col('created_at'),
                         '>=',
-                        fromDate
+                        fromDate.toISOString()
                     ),
                     Sequelize.where(
                         Sequelize.col('created_at'),
                         '<=',
-                        toDate
+                        toDate.toISOString()
                     )
                 ]
             }
         });
         res.status(200).json({
-            'month': this.months[today.month() - 1],
+            'month': this.months[dateFns.getMonth(date) - 1],
             'affluence': count
         }).end();
     }
 
     public async monthlyEnclosureAffluence(req: Request, res: Response): Promise<void> {
         const enclosureId = req.params.id;
-        const today = moment();
-        const fromDate = today.startOf('month');
-        const toDate = today.endOf('month');
+        const month: number = Number.parseInt(req.params.month);
+        let date = new Date();
+        if (!isNaN(month)) {
+            date = dateFns.setMonth(date, Math.min(12, Math.max(1, month)));
+        }
+        const fromDate = dateFns.startOfMonth(date);
+        const toDate = dateFns.startOfMonth(date);
         const count: number = await this.Entry.count({
             where: {
                 [Op.and]: [
@@ -153,41 +169,47 @@ export class StatisticController {
                     Sequelize.where(
                         Sequelize.col('created_at'),
                         '>=',
-                        fromDate
+                        fromDate.toISOString()
                     ),
                     Sequelize.where(
                         Sequelize.col('created_at'),
                         '<=',
-                        toDate
+                        toDate.toISOString()
                     )
                 ]
             }
         });
         res.status(200).json({
-            'month': this.months[today.month() - 1],
+            'month': this.months[dateFns.getMonth(date) - 1],
             'enclosureId': enclosureId,
             'affluence': count
         }).end();
     }
 
-    public async yearlyAffluence(res: Response): Promise<void> {
-        const months: { month: string, affluence: number }[] = [];
+    public async yearlyAffluence(req: Request, res: Response): Promise<void> {
+        const year = Number.parseInt(req.params.year);
+        let currYear = new Date();
+        if (!isNaN(year)) {
+            currYear = dateFns.setYear(currYear, Math.min(1990, year));
+        }
+
+        const months: { month: string, affluence: number; }[] = [];
         for (let i = 0; i < 12; i++) {
-            let month: Moment = moment().month(i + 1);
-            const fromDate = month.startOf('month');
-            const toDate = month.endOf('month');
+            let month: Date = dateFns.setMonth(currYear, i)
+            const fromDate = dateFns.startOfMonth(month);
+            const toDate = dateFns.endOfMonth(month);
             const count: number = await this.Entry.count({
                 where: {
                     [Op.and]: [
                         Sequelize.where(
                             Sequelize.col('created_at'),
                             '>=',
-                            fromDate
+                            fromDate.toString()
                         ),
                         Sequelize.where(
                             Sequelize.col('created_at'),
                             '<=',
-                            toDate
+                            toDate.toString()
                         )
                     ]
                 }
@@ -199,19 +221,24 @@ export class StatisticController {
         }
         const totalCount = months.reduce((c, m) => c + m.affluence, 0);
         res.status(200).json({
-            'year': moment().year,
+            'year': dateFns.getYear(year),
             'totalAffluence': totalCount,
             'details': months
         })
     }
 
     public async yearlyEnclosureAffluence(req: Request, res: Response): Promise<void> {
+        const year = Number.parseInt(req.params.year);
+        let currYear = new Date();
+        if (!isNaN(year)) {
+            currYear = dateFns.setYear(currYear, Math.min(1990, year));
+        }
         const enclosureId = req.params.id;
         const months: { month: string, affluence: number }[] = [];
         for (let i = 0; i < 12; i++) {
-            let month: Moment = moment().month(i + 1);
-            const fromDate = month.startOf('month');
-            const toDate = month.endOf('month');
+            let month: Date = dateFns.setMonth(currYear, i)
+            const fromDate = dateFns.startOfMonth(month);
+            const toDate = dateFns.endOfMonth(month);
             const count: number = await this.Entry.count({
                 where: {
                     [Op.and]: [
@@ -219,12 +246,12 @@ export class StatisticController {
                         Sequelize.where(
                             Sequelize.col('created_at'),
                             '>=',
-                            fromDate
+                            fromDate.toISOString()
                         ),
                         Sequelize.where(
                             Sequelize.col('created_at'),
                             '<=',
-                            toDate
+                            toDate.toISOString()
                         )
                     ]
                 }
@@ -236,7 +263,7 @@ export class StatisticController {
         }
         const totalCount = months.reduce((c, m) => c + m.affluence, 0);
         res.status(200).json({
-            'year': moment().year,
+            'year': dateFns.getYear(year),
             'enclosureId': enclosureId,
             'totalAffluence': totalCount,
             'details': months
@@ -267,8 +294,8 @@ export class StatisticController {
             res.status(404).end();
             return;
         }
-        const now = moment();
-        const fromDate = moment().subtract(enclosure.visitDuration, "minutes");
+        const now = new Date();
+        const fromDate = dateFns.subMinutes(now, enclosure.visitDuration);
         const count: number = await this.Entry.count({
             where: {
                 [Op.and]: [
@@ -276,12 +303,12 @@ export class StatisticController {
                     Sequelize.where(
                         Sequelize.col('created_at'),
                         '>=',
-                        fromDate
+                        fromDate.toString()
                     ),
                     Sequelize.where(
                         Sequelize.col('created_at'),
                         '<=',
-                        now
+                        now.toString()
                     )
                 ]
             }
