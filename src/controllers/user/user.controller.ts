@@ -208,41 +208,31 @@ export class UserController extends Controller {
     req: Request,
     res: Response
   ): Promise<void> => {
+    const { User } = await SequelizeManager.getInstance();
     const changePasswordSchema = yup.object().shape({
       actualPassword: yup.string().required(),
       newPassword: yup.string().min(PASSWORD_MIN_LENGTH).required(),
       newPasswordConfirm: yup
         .string()
-        .oneOf([yup.ref("newPassword"), null], "Passwords must match"),
+        .oneOf([yup.ref("newPassword")], "Passwords must match"),
     });
+
     const { actualPassword, newPassword, newPasswordConfirm } = req.body;
-    const isValid = await changePasswordSchema.validate({
-      actualPassword,
-      newPassword,
-      newPasswordConfirm,
-    });
 
-    if (!isValid) return;
-
-    const authorization = req.headers.authorization;
-    if (!authorization) {
-      res.status(StatusCode.UNAUTHORIZED).end();
+    try {
+      await changePasswordSchema.validate({
+        actualPassword,
+        newPassword,
+        newPasswordConfirm,
+      });
+    } catch (err) {
+      res.status(StatusCode.BAD_REQUEST).json({ message: err.message }).end();
       return;
     }
-    const { User, Session } = await SequelizeManager.getInstance();
 
-    const token = getToken(authorization);
-    const session = await Session.findOne({ where: { token } });
-    if (!session) {
-      res.status(StatusCode.UNAUTHORIZED).end();
-      return;
-    }
-    const newPasswordHash = await hash(newPassword);
-    const user = await User.findByPk(session.userId);
-    if (!user) {
-      res.status(StatusCode.SERVER_ERROR).end();
-      return;
-    }
+    const user = await this.getUserByRequest(req, res);
+    if (user === null) return;
+
     const isActualPasswordCorrect = await verify(user.password, actualPassword);
     if (isActualPasswordCorrect === false) {
       res
@@ -251,11 +241,38 @@ export class UserController extends Controller {
         .end();
       return;
     }
+
+    const newPasswordHash = await hash(newPassword);
     await User.update(
       { password: newPasswordHash },
       { where: { id: user.id } }
     );
     res.json({ message: "Password updated" }).end();
+  };
+
+  private getUserByRequest = async (
+    req: Request,
+    res: Response
+  ): Promise<IUser_Instance | null> => {
+    const authorization = req.headers.authorization;
+    if (!authorization) {
+      res.status(StatusCode.UNAUTHORIZED).end();
+      return null;
+    }
+    const { User, Session } = await SequelizeManager.getInstance();
+
+    const token = getToken(authorization);
+    const session = await Session.findOne({ where: { token } });
+    if (!session) {
+      res.status(StatusCode.UNAUTHORIZED).end();
+      return null;
+    }
+    const user = await User.findByPk(session.userId);
+    if (!user) {
+      res.status(StatusCode.SERVER_ERROR).end();
+      return null;
+    }
+    return user;
   };
 
   public updateClient = async (req: Request, res: Response): Promise<void> => {
