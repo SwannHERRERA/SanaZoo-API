@@ -326,8 +326,12 @@ export class UserController extends Controller {
   };
 
   public deleteOne = async (req: Request, res: Response): Promise<void> => {
+    const id = Number(req.params.id);
+    if (id === undefined) {
+      res.status(StatusCode.NOT_FOUND).end();
+      return;
+    }
     try {
-      const id = Number(req.params.id);
       const { User } = await SequelizeManager.getInstance();
       const isDestroyed = await User.destroy({ where: { id } });
       if (isDestroyed) {
@@ -347,6 +351,50 @@ export class UserController extends Controller {
       const { User } = await SequelizeManager.getInstance();
       const users = await User.findAll({ limit, offset });
       res.json(users);
+    } catch (err) {
+      res.status(StatusCode.SERVER_ERROR).end();
+    }
+  };
+
+  public restaureOne = async (req: Request, res: Response): Promise<void> => {
+    const id = Number(req.params.id);
+    if (id === undefined) {
+      res.status(StatusCode.NOT_FOUND).end();
+      return;
+    }
+    try {
+      const { User } = await SequelizeManager.getInstance();
+      await User.restore({ where: { id } });
+      const restauredUser = await User.findByPk(id);
+
+      if (restauredUser) {
+        res.json(restauredUser).end();
+      } else {
+        res.status(StatusCode.NOT_FOUND).end();
+      }
+    } catch (err) {
+      console.error(err);
+      res.status(StatusCode.SERVER_ERROR).end();
+    }
+  };
+
+  public forceDeleteOne = async (
+    req: Request,
+    res: Response
+  ): Promise<void> => {
+    const id = Number(req.params.id);
+    if (id === undefined) {
+      res.status(StatusCode.NOT_FOUND).end();
+      return;
+    }
+    try {
+      const { User } = await SequelizeManager.getInstance();
+      const isDestroyed = await User.destroy({ where: { id }, force: true });
+      if (isDestroyed) {
+        res.status(StatusCode.DELETED).end();
+      } else {
+        res.status(StatusCode.NOT_FOUND).end();
+      }
     } catch (err) {
       res.status(StatusCode.SERVER_ERROR).end();
     }
