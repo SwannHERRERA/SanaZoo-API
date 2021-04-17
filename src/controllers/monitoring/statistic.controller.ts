@@ -45,12 +45,12 @@ export class StatisticController {
     }
 
     public async enclosureAnimalCount(req: Request, res: Response): Promise<void> {
-        const enclosureId = req.params.id;
+        const enclosureId = req.params.enclosureId;
         const count: number = await this.Animal.count({where: {enclosureId}});
         res.status(200).json({
             'enclosureId': enclosureId,
             'animalCount': count
-        });
+        }).end();
     }
 
     public async enclosureCount(res: Response): Promise<void> {
@@ -65,7 +65,7 @@ export class StatisticController {
         const count = await this.Pass.findAll({where: Sequelize.where(Sequelize.col('valid_date'), '>=', today.toISOString())});
         res.status(200).json({
             'validPass': count
-        });
+        }).end();
     }
 
     public async expiredPassStats(res: Response): Promise<void> {
@@ -73,18 +73,18 @@ export class StatisticController {
         const count = await this.Pass.findAll({where: Sequelize.where(Sequelize.col('valid_date'), '<=', yesterday.toISOString())});
         res.status(200).json({
             'expiredPass': count
-        });
+        }).end();
     }
 
     public async allPassStats(res: Response): Promise<void> {
         const count = this.Pass.findAll();
         res.status(200).json({
             'totalPass': count
-        });
+        }).end();
 
     }
 
-    public async validPassStatsByType(req: Request, res: Response): Promise<void> {
+    public async validPassStatsByType(res: Response): Promise<void> {
         const today = dateFns.startOfToday();
         const passTypeList: IPass_Type_Instance[] = await this.PassType.findAll();
         const result: { passType: string, count: number; }[] = [];
@@ -102,10 +102,10 @@ export class StatisticController {
                 count
             });
         }
-        res.status(200).json(result);
+        res.status(200).json(result).end();
     }
 
-    public async allPassStatsByType(req: Request, res: Response): Promise<void> {
+    public async allPassStatsByType(res: Response): Promise<void> {
         const passTypeList: IPass_Type_Instance[] = await this.PassType.findAll();
         const result: { passType: string, count: number; }[] = [];
         for (const passType of passTypeList) {
@@ -117,7 +117,7 @@ export class StatisticController {
                 count
             });
         }
-        res.status(200).json(result);
+        res.status(200).json(result).end();
     }
 
 
