@@ -3,7 +3,7 @@ import {PassTypeController} from "../../controllers/pass/pass_type.controller";
 import {authMiddleware} from "../../middlewares/auth.middleware";
 import * as yup from "yup";
 import {adminMiddleware} from "../../middlewares/admin.middleware";
-import {employeePlanningRouter} from "../planning/employee_planning.router";
+import {employeeMiddleware} from "../../middlewares/employee.middleware";
 
 const passTypeRouter = express.Router();
 
@@ -92,7 +92,7 @@ passTypeRouter.delete('/:id', adminMiddleware, async function (req, res, next) {
 /**
  * Add pass type to pass
  */
-passTypeRouter.post('/add-pass', employeePlanningRouter, async function (req, res, next) {
+passTypeRouter.post('/add-pass', employeeMiddleware, async function (req, res, next) {
     const passId = req.body.passId;
     const passTypeId = req.body.passTypeId;
 
@@ -118,12 +118,12 @@ async function getPassTypeController(): Promise<PassTypeController> {
 }
 
 const passTypeCreateSchema = yup.object().shape({
-    name: yup.string().min(4).required(),
+    name: yup.string().min(4).max(255).required(),
     price: yup.number().min(0).required()
 });
 const passTypeUpdateSchema = yup.object().shape({
     id: yup.number().min(0).required(),
-    name: yup.string().min(4).optional(),
+    name: yup.string().min(4).max(255).optional(),
     price: yup.number().min(0).optional()
 });
 

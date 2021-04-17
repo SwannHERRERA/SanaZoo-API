@@ -19,7 +19,7 @@ export class PassTypeController {
             const manager = await SequelizeManager.getInstance();
             PassTypeController.instance = new PassTypeController(manager.PassType, manager.Pass);
         }
-        return this.instance;
+        return PassTypeController.instance;
     }
 
     public async getAllPassTypes(): Promise<IPass_Type_Instance[]> {
@@ -49,6 +49,10 @@ export class PassTypeController {
     public async deletePassType(id: string): Promise<boolean> {
         const passType = await this.PassType.findByPk(id);
         if (!passType) {
+            return false;
+        }
+        const pass: IPass_Instance[] = await this.Pass.findAll({where: {passTypeId: id}});
+        if (pass.length) {
             return false;
         }
         await passType.destroy();

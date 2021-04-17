@@ -21,12 +21,12 @@ import {IUser_Role_Instance} from "./user_role.model";
 
 export interface IUser_Props {
     id: number;
-    first_name: string;
-    last_name: string;
+    firstName: string;
+    lastName: string;
     email: string;
     birthdate: string;
     password: string;
-
+    userRoleId: number
 }
 
 export interface IUser_Creation_Props extends Optional<IUser_Props, "id"> {
@@ -59,11 +59,11 @@ export function userCreator(sequelize: Sequelize): ModelCtor<IUser_Instance> {
             primaryKey: true,
             autoIncrement: true
         },
-        first_name: {
+        firstName: {
             type: DataTypes.STRING,
             unique: true
         },
-        last_name: {
+        lastName: {
             type: DataTypes.STRING
         },
         email: {
@@ -74,6 +74,14 @@ export function userCreator(sequelize: Sequelize): ModelCtor<IUser_Instance> {
         },
         password: {
             type: DataTypes.STRING
+        },
+        userRoleId: {
+            type: DataTypes.BIGINT,
+            allowNull: false,
+            references: {
+                model: 'User_Role',
+                key: 'id'
+            }
         }
     }, {
         freezeTableName: true,

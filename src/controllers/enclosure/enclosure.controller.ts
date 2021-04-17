@@ -132,6 +132,21 @@ export class Enclosure_Controller {
     });
   }
 
+  public async getAllByState(
+    state: boolean,
+    params?: IEnclosure_Get_All_Params
+  ): Promise<IEnclosure_Instance[] | null> {
+    const limit = params?.limit || 20;
+    const offset = params?.offset || 0;
+    return this.Enclosure.findAll({
+      limit,
+      offset,
+      where: {
+        maintenance: state,
+      },
+    });
+  }
+
   public async getServiceBook(
     id: number
   ): Promise<IEnclosure_Service_Book_Instance[] | null> {

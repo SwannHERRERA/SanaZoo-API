@@ -19,10 +19,10 @@ export interface IPass_Type_Props {
 export interface IPass_Type_Creation_Props extends Optional<IPass_Type_Props, "id"> {
 }
 
-export interface IPass_Type_Instance extends Model<IPass_Type_Props, IPass_Type_Creation_Props>,
-    IPass_Type_Props {
+export interface IPass_Type_Instance extends Model<IPass_Type_Props, IPass_Type_Creation_Props>, IPass_Type_Props {
     getPassList: HasManyGetAssociationsMixin<IPass_Instance>;
     addPass: HasManyAddAssociationMixin<IPass_Instance, "id">;
+
     getPassNightList: HasManyGetAssociationsMixin<IPass_Night_Availability_Instance>;
     addPassNight: HasManyAddAssociationMixin<IPass_Night_Availability_Instance, "id">;
 }
@@ -51,4 +51,13 @@ export function passTypeCreator(sequelize: Sequelize): ModelCtor<IPass_Type_Inst
             paranoid: true,
             timestamps: true,
         });
+}
+
+export enum PassType {
+    DAY = 1,
+    WEEKEND = 2,
+    ANNUAL = 3,
+    ONEDAYMONTH = 4,
+    ESCAPE_GAME = 5,
+    NIGHT = 6
 }
