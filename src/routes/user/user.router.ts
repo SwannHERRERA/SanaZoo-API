@@ -23,7 +23,7 @@ userRouter.post("/", adminMiddleware, controller.create);
 userRouter.post("/register", controller.register);
 userRouter.post("/login", controller.login);
 userRouter.delete("/logout", controller.logout);
-userRouter.put("/changePassword", controller.changePassword);
+userRouter.patch("/change-password", controller.changePassword);
 userRouter.get("/:id", employeeMiddleware, controller.getOne);
 userRouter.put("/:id", adminMiddleware, controller.update);
 userRouter.delete("/:id", adminMiddleware, controller.deleteOne);

@@ -209,7 +209,7 @@ export class UserController extends Controller {
     res: Response
   ): Promise<void> => {
     const changePasswordSchema = yup.object().shape({
-      acualPassword: yup.string().required(),
+      actualPassword: yup.string().required(),
       newPassword: yup.string().min(PASSWORD_MIN_LENGTH).required(),
       newPasswordConfirm: yup
         .string()
@@ -239,10 +239,23 @@ export class UserController extends Controller {
     }
     const newPasswordHash = await hash(newPassword);
     const user = await User.findByPk(session.userId);
-    if (user) {
-      await user.update("password", newPasswordHash);
-      res.end();
+    if (!user) {
+      res.status(StatusCode.SERVER_ERROR).end();
+      return;
     }
+    const isActualPasswordCorrect = await verify(user.password, actualPassword);
+    if (isActualPasswordCorrect === false) {
+      res
+        .status(StatusCode.BAD_REQUEST)
+        .json({ message: "Actual password is incorrect" })
+        .end();
+      return;
+    }
+    await User.update(
+      { password: newPasswordHash },
+      { where: { id: user.id } }
+    );
+    res.json({ message: "Password updated" }).end();
   };
 
   public updateClient = async (req: Request, res: Response): Promise<void> => {
