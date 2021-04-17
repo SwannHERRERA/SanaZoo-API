@@ -12,20 +12,22 @@ import { verify, hash } from "argon2";
 import { addDays } from "date-fns";
 import { AnyObject } from "yup/lib/object";
 import { getToken } from "../../utils/tokenHelper";
+
+const PASSWORD_MIN_LENGTH = 6;
 export class UserController extends Controller {
   schema: yup.ObjectSchema<AnyObject> | null = null;
   registerSchema = yup.object().shape({
     lastName: yup.string().max(120).required(),
     firstName: yup.string().max(120).required(),
     email: yup.string().email().required(),
-    password: yup.string().min(6).required(),
+    password: yup.string().min(PASSWORD_MIN_LENGTH).required(),
     birthdate: yup.date(),
   });
   creationSchema = yup.object().shape({
     lastName: yup.string().max(120).required(),
     firstName: yup.string().max(120).required(),
     email: yup.string().email().required(),
-    password: yup.string().min(6).required(),
+    password: yup.string().min(PASSWORD_MIN_LENGTH).required(),
     birthdate: yup.date(),
     userRoleId: yup.number().required(),
   });
@@ -43,9 +45,27 @@ export class UserController extends Controller {
     }
   };
 
-  public me = async (): Promise<void> => {
-    throw new Error("Not implemented !");
-    // get user By cookie
+  public me = async (req: Request, res: Response): Promise<void> => {
+    const authorization = req.headers.authorization;
+    if (!authorization) {
+      res.status(StatusCode.UNAUTHORIZED).end();
+      return;
+    }
+    const { User, Session } = await SequelizeManager.getInstance();
+
+    const token = getToken(authorization);
+    const session = await Session.findOne({ where: { token } });
+    if (!session) {
+      res.status(StatusCode.UNAUTHORIZED).end();
+      return;
+    }
+    const user = await User.findByPk(session.userId, {
+      attributes: ["firstName", "lastName", "email", "birthdate", "createdAt"],
+    });
+    if (!user) {
+      res.status(StatusCode.BAD_REQUEST).end();
+    }
+    res.json(user).end();
   };
 
   public getOne = async (req: Request, res: Response): Promise<void> => {
@@ -145,7 +165,7 @@ export class UserController extends Controller {
   ): Promise<boolean> {
     const loginSchema = yup.object().shape({
       email: yup.string().email().required(),
-      password: yup.string().min(6).required(),
+      password: yup.string().min(PASSWORD_MIN_LENGTH).required(),
     });
 
     return await loginSchema
@@ -161,9 +181,10 @@ export class UserController extends Controller {
     user: IUser_Instance
   ): Promise<ISession_Instance> {
     const { Session } = await SequelizeManager.getInstance();
+    const DURATION_OF_THE_SESSION_IN_DAYS = 1;
     const now = Date.now();
     const token = await hash(now.toString() + user.email);
-    const expireDate = addDays(now, 1);
+    const expireDate = addDays(now, DURATION_OF_THE_SESSION_IN_DAYS);
     return await Session.create({
       token,
       expireDate,
@@ -174,7 +195,7 @@ export class UserController extends Controller {
   public logout = async (req: Request, res: Response): Promise<void> => {
     const authorization = req.headers.authorization;
     if (!authorization) {
-      res.status(StatusCode.BAD_REQUEST).end();
+      res.status(StatusCode.UNAUTHORIZED).end();
       return;
     }
     const token = getToken(authorization);
@@ -183,9 +204,45 @@ export class UserController extends Controller {
     res.status(StatusCode.DELETED).end();
   };
 
-  public changePassword = async (): Promise<never> => {
-    throw new Error("Not implemented !");
-    // change password of a user
+  public changePassword = async (
+    req: Request,
+    res: Response
+  ): Promise<void> => {
+    const changePasswordSchema = yup.object().shape({
+      acualPassword: yup.string().required(),
+      newPassword: yup.string().min(PASSWORD_MIN_LENGTH).required(),
+      newPasswordConfirm: yup
+        .string()
+        .oneOf([yup.ref("newPassword"), null], "Passwords must match"),
+    });
+    const { actualPassword, newPassword, newPasswordConfirm } = req.body;
+    const isValid = await changePasswordSchema.validate({
+      actualPassword,
+      newPassword,
+      newPasswordConfirm,
+    });
+
+    if (!isValid) return;
+
+    const authorization = req.headers.authorization;
+    if (!authorization) {
+      res.status(StatusCode.UNAUTHORIZED).end();
+      return;
+    }
+    const { User, Session } = await SequelizeManager.getInstance();
+
+    const token = getToken(authorization);
+    const session = await Session.findOne({ where: { token } });
+    if (!session) {
+      res.status(StatusCode.UNAUTHORIZED).end();
+      return;
+    }
+    const newPasswordHash = await hash(newPassword);
+    const user = await User.findByPk(session.userId);
+    if (user) {
+      await user.update("password", newPasswordHash);
+      res.end();
+    }
   };
 
   public updateClient = async (req: Request, res: Response): Promise<void> => {
