@@ -62,7 +62,7 @@ export class StatisticController {
 
     public async validPassStats(res: Response): Promise<void> {
         const today = dateFns.startOfToday();
-        const count = await this.Pass.findAll({where: Sequelize.where(Sequelize.col('valid_date'), '>=', today.toISOString())});
+        const count:number = await this.Pass.count({where: Sequelize.where(Sequelize.col('valid_date'), '>=', today.toISOString())});
         res.status(200).json({
             'validPass': count
         }).end();
@@ -70,14 +70,14 @@ export class StatisticController {
 
     public async expiredPassStats(res: Response): Promise<void> {
         const yesterday = dateFns.endOfYesterday()
-        const count = await this.Pass.findAll({where: Sequelize.where(Sequelize.col('valid_date'), '<=', yesterday.toISOString())});
+        const count:number = await this.Pass.count({where: Sequelize.where(Sequelize.col('valid_date'), '<=', yesterday.toISOString())});
         res.status(200).json({
             'expiredPass': count
         }).end();
     }
 
     public async allPassStats(res: Response): Promise<void> {
-        const count = this.Pass.findAll();
+        const count:number = await this.Pass.count();
         res.status(200).json({
             'totalPass': count
         }).end();
