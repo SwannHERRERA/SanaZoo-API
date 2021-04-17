@@ -14,7 +14,11 @@
         "summary": "Hello World !",
         "description": "Get the hello world",
         "produces": ["application/json"],
-        "parameters": [],
+        "parameters": {
+          "body": {
+            "name": "body"
+          }
+        },
         "responses": {
           "200": {
             "description": "successful operation",
@@ -25,7 +29,115 @@
           "400": {
             "description": "Invalid status value",
             "schema": {
-              "$ref": "#/definitions/InvalidResponse"
+              "error": "error"
+            }
+          }
+        }
+      }
+    },
+    "/animal/specie": {
+      "get": {
+        "summary": "get all specie",
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "Specie[]"
+            }
+          },
+          "500": {
+            "description": "error server (probably connection with database)",
+            "schema": {
+              "error": "error"
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "create a new specie",
+        "produces": ["application/json"],
+        "parameters": ["name", "origin", "description"],
+        "responses": {
+          "201": {
+            "description": "successful operation",
+            "schema": {
+              "type": "Specie"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "error": "error"
+            }
+          },
+          "500": {
+            "description": "error server",
+            "schema": {
+              "error": "error"
+            }
+          }
+        }
+      }
+    },
+    "/animal/specie/:id": {
+      "get": {
+        "summary": "get a specie",
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "Specie"
+            }
+          },
+          "500": {
+            "description": "error server",
+            "schema": {
+              "error": "error"
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "update a specie",
+        "produces": ["application/json"],
+        "parameters": ["name", "origin", "description"],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "Specie"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "error": "error"
+            }
+          },
+          "500": {
+            "description": "error server",
+            "schema": {
+              "error": "error"
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "delete a specie",
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          "500": {
+            "description": "error server",
+            "schema": {
+              "error": "error"
             }
           }
         }

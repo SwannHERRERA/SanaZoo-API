@@ -25,21 +25,21 @@ export function buildRoutes(app: Express) {
     app.use("/enclosure/image", enclosureImageRouter);
     app.use("/enclosure", enclosureRouter);
 
-    app.use("/animal/specie", animalSpecieRouter);
-    app.use("/animal/health", animalHealthBookRouter);
-    app.use("/animal", animalRouter);
+  app.use("/animal/specie", animalSpecieRouter);
+  app.use("/animal/health", animalHealthBookRouter);
+  app.use("/animal", animalRouter);
 
-    app.use("/planning", employeePlanningRouter);
-    app.use("/zoo", zooOpeningRouter);
+  app.use("/planning", employeePlanningRouter);
+  app.use("/zoo", zooOpeningRouter);
 
     app.use("/pass/entry", passEntryRouter);
     app.use("/pass/night", passNightRouter);
     app.use("/pass/type", passTypeRouter);
     app.use("/pass", passRouter);
 
-    app.use("/monitoring/statistic", statisticRouter);
-    app.use("/monitoring/affluence", affluenceRouter);
+  app.use("/monitoring/statistic", statisticRouter);
+  app.use("/monitoring/affluence", affluenceRouter);
 
-    app.use("/user/role", userRoleRouter);
-    app.use("/user", userRouter);
+  app.use("/user/role", userRoleRouter);
+  app.use("/user", userRouter);
 }
