@@ -271,7 +271,7 @@ export class StatisticController {
     }
 
     public async totalAffluence(res: Response): Promise<void> {
-        const count = this.Entry.count();
+        const count = await this.Entry.count();
         res.status(200).json({
             'totalAffluence': count
         })
@@ -280,7 +280,7 @@ export class StatisticController {
 
     public async totalEnclosureAffluence(req: Request, res: Response): Promise<void> {
         const enclosureId = req.params.id;
-        const count = this.Entry.count({where: {enclosureId}});
+        const count = await this.Entry.count({where: {enclosureId}});
         res.status(200).json({
             'enclosureId': enclosureId,
             'totalAffluence': count
