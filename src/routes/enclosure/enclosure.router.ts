@@ -187,6 +187,4 @@ const imageSchemaCreat = yup.object().shape({
   path: yup.string().min(5).max(255).required(),
 });
 
-export {
-    enclosureRouter
-}
+export { enclosureRouter };

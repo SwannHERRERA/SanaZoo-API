@@ -16,7 +16,7 @@ export interface ISpecie_Props {
   description: string;
 }
 
-export interface ISpecie_Creation_Props extends Optional<ISpecie_Props, "id"> {}
+export type ISpecie_Creation_Props = Optional<ISpecie_Props, "id">;
 
 export interface ISpecie_Instance
   extends Model<ISpecie_Props, ISpecie_Creation_Props>,

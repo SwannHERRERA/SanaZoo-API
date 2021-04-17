@@ -8,7 +8,7 @@ import { adminMiddleware } from "./middlewares/admin.middleware";
 
 config();
 
-process.env.TZ='Europe/Paris';
+process.env.TZ = "Europe/Paris";
 
 const app = express();
 app.use(express.json());
@@ -16,7 +16,7 @@ app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerJSON));
 
 // const sequelize = SequelizeManager.getInstance();
 buildRoutes(app);
- //Initialise instance
+//Initialise instance
 SequelizeManager.getInstance();
 
 /**

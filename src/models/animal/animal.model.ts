@@ -23,7 +23,7 @@ export interface IAnimal_Props {
   enclosureId: number;
 }
 
-export interface IAnimal_Creation_Props extends Optional<IAnimal_Props, "id"> {}
+export type IAnimal_Creation_Props = Optional<IAnimal_Props, "id">;
 
 export interface IAnimal_Instance
   extends Model<IAnimal_Props, IAnimal_Creation_Props>,
