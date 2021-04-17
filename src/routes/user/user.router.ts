@@ -19,10 +19,15 @@ userRouter.put(
 );
 userRouter.get("/", employeeMiddleware, controller.getAll);
 userRouter.get("/me", authMiddleware, controller.me);
+userRouter.post("/", adminMiddleware, controller.create);
+userRouter.post("/register", controller.register);
+userRouter.post("/login", controller.login);
+userRouter.delete("/logout", controller.logout);
+userRouter.put("/changePassword", controller.changePassword);
 userRouter.get("/:id", employeeMiddleware, controller.getOne);
 userRouter.put("/:id", adminMiddleware, controller.update);
 userRouter.delete("/:id", adminMiddleware, controller.deleteOne);
-userRouter.post("/", adminMiddleware, controller.create);
-userRouter.post("/register", controller.register);
+// restaure
+// hard delete
 
 export { userRouter };

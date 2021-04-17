@@ -2,14 +2,30 @@ import * as yup from "yup";
 import { SequelizeManager } from "../../utils/db";
 import { StatusCode } from "../../utils/statusCode";
 import { Response, Request } from "express";
-import { IUser_Creation_Props, IUser_Instance } from "../../models";
+import {
+  ISession_Instance,
+  IUser_Creation_Props,
+  IUser_Instance,
+} from "../../models";
 import { Controller } from "../../core/controller";
-
+import { verify, hash } from "argon2";
+import { addDays } from "date-fns";
+import { AnyObject } from "yup/lib/object";
+import { getToken } from "../../utils/tokenHelper";
 export class UserController extends Controller {
-  schema = yup.object().shape({
+  schema: yup.ObjectSchema<AnyObject> | null = null;
+  registerSchema = yup.object().shape({
     lastName: yup.string().max(120).required(),
     firstName: yup.string().max(120).required(),
     email: yup.string().email().required(),
+    password: yup.string().min(6).required(),
+    birthdate: yup.date(),
+  });
+  creationSchema = yup.object().shape({
+    lastName: yup.string().max(120).required(),
+    firstName: yup.string().max(120).required(),
+    email: yup.string().email().required(),
+    password: yup.string().min(6).required(),
     birthdate: yup.date(),
     userRoleId: yup.number().required(),
   });
@@ -31,6 +47,7 @@ export class UserController extends Controller {
     throw new Error("Not implemented !");
     // get user By cookie
   };
+
   public getOne = async (req: Request, res: Response): Promise<void> => {
     const id = Number(req.params.id);
     const find = await this.findOne(id);
@@ -46,6 +63,7 @@ export class UserController extends Controller {
     res: Response
   ): Promise<void> => {
     try {
+      user.password = await hash(user.password);
       const { User } = await SequelizeManager.getInstance();
       const userCreate = await User.create(user);
       res.json(userCreate).status(StatusCode.CREATED).end();
@@ -57,6 +75,7 @@ export class UserController extends Controller {
 
   public create = async (req: Request, res: Response): Promise<void> => {
     const user = req.body;
+    this.schema = this.creationSchema;
     const isValid = await this.validate(user, res);
     if (isValid === false) return;
     this.insert(user, res);
@@ -64,26 +83,104 @@ export class UserController extends Controller {
 
   public register = async (req: Request, res: Response): Promise<void> => {
     const newUser = req.body;
+    this.schema = this.registerSchema;
     const { UserRole } = await SequelizeManager.getInstance();
     const clientRole = await UserRole.findOne({ where: { name: "CLIENT" } });
     if (clientRole === null) {
       res.status(StatusCode.SERVER_ERROR).end();
       return;
     }
-    newUser.UserRoleId = clientRole.id;
+    newUser.userRoleId = clientRole.id;
     const isValid = await this.validate(newUser, res);
     if (isValid === false) return;
     this.insert(newUser, res);
   };
 
-  public login = async (): Promise<never> => {
-    throw new Error("Not implemented !");
-    // login user
+  public login = async (req: Request, res: Response): Promise<void> => {
+    const { email, password } = req.body;
+
+    const isValidRequest = await this.loginValidationRequest(
+      email,
+      password,
+      res
+    );
+
+    if (isValidRequest === false) return;
+
+    const { User } = await SequelizeManager.getInstance();
+    const user = await User.findOne({ where: { email } });
+
+    const isValidUser = await this.loginUserValidation(user, password, res);
+    if (isValidUser === false) return;
+
+    if (user) {
+      const session = await this.createSession(user);
+      res.json(session).end();
+      return;
+    }
+    res.status(StatusCode.SERVER_ERROR).end();
   };
 
-  public logout = async (): Promise<never> => {
-    throw new Error("Not implemented !");
-    // logout user
+  private async loginUserValidation(
+    user: IUser_Instance | null,
+    password: string,
+    res: Response
+  ): Promise<boolean> {
+    if (user === null) {
+      res.status(StatusCode.BAD_REQUEST).send("incorrect information").end();
+      return false;
+    }
+    const isPasswordCorrect = await verify(user.password, password);
+    if (isPasswordCorrect === false) {
+      res.status(StatusCode.BAD_REQUEST).send("incorrect information").end();
+      return false;
+    }
+    return true;
+  }
+
+  private async loginValidationRequest(
+    email: unknown,
+    password: unknown,
+    res: Response
+  ): Promise<boolean> {
+    const loginSchema = yup.object().shape({
+      email: yup.string().email().required(),
+      password: yup.string().min(6).required(),
+    });
+
+    return await loginSchema
+      .validate({ email, password })
+      .then(() => true)
+      .catch((err) => {
+        res.status(StatusCode.BAD_REQUEST).json(err.message).end();
+        return false;
+      });
+  }
+
+  private async createSession(
+    user: IUser_Instance
+  ): Promise<ISession_Instance> {
+    const { Session } = await SequelizeManager.getInstance();
+    const now = Date.now();
+    const token = await hash(now.toString() + user.email);
+    const expireDate = addDays(now, 1);
+    return await Session.create({
+      token,
+      expireDate,
+      userId: user.id,
+    });
+  }
+
+  public logout = async (req: Request, res: Response): Promise<void> => {
+    const authorization = req.headers.authorization;
+    if (!authorization) {
+      res.status(StatusCode.BAD_REQUEST).end();
+      return;
+    }
+    const token = getToken(authorization);
+    const { Session } = await SequelizeManager.getInstance();
+    Session.destroy({ where: { token } });
+    res.status(StatusCode.DELETED).end();
   };
 
   public changePassword = async (): Promise<never> => {
