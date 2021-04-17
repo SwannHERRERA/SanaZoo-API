@@ -78,6 +78,7 @@ export function userCreator(sequelize: Sequelize): ModelCtor<IUser_Instance> {
       },
       email: {
         type: DataTypes.STRING,
+        unique: true,
       },
       birthdate: {
         type: DataTypes.DATE,
