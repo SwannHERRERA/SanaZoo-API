@@ -6,8 +6,7 @@ import {animalHealthBookRouter} from "./animal/animal_health_book.router";
 import {employeePlanningRouter} from "./planning/employee_planning.router";
 import {zooOpeningRouter} from "./planning/zoo_opening.router";
 import {passRouter} from "./pass/pass.router";
-import {passControlRouter} from "./pass/pass_control.router";
-import {passEscapeGameRouter} from "./pass/pass_escape_game.router";
+import {passEntryRouter} from "./pass/pass_entry.router";
 import {passNightRouter} from "./pass/pass_night.router";
 import {statisticRouter} from "./monitoring/statistic.router";
 import {affluenceRouter} from "./monitoring/affluence.router";
@@ -26,22 +25,21 @@ export function buildRoutes(app: Express) {
     app.use("/enclosure/image", enclosureImageRouter);
     app.use("/enclosure", enclosureRouter);
 
-    app.use("/animal/specie", animalSpecieRouter);
-    app.use("/animal/health", animalHealthBookRouter);
-    app.use("/animal", animalRouter);
+  app.use("/animal/specie", animalSpecieRouter);
+  app.use("/animal/health", animalHealthBookRouter);
+  app.use("/animal", animalRouter);
 
-    app.use("/planning", employeePlanningRouter);
-    app.use("/zoo", zooOpeningRouter);
+  app.use("/planning", employeePlanningRouter);
+  app.use("/zoo", zooOpeningRouter);
 
-    app.use("/pass/control", passControlRouter);
-    app.use("/pass/escape-game", passEscapeGameRouter);
+    app.use("/pass/entry", passEntryRouter);
     app.use("/pass/night", passNightRouter);
     app.use("/pass/type", passTypeRouter);
     app.use("/pass", passRouter);
 
-    app.use("/monitoring/statistic", statisticRouter);
-    app.use("/monitoring/affluence", affluenceRouter);
+  app.use("/monitoring/statistic", statisticRouter);
+  app.use("/monitoring/affluence", affluenceRouter);
 
-    app.use("/user/role", userRoleRouter);
-    app.use("/user", userRouter);
+  app.use("/user/role", userRoleRouter);
+  app.use("/user", userRouter);
 }
