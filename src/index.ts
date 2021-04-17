@@ -8,13 +8,16 @@ import { adminMiddleware } from "./middlewares/admin.middleware";
 
 config();
 
-const app = express();
+process.env.TZ = "Europe/Paris";
 
+const app = express();
 app.use(express.json());
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerJSON));
-// const sequelize = SequelizeManager.getInstance();
 
+// const sequelize = SequelizeManager.getInstance();
 buildRoutes(app);
+//Initialise instance
+SequelizeManager.getInstance();
 
 /**
  * Just testing routes, will be deleted in final release

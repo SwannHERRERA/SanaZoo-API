@@ -1,10 +1,10 @@
 import express from "express";
-import { adminMiddleware, authMiddleware } from "../../middlewares";
 import * as yup from "yup";
 import { Enclosure_Controller } from "../../controllers/enclosure/enclosure.controller";
 import { Enclosure_Service_Book_Controller } from "../../controllers/enclosure/enclosure_service_book.controller";
 import { Enclosure_Image_Controller } from "../../controllers/enclosure/enclosure_image.controller";
 import { IEnclosure_Image_Instance } from "../../models";
+import { authMiddleware, adminMiddleware } from "../../middlewares";
 
 const enclosureRouter = express.Router();
 

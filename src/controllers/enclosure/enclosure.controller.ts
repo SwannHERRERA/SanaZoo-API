@@ -2,7 +2,6 @@ import { ModelCtor } from "sequelize";
 import {
   IAnimal_Instance,
   IEnclosure_Creation_Props,
-  IEnclosure_Image_Creation_Props,
   IEnclosure_Image_Instance,
   IEnclosure_Instance,
   IEnclosure_Service_Book_Instance,
@@ -123,13 +122,22 @@ export class Enclosure_Controller {
     });
   }
 
+  public async getImages(
+    id: number
+  ): Promise<IEnclosure_Image_Instance[] | null> {
+    return this.EnclosureImage.findAll({
+      where: {
+        enclosureId: id,
+      },
+    });
+  }
+
   public async getAllByState(
     state: boolean,
     params?: IEnclosure_Get_All_Params
   ): Promise<IEnclosure_Instance[] | null> {
     const limit = params?.limit || 20;
     const offset = params?.offset || 0;
-
     return this.Enclosure.findAll({
       limit,
       offset,
@@ -139,7 +147,19 @@ export class Enclosure_Controller {
     });
   }
 
-  public async getAllAnimals(enclosureId: number): Promise<IAnimal_Instance[]> {
+  public async getServiceBook(
+    id: number
+  ): Promise<IEnclosure_Service_Book_Instance[] | null> {
+    return this.EnclosureServiceBook.findAll({
+      where: {
+        enclosureId: id,
+      },
+    });
+  }
+
+  public async getAllAnimals(
+    enclosureId: number
+  ): Promise<IAnimal_Instance[] | null> {
     return await this.Animal.findAll({ where: { enclosureId } });
   }
 }

@@ -14,8 +14,7 @@ export interface IUser_Role_Props {
   name: string;
 }
 
-export interface IUser_Role_Creation_Props
-  extends Optional<IUser_Role_Props, "id"> {}
+export type IUser_Role_Creation_Props = Optional<IUser_Role_Props, "id">;
 
 export interface IUser_Role_Instance
   extends Model<IUser_Role_Props, IUser_Role_Creation_Props>,
