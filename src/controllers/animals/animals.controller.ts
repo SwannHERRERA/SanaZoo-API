@@ -1,10 +1,12 @@
 import { Request, Response } from "express";
 import { SequelizeManager } from "../../utils/db";
 import * as yup from "yup";
+import { StatusCode } from "../../utils/statusCode";
+import { Controller } from "../../core/controller";
 
-export class AnimalsController {
-  animalSchema = yup.object().shape({
-    name: yup.string().required(),
+export class AnimalsController extends Controller {
+  schema = yup.object().shape({
+    name: yup.string().max(120).required(),
     description: yup.string(),
     birthdate: yup.date().required(),
     image: yup.string(),
@@ -12,44 +14,36 @@ export class AnimalsController {
     enclosureId: yup.number().required(),
   });
 
-  async validate(animal: unknown, res: Response): Promise<boolean> {
-    return this.animalSchema
-      .validate(animal)
-      .then(() => true)
-      .catch((err) => {
-        res.status(400).json(err.message).end();
-        return false;
-      });
-  }
-
-  async getOneById(req: Request, res: Response): Promise<void> {
+  public getOneById = async (req: Request, res: Response): Promise<void> => {
     try {
       const id = Number(req.params.id);
       const { Animal } = await SequelizeManager.getInstance();
       const animal = await Animal.findByPk(id);
       if (animal === null) {
-        res.status(404).end();
+        res.status(StatusCode.NOT_FOUND).end();
         return;
       }
       res.json(animal);
     } catch (err) {
       console.error(err);
-      res.status(500).end();
+      res.status(StatusCode.SERVER_ERROR).end();
     }
-  }
+  };
 
-  async getAll(req: Request, res: Response): Promise<void> {
+  public getAll = async (req: Request, res: Response): Promise<void> => {
+    const limit = Number(req.query.limit) || 2000;
+    const offset = Number(req.query.offset) || 0;
     try {
       const { Animal } = await SequelizeManager.getInstance();
-      const animals = await Animal.findAll();
+      const animals = await Animal.findAll({ limit, offset });
       res.json(animals);
     } catch (err) {
       console.error(err);
-      res.status(500).end();
+      res.status(StatusCode.SERVER_ERROR).end();
     }
-  }
+  };
 
-  create = async (req: Request, res: Response): Promise<void> => {
+  public create = async (req: Request, res: Response): Promise<void> => {
     const animalPost = req.body;
     const isValid = await this.validate(animalPost, res);
     if (isValid === false) {
@@ -59,18 +53,21 @@ export class AnimalsController {
       const { Animal, Specie } = await SequelizeManager.getInstance();
       const specie = await Specie.findByPk(animalPost.specieId);
       if (!specie) {
-        res.status(404).json({ message: "specie not found" }).end();
+        res
+          .status(StatusCode.NOT_FOUND)
+          .json({ message: "specie not found" })
+          .end();
         return;
       }
       const animalCreate = await Animal.create(animalPost);
-      res.json(animalCreate).status(201);
+      res.json(animalCreate).status(StatusCode.CREATED);
     } catch (err) {
       console.error(err);
-      res.status(500).end();
+      res.status(StatusCode.SERVER_ERROR).end();
     }
   };
 
-  updateOne = async (req: Request, res: Response): Promise<void> => {
+  public updateOne = async (req: Request, res: Response): Promise<void> => {
     const id = Number(req.params.id);
     const animalPost = req.body;
     const isValid = await this.validate(animalPost, res);
@@ -81,52 +78,55 @@ export class AnimalsController {
       const { Animal } = await SequelizeManager.getInstance();
       const animal = await Animal.findByPk(id);
       if (!animal) {
-        res.status(404).end();
+        res.status(StatusCode.NOT_FOUND).end();
         return;
       }
       const animalUpdated = await animal.update(animalPost);
       res.json(animalUpdated);
     } catch (err) {
       console.error(err);
-      res.status(500).end();
+      res.status(StatusCode.SERVER_ERROR).end();
     }
   };
-  async deleteOne(req: Request, res: Response): Promise<void> {
+  public deleteOne = async (req: Request, res: Response): Promise<void> => {
     const id = Number(req.params.id);
     try {
       const { Animal } = await SequelizeManager.getInstance();
       const isDestroyed = await Animal.destroy({ where: { id } });
       if (isDestroyed) {
-        res.status(204).end();
+        res.status(StatusCode.DELETED).end();
       } else {
-        res.status(404).end();
+        res.status(StatusCode.NOT_FOUND).end();
       }
     } catch (err) {
       console.error(err);
-      res.status(500).end();
+      res.status(StatusCode.SERVER_ERROR).end();
     }
-  }
+  };
 
-  async moveEnclosureVerif(req: Request, res: Response): Promise<boolean> {
+  private async moveEnclosureVerif(
+    req: Request,
+    res: Response
+  ): Promise<boolean> {
     const animalId = Number(req.params.id);
     const moveEnclosureSchema = yup.object().shape({
       animalId: yup.number().required(),
       enclosureId: yup.number().required(),
     });
     if (animalId !== req.body.animalId) {
-      res.status(400).end();
+      res.status(StatusCode.BAD_REQUEST).end();
       return false;
     }
     try {
       await moveEnclosureSchema.validate(req.body);
       return true;
     } catch (err) {
-      res.status(400).json(err.message).end();
+      res.status(StatusCode.BAD_REQUEST).json(err.message).end();
       return false;
     }
   }
 
-  moveEnclosure = async (req: Request, res: Response): Promise<void> => {
+  public moveEnclosure = async (req: Request, res: Response): Promise<void> => {
     const reqIsValid = await this.moveEnclosureVerif(req, res);
     if (!reqIsValid) {
       return;
@@ -141,7 +141,7 @@ export class AnimalsController {
       res.json(animalUpdated);
     } catch (err) {
       console.error(err);
-      res.status(500).end();
+      res.status(StatusCode.SERVER_ERROR).end();
     }
   };
 }
