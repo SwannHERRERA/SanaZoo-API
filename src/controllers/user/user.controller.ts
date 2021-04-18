@@ -46,20 +46,9 @@ export class UserController extends Controller {
   };
 
   public me = async (req: Request, res: Response): Promise<void> => {
-    const authorization = req.headers.authorization;
-    if (!authorization) {
-      res.status(StatusCode.UNAUTHORIZED).end();
-      return;
-    }
-    const { User, Session } = await SequelizeManager.getInstance();
-
-    const token = getToken(authorization);
-    const session = await Session.findOne({ where: { token } });
-    if (!session) {
-      res.status(StatusCode.UNAUTHORIZED).end();
-      return;
-    }
-    const user = await User.findByPk(session.userId, {
+    const requestUser = res.locals.user;
+    const { User } = await SequelizeManager.getInstance();
+    const user = await User.findByPk(requestUser.id, {
       attributes: ["firstName", "lastName", "email", "birthdate", "createdAt"],
     });
     if (!user) {
@@ -230,7 +219,7 @@ export class UserController extends Controller {
       return;
     }
 
-    const user = await this.getUserByRequest(req, res);
+    const user = res.locals.user;
     if (user === null) return;
 
     const isActualPasswordCorrect = await verify(user.password, actualPassword);
@@ -248,31 +237,6 @@ export class UserController extends Controller {
       { where: { id: user.id } }
     );
     res.json({ message: "Password updated" }).end();
-  };
-
-  private getUserByRequest = async (
-    req: Request,
-    res: Response
-  ): Promise<IUser_Instance | null> => {
-    const authorization = req.headers.authorization;
-    if (!authorization) {
-      res.status(StatusCode.UNAUTHORIZED).end();
-      return null;
-    }
-    const { User, Session } = await SequelizeManager.getInstance();
-
-    const token = getToken(authorization);
-    const session = await Session.findOne({ where: { token } });
-    if (!session) {
-      res.status(StatusCode.UNAUTHORIZED).end();
-      return null;
-    }
-    const user = await User.findByPk(session.userId);
-    if (!user) {
-      res.status(StatusCode.SERVER_ERROR).end();
-      return null;
-    }
-    return user;
   };
 
   public updateClient = async (req: Request, res: Response): Promise<void> => {
@@ -317,6 +281,7 @@ export class UserController extends Controller {
         res.status(StatusCode.NOT_FOUND).end();
         return;
       }
+      newUser.password = await hash(newUser.password);
       const userUpdated = await user.update(newUser);
       res.json(userUpdated);
     } catch (err) {
