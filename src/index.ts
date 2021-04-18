@@ -2,9 +2,9 @@ import express from "express";
 import { config } from "dotenv";
 import { SequelizeManager } from "./utils/db";
 import swaggerUI from "swagger-ui-express";
-import swaggerJSON from "../docs/swagger.json";
+import swaggerJSON from "../docs/zoo.json";
 import { buildRoutes } from "./routes";
-import { adminMiddleware } from "./middlewares/admin.middleware";
+import { adminMiddleware } from "./middlewares";
 
 config();
 

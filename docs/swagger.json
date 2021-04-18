@@ -5,20 +5,39 @@
     "title": "ZOO API",
     "version": "1.0"
   },
-  "schemes": ["http"],
-  "host": "localhost:3000",
+  "schemes": [
+    "http"
+  ],
+  "host": "localhost:6800",
   "basePath": "/",
   "paths": {
     "/": {
       "get": {
+        "tags": [
+          "Test"
+        ],
         "summary": "Hello World !",
         "description": "Get the hello world",
-        "produces": ["application/json"],
-        "parameters": {
-          "body": {
-            "name": "body"
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Hello World!"
           }
-        },
+        }
+      }
+    },
+    "/animals": {
+      "get": {
+        "tags": [
+          "Animal"
+        ],
+        "description": "Get all animals",
+        "parameters": [{
+          "$ref": ""
+        }
+        ],
         "responses": {
           "200": {
             "description": "successful operation",
@@ -29,117 +48,55 @@
           "400": {
             "description": "Invalid status value",
             "schema": {
-              "error": "error"
             }
           }
         }
       }
+    }
+  },
+  "tags": [
+    {
+      "name": "Test",
+      "description": "Test API endpoint"
     },
-    "/animal/specie": {
-      "get": {
-        "summary": "get all specie",
-        "produces": ["application/json"],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "Specie[]"
-            }
-          },
-          "500": {
-            "description": "error server (probably connection with database)",
-            "schema": {
-              "error": "error"
-            }
-          }
-        }
-      },
-      "post": {
-        "summary": "create a new specie",
-        "produces": ["application/json"],
-        "parameters": ["name", "origin", "description"],
-        "responses": {
-          "201": {
-            "description": "successful operation",
-            "schema": {
-              "type": "Specie"
-            }
-          },
-          "400": {
-            "description": "Bad request",
-            "schema": {
-              "error": "error"
-            }
-          },
-          "500": {
-            "description": "error server",
-            "schema": {
-              "error": "error"
-            }
-          }
-        }
-      }
-    },
-    "/animal/specie/:id": {
-      "get": {
-        "summary": "get a specie",
-        "produces": ["application/json"],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "Specie"
-            }
-          },
-          "500": {
-            "description": "error server",
-            "schema": {
-              "error": "error"
-            }
-          }
-        }
-      },
-      "put": {
-        "summary": "update a specie",
-        "produces": ["application/json"],
-        "parameters": ["name", "origin", "description"],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "Specie"
-            }
-          },
-          "400": {
-            "description": "Bad request",
-            "schema": {
-              "error": "error"
-            }
-          },
-          "500": {
-            "description": "error server",
-            "schema": {
-              "error": "error"
-            }
-          }
-        }
-      },
-      "delete": {
-        "summary": "delete a specie",
-        "produces": ["application/json"],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "boolean"
-            }
-          },
-          "500": {
-            "description": "error server",
-            "schema": {
-              "error": "error"
-            }
-          }
+    {
+      "name": "Animal",
+      "description": "Animal endpoint"
+    }
+  ],
+  "definitions": {
+    "Animal Instance": {
+      "type":"object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "birthdate":{
+          "type": "string"
+        },
+        "image": {
+          "type": "string"
+        },
+        "createdAt":{
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        },
+        "deletedAt":{
+          "type": "string"
+        },
+        "specieId": {
+          "type": "number"
+        },
+        "enclosureId":{
+          "type": "number"
         }
       }
     }
