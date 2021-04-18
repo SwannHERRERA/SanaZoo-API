@@ -1,104 +1,813 @@
 {
-  "swagger": "2.0",
-  "info": {
-    "description": "une API pour un ZOO",
-    "title": "ZOO API",
-    "version": "1.0"
-  },
-  "schemes": [
-    "http"
+  "openapi": "3.0.0",
+  "servers": [
+    {
+      "url": "https://docker.zoo.nospy.fr",
+      "description": "",
+      "variables": {}
+    }
   ],
-  "host": "localhost:6800",
-  "basePath": "/",
+  "info": {
+    "version": "1.1",
+    "title": "ZOO API",
+    "description": "Handy Swagger to run all our zoo endpoints",
+    "termsOfService": "",
+    "contact": {
+      "name": "Nospy"
+    },
+    "license": {
+      "name": ""
+    }
+  },
   "paths": {
-    "/": {
+    "/pass/type/": {
       "get": {
-        "tags": [
-          "Test"
-        ],
-        "summary": "Hello World !",
-        "description": "Get the hello world",
-        "produces": [
-          "application/json"
-        ],
+        "summary": "Get all",
+        "description": "Get all passType",
+        "operationId": "Getall",
+        "parameters": [],
         "responses": {
           "200": {
-            "description": "Hello World!"
+            "description": "",
+            "headers": {}
           }
-        }
+        },
+        "tags": [
+          "Pass Type"
+        ]
+      },
+      "put": {
+        "summary": "Update",
+        "description": "Update an existing Pass Type with given body values",
+        "operationId": "Update",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "requestBody": {
+          "description": "Update an existing Pass Type with given body values",
+          "required": true,
+          "content": {
+            "text/plain": {
+              "schema": {
+                "type": "string",
+                "example": {
+                  "id": 0,
+                  "name": "new name",
+                  "price": 0
+                }
+              },
+              "example": "{\r\n    \"id\": 0,\r\n    \"name\":\"new name\",\r\n    \"price\":0\r\n    }"
+            }
+          }
+        },
+        "tags": [
+          "Pass Type"
+        ]
       }
     },
-    "/animals": {
+    "/pass/type/{passTypeId}": {
       "get": {
-        "tags": [
-          "Animal"
-        ],
-        "description": "Get all animals",
-        "parameters": [{
-          "$ref": ""
-        }
+        "summary": "Get by id",
+        "description": "Get one pass type by id",
+        "operationId": "Getbyid",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/passTypeId"
+          }
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Pass Type"
+        ]
+      },
+      "delete": {
+        "summary": "Delete",
+        "description": "Delete an existing Pass Type",
+        "operationId": "Delete",
+        "parameters": [
+          {
+            "name": "passTypeId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
             "schema": {
-              "type": "string"
+              "type": "number"
+            },
+            "description": "Pass Type Id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Pass Type"
+        ]
+      }
+    },
+    "/type/": {
+      "post": {
+        "summary": "Create",
+        "description": "Add a new pass type",
+        "operationId": "Create",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "requestBody": {
+          "description": "Add a new pass type",
+          "required": true,
+          "content": {
+            "text/plain": {
+              "schema": {
+                "type": "string",
+                "example": {
+                  "name": "string",
+                  "price": 0
+                }
+              },
+              "example": "{\r\n    \"name\":\"string\",\r\n    \"price\":0\r\n}"
+            }
+          }
+        },
+        "tags": [
+          "Pass Type"
+        ]
+      }
+    },
+    "/pass/type/add-pass": {
+      "post": {
+        "summary": "Add pass to pass type",
+        "description": "Assign a Pass to an existing Pass Type",
+        "operationId": "Addpasstopasstype",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "requestBody": {
+          "description": "Assign a Pass to an existing Pass Type",
+          "required": true,
+          "content": {
+            "text/plain": {
+              "schema": {
+                "type": "string",
+                "example": {
+                  "passId": 0,
+                  "passTypeId": 0
+                }
+              },
+              "example": "{\r\n    \"passId\": 0,\r\n    \"passTypeId\": 0\r\n}"
+            }
+          }
+        },
+        "tags": [
+          "Pass Type"
+        ]
+      }
+    },
+    "/pass/entry/": {
+      "get": {
+        "summary": "Get all",
+        "description": "Get all entries with optional\n- limit\n- offset",
+        "operationId": "Getall0",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/limit"
+          },
+          {
+            "$ref": "#/components/parameters/offset"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Entry"
+        ]
+      }
+    },
+    "/pass/entry/user/{userId}": {
+      "get": {
+        "summary": "Get by user",
+        "description": "Get all user entries with optional \n- limit\n- offset",
+        "operationId": "Getbyuser",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": true,
+            "style": "form",
+            "schema": {
+              "type": "number"
             }
           },
-          "400": {
-            "description": "Invalid status value",
+          {
+            "name": "offset",
+            "in": "query",
+            "required": true,
+            "style": "form",
             "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/userId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Entry"
+        ]
+      }
+    },
+    "/pass/entry/pass/{passId}": {},
+    "/pass/night/": {},
+    "/pass": {},
+    "/monitoring/affluence/daily": {
+      "get": {
+        "summary": "Daily",
+        "description": "Get for given day daily affluence",
+        "operationId": "Daily",
+        "parameters": [
+        ],
+        "requestBody": {
+          "description": "Get for given day daily affluence",
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "date": "2021-12-31"
+                }
+              },
+              "example": "{\r\n    \"date\": \"2021-12-31\"\r\n}"
             }
           }
-        }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Affluence"
+        ]
+      }
+    },
+    "/monitoring/affluence/daily/{enclosureId}": {
+      "get": {
+        "summary": "Daily by enclosure",
+        "description": "Get for given day and enclosure daily affluence",
+        "operationId": "Dailybyenclosure",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/enclosureId"
+          }
+        ],
+        "requestBody": {
+          "description": "Get for given day daily affluence",
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "date": "2021-12-31"
+                }
+              },
+              "example": "{\r\n    \"date\": \"2021-12-31\"\r\n}"
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Affluence"
+        ]
+      }
+    },
+    "/monitoring/affluence/weekly": {
+      "get": {
+        "summary": "Weekly",
+        "description": "Get current week total affluence",
+        "operationId": "Weekly",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Affluence"
+        ]
+      }
+    },
+    "/monitoring/affluence/weekly/{enclosureId}": {
+      "get": {
+        "summary": "Weekly by enclosure",
+        "description": "Get current week enclosure total affluence",
+        "operationId": "Weeklybyenclosure",
+        "parameters": [
+          {
+            "name": "enclosureId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "number"
+            },
+            "description": "Enclosure ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Affluence"
+        ]
+      }
+    },
+    "/monitoring/affluence/monthly/{month}": {
+      "get": {
+        "summary": "Monthly",
+        "description": "Get given month total affluence\n\nIf month parameter invalid or empty, it will return for current month",
+        "operationId": "Monthly",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/month"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Affluence"
+        ]
+      }
+    },
+    "/monitoring/affluence/monthly-enclosure/{enclosureId}/{month}": {
+      "get": {
+        "summary": "Monthly by enclosure",
+        "description": "Get given month enclosure's total affluence\n\nIf month parameter invalid or empty, it will return for current month",
+        "operationId": "Monthlybyenclosure",
+        "parameters": [
+          {
+            "name": "enclosureId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "number"
+            },
+            "description": "Enclosure ID"
+          },
+          {
+            "name": "month",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "number"
+            },
+            "description": "Month number (1-12)"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Affluence"
+        ]
+      }
+    },
+    "/monitoring/affluence/yearly/{year}": {
+      "get": {
+        "summary": "Yearly",
+        "description": "Get yearly affluence with details per month.\n\nIf year invalid or empty, return for current year",
+        "operationId": "Yearly",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/year"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Affluence"
+        ]
+      }
+    },
+    "/monitoring/affluence/yearly-enclosure/{enclosureId}/{year}": {
+      "get": {
+        "summary": "Yearly by enclosure",
+        "description": "Get yearly enclosure's affluence with details per month.\n\nIf year invalid or empty, return for current year",
+        "operationId": "Yearlybyenclosure",
+        "parameters": [
+          {
+            "name": "enclosureId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "number"
+            },
+            "description": "Enclosure ID"
+          },
+          {
+            "name": "year",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "number"
+            },
+            "description": "Year"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Affluence"
+        ]
+      }
+    },
+    "/monitoring/affluence/total": {
+      "get": {
+        "summary": "Total",
+        "description": "Get total affluence of the ZOO since it's creation",
+        "operationId": "Total",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Affluence"
+        ]
+      }
+    },
+    "/monitoring/affluence/total/{enclosureId}": {
+      "get": {
+        "summary": "Total by enclosure",
+        "description": "Get total enclosure's affluence of the ZOO since it's creation",
+        "operationId": "Totalbyenclosure",
+        "parameters": [
+          {
+            "name": "enclosureId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "number"
+            },
+            "description": "Enclosure ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Affluence"
+        ]
+      }
+    },
+    "/monitoring/affluence/live/{enclosureId}": {
+      "get": {
+        "summary": "Live enclosure affluence",
+        "description": "Get live enclosure affluence",
+        "operationId": "Liveenclosureaffluence",
+        "parameters": [
+          {
+            "name": "enclosureId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "number"
+            },
+            "description": "Enclosure ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Affluence"
+        ]
+      }
+    },
+    "/monitoring/statistic/count/user": {
+      "get": {
+        "summary": "Count user",
+        "description": "Count total of active users",
+        "operationId": "Countuser",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Statistics"
+        ]
+      }
+    },
+    "/monitoring/statistic/count/enclosure": {
+      "get": {
+        "summary": "Count enclosure",
+        "description": "Count total of enclosures",
+        "operationId": "Countenclosure",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Statistics"
+        ]
+      }
+    },
+    "/monitoring/statistic/count/animal/": {
+      "get": {
+        "summary": "Count animal",
+        "description": "Count total of animals",
+        "operationId": "Countanimal",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Statistics"
+        ]
+      }
+    },
+    "/monitoring/statistic/count/animal/{enclosureId}": {
+      "get": {
+        "summary": "Count animal by enclosure",
+        "description": "Count total of enclosure's animals",
+        "operationId": "Countanimalbyenclosure",
+        "parameters": [
+          {
+            "name": "enclosureId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "number"
+            },
+            "description": "Enclosure ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Statistics"
+        ]
+      }
+    },
+    "/monitoring/statistic/count/pass/valid/": {
+      "get": {
+        "summary": "Count valid pass",
+        "description": "Count total of valid pass",
+        "operationId": "Countvalidpass",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Statistics"
+        ]
+      }
+    },
+    "/monitoring/statistic/count/pass/valid/types": {
+      "get": {
+        "summary": "Count valid pass by types",
+        "description": "Count total of valid pass by types",
+        "operationId": "Countvalidpassbytypes",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Statistics"
+        ]
+      }
+    },
+    "/monitoring/statistic/count/pass/expired": {
+      "get": {
+        "summary": "Count expired pass",
+        "description": "Count total of expired pass",
+        "operationId": "Countexpiredpass",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Statistics"
+        ]
+      }
+    },
+    "/monitoring/statistic/count/pass/": {
+      "get": {
+        "summary": "Count all pass",
+        "description": "Count total of both valid or expired pass",
+        "operationId": "Countallpass",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Statistics"
+        ]
+      }
+    },
+    "/monitoring/statistic/count/pass/types": {
+      "get": {
+        "summary": "Count all pass by types",
+        "description": "Count total of both valid or expired pass by types",
+        "operationId": "Countallpassbytypes",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Statistics"
+        ]
       }
     }
   },
-  "tags": [
-    {
-      "name": "Test",
-      "description": "Test API endpoint"
-    },
-    {
-      "name": "Animal",
-      "description": "Animal endpoint"
-    }
-  ],
-  "definitions": {
-    "Animal Instance": {
-      "type":"object",
-      "properties": {
-        "id": {
-          "type": "integer"
-        },
-        "name": {
-          "type": "string"
-        },
-        "description": {
-          "type": "string"
-        },
-        "birthdate":{
-          "type": "string"
-        },
-        "image": {
-          "type": "string"
-        },
-        "createdAt":{
-          "type": "string"
-        },
-        "updatedAt": {
-          "type": "string"
-        },
-        "deletedAt":{
-          "type": "string"
-        },
-        "specieId": {
+  "components": {
+    "parameters": {
+      "passTypeId": {
+        "name": "passTypeId",
+        "in": "path",
+        "required": true,
+        "style": "simple",
+        "schema": {
           "type": "number"
         },
-        "enclosureId":{
+        "description": "Pass Type Id"
+      },
+      "limit": {
+        "name": "limit",
+        "in": "query",
+        "required": false,
+        "style": "form",
+        "schema": {
+          "default": 20,
           "type": "number"
         }
+      },
+      "offset": {
+        "name": "offset",
+        "in": "query",
+        "required": false,
+        "style": "form",
+        "schema": {
+          "default": 1,
+          "type": "number"
+        }
+      },
+      "userId": {
+        "name": "userId",
+        "in": "path",
+        "required": true,
+        "style": "simple",
+        "schema": {
+          "type": "number"
+        },
+        "description": "User ID"
+      },
+      "enclosureId": {
+        "name": "enclosureId",
+        "in": "path",
+        "required": true,
+        "style": "simple",
+        "schema": {
+          "type": "number"
+        },
+        "description": "Enclosure ID"
+      },
+      "month": {
+        "name": "month",
+        "in": "path",
+        "required": false,
+        "style": "simple",
+        "schema": {
+          "type": "number"
+        },
+        "description": "Month number (1-12)",
+        "$ref": "#/components/parameters/month"
+      },
+      "year": {
+        "name": "year",
+        "in": "path",
+        "required": false,
+        "style": "simple",
+        "schema": {
+          "type": "number"
+        },
+        "description": "Year",
+        "$ref": "#/components/parameters/year"
+      }
+    },
+    "securitySchemes": {
+      "bearer": {
+        "type": "http",
+        "scheme": "bearer"
       }
     }
+  },
+  "security": [
+    {
+      "bearer": []
+    }
+  ],
+  "tags": [],
+  "externalDocs": {
+    "url": "",
+    "description": ""
   }
 }
