@@ -13,9 +13,11 @@ export interface ISession_Props {
   id: number;
   token: string;
   expireDate: Date;
+  userId: number;
 }
 
-export type ISession_Creation_Props = Optional<ISession_Props, "id">;
+export interface ISession_Creation_Props
+  extends Optional<ISession_Props, "id"> {}
 
 export interface ISession_Instance
   extends Model<ISession_Props, ISession_Creation_Props>,
@@ -42,6 +44,14 @@ export function sessionCreator(
       expireDate: {
         type: DataTypes.DATE,
         allowNull: false,
+      },
+      userId: {
+        type: DataTypes.BIGINT,
+        allowNull: true,
+        references: {
+          model: "User",
+          key: "id",
+        },
       },
     },
     {
