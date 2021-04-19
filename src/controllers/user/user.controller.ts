@@ -220,7 +220,7 @@ export class UserController extends Controller {
     }
 
     const user = res.locals.user;
-    if (user === null) return;
+    if (!user) return;
 
     const isActualPasswordCorrect = await verify(user.password, actualPassword);
     if (isActualPasswordCorrect === false) {
@@ -243,6 +243,7 @@ export class UserController extends Controller {
     try {
       const id = Number(req.params.id);
       const newUser = req.body;
+      this.schema = this.creationSchema;
       const isValid = await this.validate(newUser, res);
       if (isValid === false) return;
       const { User, UserRole } = await SequelizeManager.getInstance();
@@ -252,7 +253,7 @@ export class UserController extends Controller {
         return;
       }
 
-      const userRole = await UserRole.findByPk(user?.userRoleId);
+      const userRole = await UserRole.findByPk(user.userRoleId);
       if (userRole === null) {
         res.status(StatusCode.SERVER_ERROR).end();
         return;
@@ -261,6 +262,7 @@ export class UserController extends Controller {
         res.status(StatusCode.FORBIDDEN).end();
         return;
       }
+      newUser.password = await hash(newUser.password);
       const userUpdated = await user.update(newUser);
       res.json(userUpdated);
     } catch (err) {

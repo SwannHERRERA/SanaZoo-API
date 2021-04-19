@@ -16,7 +16,7 @@ export class AnimalsHealsBookController extends Controller {
 
   public getOneById = async (req: Request, res: Response): Promise<void> => {
     try {
-      const healsId = Number(req.body.id);
+      const healsId = Number(req.params.id);
       const { AnimalHealthBook } = await SequelizeManager.getInstance();
       const healsBook = await AnimalHealthBook.findByPk(healsId);
       if (healsBook === null) {
@@ -96,7 +96,7 @@ export class AnimalsHealsBookController extends Controller {
   };
 
   public updateOne = async (req: Request, res: Response): Promise<void> => {
-    const healsId = Number(req.body.id);
+    const healsId = Number(req.params.id);
     const heals = req.body;
     const isValid = await this.validate(heals, res);
     if (isValid === false) {
@@ -129,12 +129,12 @@ export class AnimalsHealsBookController extends Controller {
     }
   };
   public deleteOne = async (req: Request, res: Response): Promise<void> => {
-    const id = Number(req.body.id);
+    const id = Number(req.params.id);
     try {
       const { AnimalHealthBook } = await SequelizeManager.getInstance();
       const isDestroyed = await AnimalHealthBook.destroy({ where: { id } });
       if (isDestroyed) {
-        res.status(StatusCode.CREATED).end();
+        res.status(StatusCode.DELETED).end();
       } else {
         res.status(StatusCode.NOT_FOUND).end();
       }
@@ -159,7 +159,10 @@ export class AnimalsHealsBookController extends Controller {
           .end();
         return;
       }
-      AnimalHealthBook.findAll({ where: { animalId } });
+      const healthBook = await AnimalHealthBook.findAll({
+        where: { animalId },
+      });
+      res.json(healthBook);
     } catch (err) {
       console.error(err);
       res.status(StatusCode.SERVER_ERROR).end();
