@@ -50,7 +50,7 @@ passEntryRouter.post("/", employeeMiddleware, async (req, res) => {
 /**
  * Delete entry
  */
-passEntryRouter.post("/", employeeMiddleware, async (req, res) => {
+passEntryRouter.post("/:id", employeeMiddleware, async (req, res) => {
   await (await getEntryController()).deleteEntry(req, res);
 });
 

@@ -8,7 +8,7 @@
     }
   ],
   "info": {
-    "version": "433f4cb1-c2e4-4741-b8f6-9628b46cc38e",
+    "version": "1.1",
     "title": "zoo api",
     "description": "",
     "termsOfService": "",
@@ -20,57 +20,14 @@
   "paths": {
     "/pass/type/": {
       "get": {
-        "summary": "get all",
-        "operationId": "getall",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/PORTBASE_PATH"
-          }
-        ],
+        "summary": "Get all",
+        "description": "Get all passType",
+        "operationId": "Getall",
+        "parameters": [],
         "responses": {
           "200": {
             "description": "",
             "headers": {}
-          }
-        },
-        "tags": [
-          "Pass Type"
-        ]
-      },
-      "post": {
-        "summary": "add",
-        "operationId": "add",
-        "parameters": [
-          {
-            "name": "PORTBASE_PATH",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "PORTBASE_PATH"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "headers": {}
-          }
-        },
-        "requestBody": {
-          "required": true,
-          "content": {
-            "text/plain": {
-              "schema": {
-                "type": "string",
-                "example": {
-                  "name": "fvdbdby",
-                  "price": "63.5"
-                }
-              },
-              "example": "{\r\n    \"name\":\"fvdbdby\",\r\n    \"price\":\"63.5\"\r\n}"
-            }
           }
         },
         "tags": [
@@ -78,20 +35,10 @@
         ]
       },
       "put": {
-        "summary": "update",
-        "operationId": "update",
-        "parameters": [
-          {
-            "name": "PORTBASE_PATH",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "PORTBASE_PATH"
-            }
-          }
-        ],
+        "summary": "Update",
+        "description": "Update an existing Pass Type with given body values",
+        "operationId": "Update",
+        "parameters": [],
         "responses": {
           "200": {
             "description": "",
@@ -99,18 +46,19 @@
           }
         },
         "requestBody": {
+          "description": "Update an existing Pass Type with given body values",
           "required": true,
           "content": {
             "text/plain": {
               "schema": {
                 "type": "string",
                 "example": {
-                  "id": 10,
-                  "name": "pzzz",
-                  "price": "63.5"
+                  "id": 0,
+                  "name": "new name",
+                  "price": 0
                 }
               },
-              "example": "{\r\n    \"id\":10,\r\n    \"name\":\"pzzz\",\r\n    \"price\":\"63.5\"\r\n    }"
+              "example": "{\r\n    \"id\": 0,\r\n    \"name\":\"new name\",\r\n    \"price\":0\r\n    }"
             }
           }
         },
@@ -119,26 +67,79 @@
         ]
       }
     },
-    "/pass/type/5": {
+    "/pass/type/{passTypeId}": {
       "get": {
-        "summary": "get all by id",
-        "operationId": "getallbyid",
+        "summary": "Get by id",
+        "description": "Get one pass type by id",
+        "operationId": "Getbyid",
         "parameters": [
           {
-            "name": "PORTBASE_PATH",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "PORTBASE_PATH"
-            }
+            "$ref": "#/components/parameters/passTypeId"
           }
         ],
         "responses": {
           "200": {
             "description": "",
             "headers": {}
+          }
+        },
+        "tags": [
+          "Pass Type"
+        ]
+      },
+      "delete": {
+        "summary": "Delete",
+        "description": "Delete an existing Pass Type",
+        "operationId": "Delete",
+        "parameters": [
+          {
+            "name": "passTypeId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "number"
+            },
+            "description": "Pass Type Id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Pass Type"
+        ]
+      }
+    },
+    "/type/": {
+      "post": {
+        "summary": "Create",
+        "description": "Add a new pass type",
+        "operationId": "Create",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "requestBody": {
+          "description": "Add a new pass type",
+          "required": true,
+          "content": {
+            "text/plain": {
+              "schema": {
+                "type": "string",
+                "example": {
+                  "name": "string",
+                  "price": 0
+                }
+              },
+              "example": "{\r\n    \"name\":\"string\",\r\n    \"price\":0\r\n}"
+            }
           }
         },
         "tags": [
@@ -148,20 +149,10 @@
     },
     "/pass/type/add-pass": {
       "post": {
-        "summary": "add pass",
-        "operationId": "addpass",
-        "parameters": [
-          {
-            "name": "PORTBASE_PATH",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "PORTBASE_PATH"
-            }
-          }
-        ],
+        "summary": "Add pass to pass type",
+        "description": "Assign a Pass to an existing Pass Type",
+        "operationId": "Addpasstopasstype",
+        "parameters": [],
         "responses": {
           "200": {
             "description": "",
@@ -169,45 +160,19 @@
           }
         },
         "requestBody": {
+          "description": "Assign a Pass to an existing Pass Type",
           "required": true,
           "content": {
             "text/plain": {
               "schema": {
                 "type": "string",
                 "example": {
-                  "passId": 1,
-                  "passTypeId": 5
+                  "passId": 0,
+                  "passTypeId": 0
                 }
               },
-              "example": "{\r\n    \"passId\":1,\r\n    \"passTypeId\": 5\r\n}"
+              "example": "{\r\n    \"passId\": 0,\r\n    \"passTypeId\": 0\r\n}"
             }
-          }
-        },
-        "tags": [
-          "Pass Type"
-        ]
-      }
-    },
-    "/pass/type/42": {
-      "delete": {
-        "summary": "delete",
-        "operationId": "delete",
-        "parameters": [
-          {
-            "name": "PORTBASE_PATH",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "PORTBASE_PATH"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "headers": {}
           }
         },
         "tags": [
@@ -218,17 +183,14 @@
     "/pass/entry/": {
       "get": {
         "summary": "Get all",
-        "operationId": "Getall",
+        "description": "Get all entries with optional\n- limit\n- offset",
+        "operationId": "Getall0",
         "parameters": [
           {
-            "name": "PORTBASE_PATH",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "PORTBASE_PATH"
-            }
+            "$ref": "#/components/parameters/limit"
+          },
+          {
+            "$ref": "#/components/parameters/offset"
           }
         ],
         "responses": {
@@ -243,19 +205,9 @@
       },
       "post": {
         "summary": "Add entry",
+        "description": "Add new entry between existing Pass and Enclosure",
         "operationId": "Addentry",
-        "parameters": [
-          {
-            "name": "PORTBASE_PATH",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "PORTBASE_PATH"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "",
@@ -263,17 +215,18 @@
           }
         },
         "requestBody": {
+          "description": "Add new entry between existing Pass and Enclosure",
           "required": true,
           "content": {
             "text/plain": {
               "schema": {
                 "type": "string",
                 "example": {
-                  "passId": 1,
-                  "enclosureId": 1
+                  "passId": 0,
+                  "enclosureId": 0
                 }
               },
-              "example": "{\r\n    \"passId\":1,\r\n    \"enclosureId\":1\r\n}"
+              "example": "{\r\n    \"passId\":0,\r\n    \"enclosureId\":0\r\n}"
             }
           }
         },
@@ -282,20 +235,32 @@
         ]
       }
     },
-    "/pass/entry/user/1": {
+    "/pass/entry/user/{userId}": {
       "get": {
         "summary": "Get by user",
+        "description": "Get all user entries with optional \n- limit\n- offset",
         "operationId": "Getbyuser",
         "parameters": [
           {
-            "name": "PORTBASE_PATH",
-            "in": "path",
+            "name": "limit",
+            "in": "query",
             "required": true,
-            "style": "simple",
+            "style": "form",
             "schema": {
-              "type": "string",
-              "example": "PORTBASE_PATH"
+              "type": "number"
             }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": true,
+            "style": "form",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/userId"
           }
         ],
         "responses": {
@@ -309,20 +274,32 @@
         ]
       }
     },
-    "/pass/entry/pass/1": {
+    "/pass/entry/pass/{passId}": {
       "get": {
         "summary": "Get by pass",
+        "description": "Get all entries on a Pass with optional \n- limit\n- offset",
         "operationId": "Getbypass",
         "parameters": [
           {
-            "name": "PORTBASE_PATH",
-            "in": "path",
+            "name": "limit",
+            "in": "query",
             "required": true,
-            "style": "simple",
+            "style": "form",
             "schema": {
-              "type": "string",
-              "example": "PORTBASE_PATH"
+              "type": "number"
             }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": true,
+            "style": "form",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/passId"
           }
         ],
         "responses": {
@@ -336,20 +313,53 @@
         ]
       }
     },
-    "/pass/entry/enclosure/1": {
+    "/pass/entry/enclosure/{enclosureId}": {
       "get": {
         "summary": "Get by enclosure",
+        "description": "Get all enclosure's entries with optional \n- limit\n- offset",
         "operationId": "Getbyenclosure",
         "parameters": [
           {
-            "name": "PORTBASE_PATH",
-            "in": "path",
+            "name": "limit",
+            "in": "query",
             "required": true,
-            "style": "simple",
+            "style": "form",
             "schema": {
-              "type": "string",
-              "example": "PORTBASE_PATH"
+              "type": "number"
             }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": true,
+            "style": "form",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/enclosureId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Entry"
+        ]
+      }
+    },
+    "/pass/entry/{entryId}": {
+      "delete": {
+        "summary": "Remove entry",
+        "description": "Remove entry between existing Pass and Enclosure",
+        "operationId": "Removeentry",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/entryId"
           }
         ],
         "responses": {
@@ -365,17 +375,26 @@
     },
     "/pass/night/": {
       "get": {
-        "summary": "Get all passnight",
-        "operationId": "Getallpassnight",
+        "summary": "Get all",
+        "description": "Get all pass night with optional \n- limit\n- offset",
+        "operationId": "Getall0",
         "parameters": [
           {
-            "name": "PORTBASE_PATH",
-            "in": "path",
+            "name": "limit",
+            "in": "query",
             "required": true,
-            "style": "simple",
+            "style": "form",
             "schema": {
-              "type": "string",
-              "example": "PORTBASE_PATH"
+              "type": "number"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": true,
+            "style": "form",
+            "schema": {
+              "type": "number"
             }
           }
         ],
@@ -386,24 +405,14 @@
           }
         },
         "tags": [
-          "pass night"
+          "Pass Night"
         ]
       },
       "post": {
-        "summary": "Add pass night availability",
-        "operationId": "Addpassnightavailability",
-        "parameters": [
-          {
-            "name": "PORTBASE_PATH",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "PORTBASE_PATH"
-            }
-          }
-        ],
+        "summary": "Add availability",
+        "description": "Add new pass night availability",
+        "operationId": "Addavailability",
+        "parameters": [],
         "responses": {
           "200": {
             "description": "",
@@ -411,37 +420,47 @@
           }
         },
         "requestBody": {
+          "description": "Add new pass night availability",
           "required": true,
           "content": {
             "text/plain": {
               "schema": {
                 "type": "string",
                 "example": {
-                  "date": "2021-04-31"
+                  "date": "2021-12-31"
                 }
               },
-              "example": "{\r\n \"date\":\"2021-04-31\"\r\n}"
+              "example": "{\r\n \"date\":\"2021-12-31\"\r\n}"
             }
           }
         },
         "tags": [
-          "pass night"
+          "Pass Night"
         ]
       }
     },
     "/pass/night/available": {
       "get": {
-        "summary": "Get all valid passnight",
-        "operationId": "Getallvalidpassnight",
+        "summary": "Get all valid",
+        "description": "Get all available pass night with optional\n- limit\n- offset",
+        "operationId": "Getallvalid",
         "parameters": [
           {
-            "name": "PORTBASE_PATH",
-            "in": "path",
+            "name": "limit",
+            "in": "query",
             "required": true,
-            "style": "simple",
+            "style": "form",
             "schema": {
-              "type": "string",
-              "example": "PORTBASE_PATH"
+              "type": "number"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": true,
+            "style": "form",
+            "schema": {
+              "type": "number"
             }
           }
         ],
@@ -452,24 +471,18 @@
           }
         },
         "tags": [
-          "pass night"
+          "Pass Night"
         ]
       }
     },
-    "/pass/night/11": {
+    "/pass/night/{passNightAvailabilityId}": {
       "put": {
         "summary": "Update  passnight",
+        "description": "Update a availability date for pass night",
         "operationId": "Updatepassnight",
         "parameters": [
           {
-            "name": "PORTBASE_PATH",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "PORTBASE_PATH"
-            }
+            "$ref": "#/components/parameters/passNightAvailabilityId"
           }
         ],
         "responses": {
@@ -479,6 +492,7 @@
           }
         },
         "requestBody": {
+          "description": "Update a availability date for pass night",
           "required": true,
           "content": {
             "text/plain": {
@@ -493,24 +507,23 @@
           }
         },
         "tags": [
-          "pass night"
+          "Pass Night"
         ]
-      }
-    },
-    "/pass/night/10": {
+      },
       "delete": {
         "summary": "Delete passnight",
+        "description": "Remove a Pass Night availability",
         "operationId": "Deletepassnight",
         "parameters": [
           {
-            "name": "PORTBASE_PATH",
+            "name": "passNightAvailabilityId",
             "in": "path",
             "required": true,
             "style": "simple",
             "schema": {
-              "type": "string",
-              "example": "PORTBASE_PATH"
-            }
+              "type": "number"
+            },
+            "description": "Pass Night Availability ID"
           }
         ],
         "responses": {
@@ -520,23 +533,32 @@
           }
         },
         "tags": [
-          "pass night"
+          "Pass Night"
         ]
       }
     },
-    "/pass/": {
-      "post": {
-        "summary": "Add pass",
-        "operationId": "Addpass",
+    "/pass": {
+      "get": {
+        "summary": "Get all",
+        "description": "Get all pass with optional \n- limit\n- offset",
+        "operationId": "Getall0",
         "parameters": [
           {
-            "name": "PORTBASE_PATH",
-            "in": "path",
+            "name": "limit",
+            "in": "query",
             "required": true,
-            "style": "simple",
+            "style": "form",
             "schema": {
-              "type": "string",
-              "example": "PORTBASE_PATH"
+              "type": "number"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": true,
+            "style": "form",
+            "schema": {
+              "type": "number"
             }
           }
         ],
@@ -546,44 +568,106 @@
             "headers": {}
           }
         },
-        "requestBody": {
-          "required": true,
-          "content": {
-            "text/plain": {
-              "schema": {
-                "type": "string",
-                "example": {
-                  "validDate": "2021-04-11",
-                  "userId": 1,
-                  "passTypeId": 6,
-                  "enclosureAccessList": [
-                    1
-                  ]
-                }
-              },
-              "example": "{\r\n    \"validDate\":\"2021-04-11\",\r\n    \"userId\":1,\r\n    \"passTypeId\":6,\r\n    \"enclosureAccessList\":[\r\n        1\r\n    ]\r\n}"
-            }
-          }
-        },
         "tags": [
-          "pass night"
+          "Pass"
         ]
       }
     },
-    "/pass/1": {
+    "/pass/user/{userId}": {
+      "get": {
+        "summary": "Get all by user id",
+        "description": "Get all user pass",
+        "operationId": "Getallbyuserid",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "number"
+            },
+            "description": "User ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Pass"
+        ]
+      }
+    },
+    "/pass/{passId}": {
+      "get": {
+        "summary": "Get by id",
+        "description": "Get a specific pass by given ID with \n- all it's enclosure access\n- all it's enclosure entries",
+        "operationId": "Getbyid",
+        "parameters": [
+          {
+            "name": "passId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "number"
+            },
+            "description": "Pass ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Pass"
+        ]
+      },
+      "delete": {
+        "summary": "Delete pass",
+        "description": "Delete a pass",
+        "operationId": "Deletepass",
+        "parameters": [
+          {
+            "name": "passId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "number"
+            },
+            "description": "Pass ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Pass"
+        ]
+      },
       "put": {
         "summary": "Update pass",
+        "description": "Update a pass\n\nOnly Type is updatable by this endpoint.",
         "operationId": "Updatepass",
         "parameters": [
           {
-            "name": "PORTBASE_PATH",
+            "name": "passId",
             "in": "path",
             "required": true,
             "style": "simple",
             "schema": {
-              "type": "string",
-              "example": "PORTBASE_PATH"
-            }
+              "type": "number"
+            },
+            "description": "Pass ID\n"
           }
         ],
         "responses": {
@@ -593,6 +677,7 @@
           }
         },
         "requestBody": {
+          "description": "Update a pass\n\nOnly Type is updatable by this endpoint.",
           "required": true,
           "content": {
             "text/plain": {
@@ -607,132 +692,16 @@
           }
         },
         "tags": [
-          "pass night"
-        ]
-      },
-      "get": {
-        "summary": "Get pass by id",
-        "operationId": "Getpassbyid",
-        "parameters": [
-          {
-            "name": "PORTBASE_PATH",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "PORTBASE_PATH"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "headers": {}
-          }
-        },
-        "tags": [
-          "pass night"
+          "Pass"
         ]
       }
     },
-    "/pass": {
-      "get": {
-        "summary": "Get all pass",
-        "operationId": "Getallpass",
-        "parameters": [
-          {
-            "name": "PORTBASE_PATH",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "PORTBASE_PATH"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "headers": {}
-          }
-        },
-        "tags": [
-          "pass night"
-        ]
-      }
-    },
-    "/pass/user/1": {
-      "get": {
-        "summary": "Get all pass by user id",
-        "operationId": "Getallpassbyuserid",
-        "parameters": [
-          {
-            "name": "PORTBASE_PATH",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "PORTBASE_PATH"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "headers": {}
-          }
-        },
-        "tags": [
-          "pass night"
-        ]
-      }
-    },
-    "/pass/2": {
-      "delete": {
-        "summary": "Delete pass",
-        "operationId": "Deletepass",
-        "parameters": [
-          {
-            "name": "PORTBASE_PATH",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "PORTBASE_PATH"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "headers": {}
-          }
-        },
-        "tags": [
-          "pass night"
-        ]
-      }
-    },
-    "/pass/enclosure-access": {
+    "/pass/": {
       "post": {
-        "summary": "Add pass enclosure access",
-        "operationId": "Addpassenclosureaccess",
-        "parameters": [
-          {
-            "name": "PORTBASE_PATH",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "PORTBASE_PATH"
-            }
-          }
-        ],
+        "summary": "Create",
+        "description": "Create a new pass with enclosure access list",
+        "operationId": "Create4",
+        "parameters": [],
         "responses": {
           "200": {
             "description": "",
@@ -740,33 +709,88 @@
           }
         },
         "requestBody": {
+          "description": "Create a new pass with enclosure access list",
           "required": true,
           "content": {
             "text/plain": {
               "schema": {
                 "type": "string",
                 "example": {
-                  "enclosureId": 1,
-                  "passId": 1
+                  "validDate": "2021-12-31",
+                  "userId": 0,
+                  "passTypeId": 0,
+                  "enclosureAccessList": [
+                    0
+                  ]
                 }
               },
-              "example": "{\r\n    \"enclosureId\":1,\r\n    \"passId\":1\r\n}"
+              "example": "{\r\n    \"validDate\":\"2021-12-31\",\r\n    \"userId\":0,\r\n    \"passTypeId\":0,\r\n    \"enclosureAccessList\":[\r\n        0\r\n    ]\r\n}"
             }
           }
         },
         "tags": [
-          "pass night"
+          "Pass"
         ]
-      },
+      }
+    },
+    "/pass/enclosure-access": {
+      "post": {
+        "summary": "Add enclosure access",
+        "description": "Add to an existing pass enclosure access",
+        "operationId": "Addenclosureaccess",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "requestBody": {
+          "description": "Add to an existing pass enclosure access",
+          "required": true,
+          "content": {
+            "text/plain": {
+              "schema": {
+                "type": "string",
+                "example": {
+                  "enclosureId": 0,
+                  "passId": 0
+                }
+              },
+              "example": "{\r\n    \"enclosureId\":0,\r\n    \"passId\":0\r\n}"
+            }
+          }
+        },
+        "tags": [
+          "Pass"
+        ]
+      }
+    },
+    "/pass/enclosure-access/{passId}/{enclosureId}": {
       "delete": {
-        "summary": "Remove pass enclosure access",
-        "operationId": "Removepassenclosureaccess",
+        "summary": "Remove enclosure access",
+        "description": "Remove to an existing pass an enclosure access",
+        "operationId": "Removeenclosureaccess",
         "parameters": [
           {
-            "$ref": "#/components/parameters/passId"
+            "name": "passId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "number"
+            },
+            "description": "Pass ID"
           },
           {
-            "$ref": "#/components/parameters/enclosureId"
+            "name": "enclosureId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "number"
+            },
+            "description": "Enclosure ID"
           }
         ],
         "responses": {
@@ -776,26 +800,16 @@
           }
         },
         "tags": [
-          "pass night"
+          "Pass"
         ]
       }
     },
     "/monitoring/affluence/daily": {
       "get": {
-        "summary": "Daily affluence",
-        "operationId": "Dailyaffluence",
-        "parameters": [
-          {
-            "name": "PORTBASE_PATH",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "PORTBASE_PATH"
-            }
-          }
-        ],
+        "summary": "Daily",
+        "description": "Get for given day daily affluence",
+        "operationId": "Daily",
+        "parameters": [],
         "responses": {
           "200": {
             "description": "",
@@ -807,20 +821,21 @@
         ]
       }
     },
-    "/monitoring/affluence/daily/1": {
+    "/monitoring/affluence/daily/{enclosureId}": {
       "get": {
-        "summary": "Daily affluence by enclosure",
-        "operationId": "Dailyaffluencebyenclosure",
+        "summary": "Daily by enclosure",
+        "description": "Get for given day and enclosure daily affluence",
+        "operationId": "Dailybyenclosure",
         "parameters": [
           {
-            "name": "PORTBASE_PATH",
+            "name": "enclosureId",
             "in": "path",
             "required": true,
             "style": "simple",
             "schema": {
-              "type": "string",
-              "example": "PORTBASE_PATH"
-            }
+              "type": "number"
+            },
+            "description": "Enclosure ID"
           }
         ],
         "responses": {
@@ -836,18 +851,36 @@
     },
     "/monitoring/affluence/weekly": {
       "get": {
-        "summary": "Weekly affluence",
-        "operationId": "Weeklyaffluence",
+        "summary": "Weekly",
+        "description": "Get current week total affluence",
+        "operationId": "Weekly",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Affluence"
+        ]
+      }
+    },
+    "/monitoring/affluence/weekly/{enclosureId}": {
+      "get": {
+        "summary": "Weekly by enclosure",
+        "description": "Get current week enclosure total affluence",
+        "operationId": "Weeklybyenclosure",
         "parameters": [
           {
-            "name": "PORTBASE_PATH",
+            "name": "enclosureId",
             "in": "path",
             "required": true,
             "style": "simple",
             "schema": {
-              "type": "string",
-              "example": "PORTBASE_PATH"
-            }
+              "type": "number"
+            },
+            "description": "Enclosure ID"
           }
         ],
         "responses": {
@@ -861,20 +894,14 @@
         ]
       }
     },
-    "/monitoring/affluence/weekly/1": {
+    "/monitoring/affluence/monthly/{month}": {
       "get": {
-        "summary": "Weekly affluence by enclosure",
-        "operationId": "Weeklyaffluencebyenclosure",
+        "summary": "Monthly",
+        "description": "Get given month total affluence\n\nIf month parameter invalid or empty, it will return for current month",
+        "operationId": "Monthly",
         "parameters": [
           {
-            "name": "PORTBASE_PATH",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "PORTBASE_PATH"
-            }
+            "$ref": "#/components/parameters/month"
           }
         ],
         "responses": {
@@ -888,20 +915,31 @@
         ]
       }
     },
-    "/monitoring/affluence/monthly/4": {
+    "/monitoring/affluence/monthly-enclosure/{enclosureId}/{month}": {
       "get": {
-        "summary": "Monthly  affluence",
-        "operationId": "Monthlyaffluence",
+        "summary": "Monthly by enclosure",
+        "description": "Get given month enclosure's total affluence\n\nIf month parameter invalid or empty, it will return for current month",
+        "operationId": "Monthlybyenclosure",
         "parameters": [
           {
-            "name": "PORTBASE_PATH",
+            "name": "enclosureId",
             "in": "path",
             "required": true,
             "style": "simple",
             "schema": {
-              "type": "string",
-              "example": "PORTBASE_PATH"
-            }
+              "type": "number"
+            },
+            "description": "Enclosure ID"
+          },
+          {
+            "name": "month",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "number"
+            },
+            "description": "Month number (1-12)"
           }
         ],
         "responses": {
@@ -915,21 +953,14 @@
         ]
       }
     },
-    "/monitoring/affluence/monthly-enclosure/1/4": {
+    "/monitoring/affluence/yearly/{year}": {
       "get": {
-        "summary": "Monthly affluence by enclosure",
-        "description": "Premier paramètre : id enclot\nDeuxième paramètre : mois (optionnel)",
-        "operationId": "Monthlyaffluencebyenclosure",
+        "summary": "Yearly",
+        "description": "Get yearly affluence with details per month.\n\nIf year invalid or empty, return for current year",
+        "operationId": "Yearly",
         "parameters": [
           {
-            "name": "PORTBASE_PATH",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "PORTBASE_PATH"
-            }
+            "$ref": "#/components/parameters/year"
           }
         ],
         "responses": {
@@ -943,48 +974,31 @@
         ]
       }
     },
-    "/monitoring/affluence/yearly/2021": {
+    "/monitoring/affluence/yearly-enclosure/{enclosureId}/{year}": {
       "get": {
-        "summary": "Yearly  affluence",
-        "operationId": "Yearlyaffluence",
+        "summary": "Yearly by enclosure",
+        "description": "Get yearly enclosure's affluence with details per month.\n\nIf year invalid or empty, return for current year",
+        "operationId": "Yearlybyenclosure",
         "parameters": [
           {
-            "name": "PORTBASE_PATH",
+            "name": "enclosureId",
             "in": "path",
             "required": true,
             "style": "simple",
             "schema": {
-              "type": "string",
-              "example": "PORTBASE_PATH"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "headers": {}
-          }
-        },
-        "tags": [
-          "Affluence"
-        ]
-      }
-    },
-    "/monitoring/affluence/yearly-enclosure/6/2021": {
-      "get": {
-        "summary": "Yearly affluence by enclosure",
-        "description": "Premier paramètre : id enclot\nDeuxième paramètre : mois (optionnel)",
-        "operationId": "Yearlyaffluencebyenclosure",
-        "parameters": [
+              "type": "number"
+            },
+            "description": "Enclosure ID"
+          },
           {
-            "name": "PORTBASE_PATH",
+            "name": "year",
             "in": "path",
             "required": true,
             "style": "simple",
             "schema": {
-              "type": "string",
-              "example": "PORTBASE_PATH"
-            }
+              "type": "number"
+            },
+            "description": "Year"
           }
         ],
         "responses": {
@@ -1000,21 +1014,10 @@
     },
     "/monitoring/affluence/total": {
       "get": {
-        "summary": "Total affluence",
-        "description": "Premier paramètre : id enclot\nDeuxième paramètre : mois (optionnel)",
-        "operationId": "Totalaffluence",
-        "parameters": [
-          {
-            "name": "PORTBASE_PATH",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "PORTBASE_PATH"
-            }
-          }
-        ],
+        "summary": "Total",
+        "description": "Get total affluence of the ZOO since it's creation",
+        "operationId": "Total",
+        "parameters": [],
         "responses": {
           "200": {
             "description": "",
@@ -1026,21 +1029,21 @@
         ]
       }
     },
-    "/monitoring/affluence/total/6": {
+    "/monitoring/affluence/total/{enclosureId}": {
       "get": {
-        "summary": "Total affluence by enclosure",
-        "description": "Premier paramètre : id enclot\nDeuxième paramètre : mois (optionnel)",
-        "operationId": "Totalaffluencebyenclosure",
+        "summary": "Total by enclosure",
+        "description": "Get total enclosure's affluence of the ZOO since it's creation",
+        "operationId": "Totalbyenclosure",
         "parameters": [
           {
-            "name": "PORTBASE_PATH",
+            "name": "enclosureId",
             "in": "path",
             "required": true,
             "style": "simple",
             "schema": {
-              "type": "string",
-              "example": "PORTBASE_PATH"
-            }
+              "type": "number"
+            },
+            "description": "Enclosure ID"
           }
         ],
         "responses": {
@@ -1054,21 +1057,21 @@
         ]
       }
     },
-    "/monitoring/affluence/live/1": {
+    "/monitoring/affluence/live/{enclosureId}": {
       "get": {
         "summary": "Live enclosure affluence",
-        "description": "Premier paramètre : id enclot\nDeuxième paramètre : mois (optionnel)",
+        "description": "Get live enclosure affluence",
         "operationId": "Liveenclosureaffluence",
         "parameters": [
           {
-            "name": "PORTBASE_PATH",
+            "name": "enclosureId",
             "in": "path",
             "required": true,
             "style": "simple",
             "schema": {
-              "type": "string",
-              "example": "PORTBASE_PATH"
-            }
+              "type": "number"
+            },
+            "description": "Enclosure ID"
           }
         ],
         "responses": {
@@ -1085,19 +1088,9 @@
     "/monitoring/statistic/count/user": {
       "get": {
         "summary": "Count user",
+        "description": "Count total of active users",
         "operationId": "Countuser",
-        "parameters": [
-          {
-            "name": "PORTBASE_PATH",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "PORTBASE_PATH"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "",
@@ -1112,19 +1105,9 @@
     "/monitoring/statistic/count/enclosure": {
       "get": {
         "summary": "Count enclosure",
+        "description": "Count total of enclosures",
         "operationId": "Countenclosure",
-        "parameters": [
-          {
-            "name": "PORTBASE_PATH",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "PORTBASE_PATH"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "",
@@ -1139,19 +1122,9 @@
     "/monitoring/statistic/count/animal/": {
       "get": {
         "summary": "Count animal",
+        "description": "Count total of animals",
         "operationId": "Countanimal",
-        "parameters": [
-          {
-            "name": "PORTBASE_PATH",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "PORTBASE_PATH"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "",
@@ -1163,47 +1136,21 @@
         ]
       }
     },
-    "/monitoring/statistic/count/animal/1": {
+    "/monitoring/statistic/count/animal/{enclosureId}": {
       "get": {
         "summary": "Count animal by enclosure",
+        "description": "Count total of enclosure's animals",
         "operationId": "Countanimalbyenclosure",
         "parameters": [
           {
-            "name": "PORTBASE_PATH",
+            "name": "enclosureId",
             "in": "path",
             "required": true,
             "style": "simple",
             "schema": {
-              "type": "string",
-              "example": "PORTBASE_PATH"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "headers": {}
-          }
-        },
-        "tags": [
-          "Statistics"
-        ]
-      }
-    },
-    "/monitoring/statistic/count/pass/valid/types": {
-      "get": {
-        "summary": "Count valid pass by types",
-        "operationId": "Countvalidpassbytypes",
-        "parameters": [
-          {
-            "name": "PORTBASE_PATH",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "PORTBASE_PATH"
-            }
+              "type": "number"
+            },
+            "description": "Enclosure ID"
           }
         ],
         "responses": {
@@ -1220,19 +1167,26 @@
     "/monitoring/statistic/count/pass/valid/": {
       "get": {
         "summary": "Count valid pass",
+        "description": "Count total of valid pass",
         "operationId": "Countvalidpass",
-        "parameters": [
-          {
-            "name": "PORTBASE_PATH",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "PORTBASE_PATH"
-            }
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
           }
-        ],
+        },
+        "tags": [
+          "Statistics"
+        ]
+      }
+    },
+    "/monitoring/statistic/count/pass/valid/types": {
+      "get": {
+        "summary": "Count valid pass by types",
+        "description": "Count total of valid pass by types",
+        "operationId": "Countvalidpassbytypes",
+        "parameters": [],
         "responses": {
           "200": {
             "description": "",
@@ -1247,19 +1201,9 @@
     "/monitoring/statistic/count/pass/expired": {
       "get": {
         "summary": "Count expired pass",
+        "description": "Count total of expired pass",
         "operationId": "Countexpiredpass",
-        "parameters": [
-          {
-            "name": "PORTBASE_PATH",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "PORTBASE_PATH"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "",
@@ -1274,19 +1218,9 @@
     "/monitoring/statistic/count/pass/": {
       "get": {
         "summary": "Count all pass",
+        "description": "Count total of both valid or expired pass",
         "operationId": "Countallpass",
-        "parameters": [
-          {
-            "name": "PORTBASE_PATH",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "PORTBASE_PATH"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "",
@@ -1301,46 +1235,9 @@
     "/monitoring/statistic/count/pass/types": {
       "get": {
         "summary": "Count all pass by types",
+        "description": "Count total of both valid or expired pass by types",
         "operationId": "Countallpassbytypes",
-        "parameters": [
-          {
-            "name": "PORTBASE_PATH",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "PORTBASE_PATH"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "headers": {}
-          }
-        },
-        "tags": [
-          "Statistics"
-        ]
-      }
-    },
-    "/auth/logout": {
-      "delete": {
-        "summary": "logout",
-        "operationId": "logout",
-        "parameters": [
-          {
-            "name": "PORTBASE_PATH",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string",
-              "example": "PORTBASE_PATH"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "",
@@ -1355,33 +1252,101 @@
   },
   "components": {
     "parameters": {
-      "PORTBASE_PATH": {
-        "name": "PORTBASE_PATH",
+      "passTypeId": {
+        "name": "passTypeId",
         "in": "path",
         "required": true,
         "style": "simple",
         "schema": {
-          "type": "string",
-          "example": "PORTBASE_PATH"
+          "type": "number"
+        },
+        "description": "Pass Type Id"
+      },
+      "limit": {
+        "name": "limit",
+        "in": "query",
+        "required": true,
+        "style": "form",
+        "schema": {
+          "type": "number"
         }
+      },
+      "offset": {
+        "name": "offset",
+        "in": "query",
+        "required": true,
+        "style": "form",
+        "schema": {
+          "type": "number"
+        }
+      },
+      "userId": {
+        "name": "userId",
+        "in": "path",
+        "required": true,
+        "style": "simple",
+        "schema": {
+          "type": "number"
+        },
+        "description": "User ID"
       },
       "passId": {
         "name": "passId",
-        "in": "query",
+        "in": "path",
         "required": true,
-        "style": "form",
+        "style": "simple",
+        "schema": {
+          "type": "number"
+        },
+        "description": "Pass ID"
+      },
+      "enclosureId": {
+        "name": "enclosureId",
+        "in": "path",
+        "required": true,
+        "style": "simple",
         "schema": {
           "type": "number"
         }
       },
-      "enclosureId": {
-        "name": "enclosureId",
-        "in": "query",
+      "entryId": {
+        "name": "entryId",
+        "in": "path",
         "required": true,
-        "style": "form",
+        "style": "simple",
         "schema": {
           "type": "number"
         }
+      },
+      "passNightAvailabilityId": {
+        "name": "passNightAvailabilityId",
+        "in": "path",
+        "required": true,
+        "style": "simple",
+        "schema": {
+          "type": "number"
+        },
+        "description": "Pass Night Availability ID"
+      },
+      "month": {
+        "name": "month",
+        "in": "path",
+        "required": true,
+        "style": "simple",
+        "schema": {
+          "type": "number"
+        },
+        "description": "Month number (1-12)"
+      },
+      "year": {
+        "name": "year",
+        "in": "path",
+        "required": true,
+        "style": "simple",
+        "schema": {
+          "type": "number"
+        },
+        "description": "Year"
       }
     },
     "securitySchemes": {
@@ -1396,12 +1361,14 @@
       "bearer": []
     }
   ],
-  "tags": [],
+  "tags": [
+    {
+      "name": "Pass Type",
+      "description": "Manage pass type"
+    }
+  ],
   "externalDocs": {
     "url": "",
     "description": ""
-  },
-  "warnings": [
-    "Two GET or two POST methods for the same path are not allowed in OpenAPI specification : get{{SCHEME}}://{{HOST}}:{{PORT}}{{BASE_PATH}}/pass/night/"
-  ]
+  }
 }
