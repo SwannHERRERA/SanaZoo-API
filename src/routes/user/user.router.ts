@@ -18,11 +18,20 @@ userRouter.put(
   controller.updateClient
 );
 userRouter.get("/", employeeMiddleware, controller.getAll);
+userRouter.post("/", adminMiddleware, controller.create);
 userRouter.get("/me", authMiddleware, controller.me);
+userRouter.post("/register", controller.register);
+userRouter.post("/login", controller.login);
+userRouter.delete("/logout", controller.logout);
+userRouter.patch("/change-password", controller.changePassword);
+userRouter.patch("/restaure/:id", adminMiddleware, controller.restaureOne);
+userRouter.delete(
+  "/force-delete/:id",
+  adminMiddleware,
+  controller.forceDeleteOne
+);
 userRouter.get("/:id", employeeMiddleware, controller.getOne);
 userRouter.put("/:id", adminMiddleware, controller.update);
 userRouter.delete("/:id", adminMiddleware, controller.deleteOne);
-userRouter.post("/", adminMiddleware, controller.create);
-userRouter.post("/register", controller.register);
 
 export { userRouter };
