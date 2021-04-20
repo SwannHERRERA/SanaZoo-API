@@ -10,3 +10,16 @@ insert into Pass_Type (id, name, price, created_at, updated_at)
 VALUES (5, 'PASS Escape game', 30, '2021-04-05', '2021-04-05');
 insert into Pass_Type (id, name, price, created_at, updated_at)
 VALUES (6, 'PASS Night', 40, '2021-04-05', '2021-04-05');
+
+insert into User_Role (id, name)
+VALUES (1, 'Admin');
+insert into User_Role (id, name)
+VALUES (2, 'Vendeur');
+insert into User_Role (id, name)
+VALUES (3, 'Agent d\'accueil);
+insert into User_Role (id, name)
+VALUES (4, 'Agent d\'entretient');
+insert into User_Role (id, name)
+VALUES (5, 'Veterinaire');
+insert into User_Role (id, name)
+VALUES (6, 'Visiteur', 40);

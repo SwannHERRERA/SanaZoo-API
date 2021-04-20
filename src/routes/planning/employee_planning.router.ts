@@ -1,7 +1,6 @@
 import express from "express";
-import {employeeMiddleware} from "../../middlewares/employee.middleware";
+import {employeeMiddleware, adminMiddleware} from "../../middlewares";
 import {Planning_Controller} from "../../controllers/planning/planning.controller";
-import {adminMiddleware} from "../../middlewares/admin.middleware";
 import * as yup from "yup";
 
 const employeePlanningRouter = express.Router();
@@ -24,7 +23,7 @@ employeePlanningRouter.get("/calendar", employeeMiddleware, async function(req, 
 
 
     let date = result[0].start_time.toDateString();
-    let presence = new Array();
+    let presence = [];
     for await (let instance of result) {
         if (instance.start_time.toDateString() !== date) {
             await calendar.push({date: date, presence: JSON.parse(JSON.stringify(presence))});
@@ -38,6 +37,46 @@ employeePlanningRouter.get("/calendar", employeeMiddleware, async function(req, 
 
 
     res.status(200).json(calendar).end();
+});
+
+employeePlanningRouter.get("/openDate", employeeMiddleware, async function(req, res) {
+  const start_time = new Date(req.body.start_time);
+  const number_of_days = Number.parseInt(req.body.number_of_day);
+
+  if (number_of_days <= 0) {
+    res.status(500).end();
+    return;
+  }
+  const controller = await Planning_Controller.getInstance();
+  const result = await controller.getPlanning(start_time, number_of_days);
+
+  let calendar = new Array();
+
+
+  let date = result[0].start_time.toDateString();
+  let presence = [];
+
+  for (let instance of result) {
+    if (instance.start_time.toDateString() !== date) {
+      if (presence.indexOf(2) !== -1 &&
+        presence.indexOf(3) !== -1&&
+        presence.indexOf(4) !== -1&&
+        presence.indexOf(5) !== -1) {
+        calendar.push(date);
+      }
+      presence.length = 0;
+      date = instance.start_time.toDateString();
+    }
+    presence.push(instance.user_role_id);
+  }
+  if (presence.indexOf(2) !== -1 &&
+    presence.indexOf(3) !== -1&&
+    presence.indexOf(4) !== -1&&
+    presence.indexOf(5) !== -1) {
+    calendar.push(date);
+  }
+
+  res.status(200).json(calendar).end();
 });
 
 employeePlanningRouter.get("/user/:id", employeeMiddleware, async function(req, res) {
