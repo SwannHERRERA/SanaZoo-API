@@ -50,12 +50,24 @@ export class AnimalsController extends Controller {
       return;
     }
     try {
-      const { Animal, Specie } = await SequelizeManager.getInstance();
+      const {
+        Animal,
+        Specie,
+        Enclosure,
+      } = await SequelizeManager.getInstance();
+      const enclosure = await Enclosure.findByPk(animalPost.enclosureId);
       const specie = await Specie.findByPk(animalPost.specieId);
       if (!specie) {
         res
           .status(StatusCode.NOT_FOUND)
           .json({ message: "specie not found" })
+          .end();
+        return;
+      }
+      if (!enclosure) {
+        res
+          .status(StatusCode.NOT_FOUND)
+          .json({ message: "enclosure not found" })
           .end();
         return;
       }
@@ -132,10 +144,22 @@ export class AnimalsController extends Controller {
       return;
     }
     try {
-      const { Animal } = await SequelizeManager.getInstance();
+      const { Animal, Enclosure } = await SequelizeManager.getInstance();
       const animal = await Animal.findByPk(req.body.animalId);
+      const enclosure = await Enclosure.findByPk(req.body.enclosureId);
       if (animal === null) {
-        throw new Error("animal doesn't exist");
+        res
+          .status(StatusCode.NOT_FOUND)
+          .json({ message: "animal not found" })
+          .end();
+        return;
+      }
+      if (enclosure === null) {
+        res
+          .status(StatusCode.NOT_FOUND)
+          .json({ message: "enclosure not found" })
+          .end();
+        return;
       }
       const animalUpdated = await animal.setEnclosure(req.body.enclosureId);
       res.json(animalUpdated);
