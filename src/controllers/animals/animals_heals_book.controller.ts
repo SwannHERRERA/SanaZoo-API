@@ -148,8 +148,10 @@ export class AnimalsHealsBookController extends Controller {
     req: Request,
     res: Response
   ): Promise<void> => {
+    const limit = Number(req.query.limit) || 2000;
+    const offset = Number(req.query.offset) || 0;
+    const animalId = Number(req.params.animalId);
     try {
-      const animalId = Number(req.params.animalId);
       const { AnimalHealthBook, Animal } = await SequelizeManager.getInstance();
       const animal = await Animal.findByPk(animalId);
       if (!animal) {
@@ -161,6 +163,8 @@ export class AnimalsHealsBookController extends Controller {
       }
       const healthBook = await AnimalHealthBook.findAll({
         where: { animalId },
+        limit,
+        offset,
       });
       res.json(healthBook);
     } catch (err) {

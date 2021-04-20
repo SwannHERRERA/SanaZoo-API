@@ -10,9 +10,11 @@ export class UserRoleController extends Controller {
   });
 
   public getAll = async (req: Request, res: Response): Promise<void> => {
+    const limit = Number(req.query.limit) || 2000;
+    const offset = Number(req.query.offset) || 0;
     try {
       const { UserRole } = await SequelizeManager.getInstance();
-      const roles = await UserRole.findAll();
+      const roles = await UserRole.findAll({ limit, offset });
       res.json(roles);
     } catch (err) {
       res.status(StatusCode.SERVER_ERROR).end();
