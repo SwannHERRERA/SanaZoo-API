@@ -309,6 +309,27 @@ export class UserController extends Controller {
     }
   };
 
+  public updateMe = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const user = res.locals.user;
+      const { User } = await SequelizeManager.getInstance();
+      const previousUser = await User.findByPk(user.id);
+      if (previousUser === null) {
+        res.status(StatusCode.NOT_FOUND).end();
+        return;
+      }
+      let newUser = req.body;
+      newUser = await this.mergeUserWithPreviousVersion(previousUser, newUser);
+      const isValid = await this.validate(newUser, res);
+      if (isValid === false) return;
+      const userUpdated = await previousUser.update(newUser);
+      res.json(userUpdated);
+    } catch (err) {
+      console.error(err);
+      res.status(StatusCode.SERVER_ERROR).end();
+    }
+  };
+
   public deleteOne = async (req: Request, res: Response): Promise<void> => {
     const id = Number(req.params.id);
     if (id === undefined) {

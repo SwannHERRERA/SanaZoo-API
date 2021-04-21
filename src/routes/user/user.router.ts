@@ -20,6 +20,7 @@ userRouter.put(
 userRouter.get("/", employeeMiddleware, controller.getAll);
 userRouter.post("/", adminMiddleware, controller.create);
 userRouter.get("/me", authMiddleware, controller.me);
+userRouter.put("/me", authMiddleware, controller.updateMe);
 userRouter.post("/register", controller.register);
 userRouter.post("/login", controller.login);
 userRouter.delete("/logout", controller.logout);
