@@ -16,10 +16,10 @@ VALUES (1, 'Admin');
 insert into User_Role (id, name)
 VALUES (2, 'Vendeur');
 insert into User_Role (id, name)
-VALUES (3, 'Agent d\'accueil);
+VALUES (3, 'Agent d\'accueil');
 insert into User_Role (id, name)
 VALUES (4, 'Agent d\'entretient');
 insert into User_Role (id, name)
-VALUES (5, 'Veterinaire');
+VALUES (5, 'Vétérinaire');
 insert into User_Role (id, name)
 VALUES (6, 'Visiteur', 40);

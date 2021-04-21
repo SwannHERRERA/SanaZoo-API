@@ -9,6 +9,10 @@ import {
 } from "sequelize";
 import {IUser_Instance} from "..";
 
+export interface IPlaning_Result {
+    start_time: Date;
+    user_role_id: number;
+}
 
 export interface IEmployee_Planning_Props {
     id: number;

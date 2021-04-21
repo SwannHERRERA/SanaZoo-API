@@ -1,5 +1,5 @@
 import { ModelCtor, Op, QueryTypes, Sequelize } from "sequelize";
-import {IEmployee_Planning_Creation_Props, IEmployee_Planning_Instance} from "../../models";
+import { IEmployee_Planning_Creation_Props, IEmployee_Planning_Instance, IPlaning_Result } from "../../models";
 import {SequelizeManager} from "../../utils/db";
 import {GetAllOptions} from "../../utils/sequelize_options";
 
@@ -8,6 +8,20 @@ export class Planning_Controller {
     EmployeePlanning: ModelCtor<IEmployee_Planning_Instance>;
 
     private static instance: Planning_Controller;
+
+    private formatDate(date: Date) {
+        let d = new Date(date),
+          month = '' + (d.getMonth() + 1),
+          day = '' + d.getDate(),
+          year = d.getFullYear();
+
+        if (month.length < 2)
+            month = '0' + month;
+        if (day.length < 2)
+            day = '0' + day;
+
+        return [year, month, day].join('-');
+    }
 
 
     private constructor(EmployeePlanning: ModelCtor<IEmployee_Planning_Instance>) {
@@ -85,14 +99,19 @@ export class Planning_Controller {
         });
     }
 
-    public async getPlanning(start?: Date, number_of_day?: number): Promise<any> {
+    public async getPlanning(start?: Date, number_of_day?: number): Promise<IPlaning_Result[]> {
         const date_start = start || new Date(Date.now());
         const duration = number_of_day || 7;
         const date_end = new Date(date_start);
-        date_end.setDate(date_end.getDate() + duration);
 
+        date_end.setDate(date_end.getDate() + duration);
         const manager = await SequelizeManager.getInstance();
-        const result = await manager.sequelize.query(`SELECT User.user_role_id, DATE(Employee_Planning.start_time) FROM Employee_Planning INNER JOIN User ON Employee_Planning.user_id = User.id WHERE Employee_Planning.start_time BETWEEN ${date_start} AND ${date_end} ORDER BY Employee_Planning.start_time ASC`, {type: QueryTypes.SELECT});
-        return result;
+        const result = await manager.sequelize.query(
+          `SELECT User.user_role_id, DATE(Employee_Planning.start_time) as start_time 
+               FROM Employee_Planning INNER JOIN User ON Employee_Planning.user_id = User.id 
+               WHERE Employee_Planning.start_time BETWEEN '${this.formatDate(date_start)}' AND '${this.formatDate(date_end)}' 
+               ORDER BY Employee_Planning.start_time ASC`, {type: QueryTypes.SELECT});
+        console.log(result);
+        return result as IPlaning_Result[];
     }
 }

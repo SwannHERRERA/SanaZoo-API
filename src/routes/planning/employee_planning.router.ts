@@ -2,6 +2,7 @@ import express from "express";
 import {employeeMiddleware, adminMiddleware} from "../../middlewares";
 import {Planning_Controller} from "../../controllers/planning/planning.controller";
 import * as yup from "yup";
+import { IPlaning_Result } from "../../models";
 
 const employeePlanningRouter = express.Router();
 
@@ -48,16 +49,16 @@ employeePlanningRouter.get("/openDate", employeeMiddleware, async function(req, 
     return;
   }
   const controller = await Planning_Controller.getInstance();
-  const result = await controller.getPlanning(start_time, number_of_days);
-
+  const result: IPlaning_Result[] = await controller.getPlanning(start_time, number_of_days);
+  console.log(result);
   let calendar = new Array();
 
 
-  let date = result[0].start_time.toDateString();
+  let date = result[0].start_time;
   let presence = [];
 
   for (let instance of result) {
-    if (instance.start_time.toDateString() !== date) {
+    if (instance.start_time !== date) {
       if (presence.indexOf(2) !== -1 &&
         presence.indexOf(3) !== -1&&
         presence.indexOf(4) !== -1&&
@@ -65,7 +66,7 @@ employeePlanningRouter.get("/openDate", employeeMiddleware, async function(req, 
         calendar.push(date);
       }
       presence.length = 0;
-      date = instance.start_time.toDateString();
+      date = instance.start_time;
     }
     presence.push(instance.user_role_id);
   }
