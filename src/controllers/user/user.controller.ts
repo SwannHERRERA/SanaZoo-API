@@ -275,7 +275,7 @@ export class UserController extends Controller {
         res.status(StatusCode.SERVER_ERROR).end();
         return;
       }
-      if (userRole.name !== "CLIENT") {
+      if (userRole.name !== "VISITEUR") {
         res.status(StatusCode.FORBIDDEN).end();
         return;
       }
