@@ -61,18 +61,19 @@ export class UserRoleController extends Controller {
   };
 
   public update = async (req: Request, res: Response): Promise<void> => {
-    const id = Number(req.params.id);
-    const newRole = req.body;
-    const isValid = await this.validate(newRole, res);
-    if (isValid === false) return;
     try {
+      const id = Number(req.params.id);
+      const newRole = req.body;
       const { UserRole } = await SequelizeManager.getInstance();
-      const role = await UserRole.findByPk(id);
-      if (role === null) {
+      const previousRole = await UserRole.findByPk(id);
+      if (previousRole === null) {
         res.status(StatusCode.NOT_FOUND).end();
         return;
       }
-      const roleUpdated = await role.update(newRole);
+      const isValid = await this.validate(newRole, res);
+      if (isValid === false) return;
+
+      const roleUpdated = await previousRole.update(newRole);
       res.json(roleUpdated);
     } catch (err) {
       console.error(err);

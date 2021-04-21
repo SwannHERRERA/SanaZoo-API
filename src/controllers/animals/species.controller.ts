@@ -57,20 +57,24 @@ export class SpeciesController extends Controller {
   };
 
   public updateOne = async (req: Request, res: Response): Promise<void> => {
-    const id = Number(req.params.id);
-    const speciePost = req.body;
-    const isValid = await this.validate(speciePost, res);
-    if (isValid === false) {
-      return;
-    }
     try {
+      const id = Number(req.params.id);
       const { Specie } = await SequelizeManager.getInstance();
-      const specie = await Specie.findByPk(id);
-      if (!specie) {
+      const previousSpecie = await Specie.findByPk(id);
+      if (!previousSpecie) {
         res.status(StatusCode.NOT_FOUND).end();
         return;
       }
-      const specieUpdated = await specie.update(speciePost);
+      const speciePost = req.body;
+      speciePost.name = speciePost.name || previousSpecie.name;
+      speciePost.origin = speciePost.origin || speciePost.origin;
+      speciePost.description = speciePost.description || speciePost.description;
+
+      const isValid = await this.validate(speciePost, res);
+      if (isValid === false) {
+        return;
+      }
+      const specieUpdated = await previousSpecie.update(speciePost);
       res.json(specieUpdated);
     } catch (err) {
       console.error(err);

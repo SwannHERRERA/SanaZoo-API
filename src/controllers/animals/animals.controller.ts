@@ -80,20 +80,28 @@ export class AnimalsController extends Controller {
   };
 
   public updateOne = async (req: Request, res: Response): Promise<void> => {
-    const id = Number(req.params.id);
-    const animalPost = req.body;
-    const isValid = await this.validate(animalPost, res);
-    if (isValid === false) {
-      return;
-    }
     try {
+      const id = Number(req.params.id);
+      const animalPost = req.body;
       const { Animal } = await SequelizeManager.getInstance();
-      const animal = await Animal.findByPk(id);
-      if (!animal) {
+      const previousAnimal = await Animal.findByPk(id);
+      if (previousAnimal === null) {
         res.status(StatusCode.NOT_FOUND).end();
         return;
       }
-      const animalUpdated = await animal.update(animalPost);
+      animalPost.name = animalPost.name || previousAnimal.name;
+      animalPost.description =
+        animalPost.description || previousAnimal.description;
+      animalPost.birthdate = animalPost.birthdate || previousAnimal.birthdate;
+      animalPost.image = animalPost.image || previousAnimal.image;
+      animalPost.specieId = animalPost.specieId || previousAnimal.specieId;
+      animalPost.enclosureId =
+        animalPost.enclosureId || previousAnimal.enclosureId;
+      const isValid = await this.validate(animalPost, res);
+      if (isValid === false) {
+        return;
+      }
+      const animalUpdated = await previousAnimal.update(animalPost);
       res.json(animalUpdated);
     } catch (err) {
       console.error(err);
