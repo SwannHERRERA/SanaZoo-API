@@ -21,14 +21,14 @@ export class UserController extends Controller {
     firstName: yup.string().max(120).required(),
     email: yup.string().email().required(),
     password: yup.string().min(PASSWORD_MIN_LENGTH).required(),
-    birthdate: yup.date(),
+    birthdate: yup.date().nullable(),
   });
-  creationSchema = yup.object().shape({
+  fullUserSchema = yup.object().shape({
     lastName: yup.string().max(120).required(),
     firstName: yup.string().max(120).required(),
     email: yup.string().email().required(),
     password: yup.string().min(PASSWORD_MIN_LENGTH).required(),
-    birthdate: yup.date(),
+    birthdate: yup.date().nullable(),
     userRoleId: yup.number().required(),
   });
 
@@ -84,7 +84,7 @@ export class UserController extends Controller {
 
   public create = async (req: Request, res: Response): Promise<void> => {
     const user = req.body;
-    this.schema = this.creationSchema;
+    this.schema = this.fullUserSchema;
     const isValid = await this.validate(user, res);
     if (isValid === false) return;
     this.insert(user, res);
@@ -241,18 +241,24 @@ export class UserController extends Controller {
 
   private async mergeUserWithPreviousVersion(
     previousUser: IUser_Instance,
-    newUser: Partial<IUser_Instance>
+    newUser: Partial<IUser_Instance>,
+    updateByAdmin = false
   ) {
     newUser.lastName = newUser.lastName || previousUser.lastName;
     newUser.firstName = newUser.firstName || previousUser.firstName;
     newUser.email = newUser.email || previousUser.email;
     newUser.birthdate = newUser.birthdate || previousUser.birthdate;
-    newUser.userRoleId = newUser.userRoleId || previousUser.userRoleId;
+    if (updateByAdmin) {
+      newUser.userRoleId = newUser.userRoleId || previousUser.userRoleId;
+    } else {
+      newUser.userRoleId = previousUser.userRoleId;
+    }
     if (newUser.password) {
       newUser.password = await hash(newUser.password);
     } else {
       newUser.password = previousUser.password;
     }
+    return newUser;
   }
 
   public updateClient = async (req: Request, res: Response): Promise<void> => {
@@ -266,7 +272,7 @@ export class UserController extends Controller {
         return;
       }
       newUser = await this.mergeUserWithPreviousVersion(previousUser, newUser);
-      this.schema = this.creationSchema;
+      this.schema = this.fullUserSchema;
       const isValid = await this.validate(newUser, res);
       if (isValid === false) return;
 
@@ -290,6 +296,7 @@ export class UserController extends Controller {
 
   public update = async (req: Request, res: Response): Promise<void> => {
     try {
+      this.schema = this.fullUserSchema;
       const id = Number(req.params.id);
       const { User } = await SequelizeManager.getInstance();
       const previousUser = await User.findByPk(id);
@@ -298,7 +305,11 @@ export class UserController extends Controller {
         return;
       }
       let newUser = req.body;
-      newUser = await this.mergeUserWithPreviousVersion(previousUser, newUser);
+      newUser = await this.mergeUserWithPreviousVersion(
+        previousUser,
+        newUser,
+        true
+      );
       const isValid = await this.validate(newUser, res);
       if (isValid === false) return;
       const userUpdated = await previousUser.update(newUser);
@@ -311,6 +322,7 @@ export class UserController extends Controller {
 
   public updateMe = async (req: Request, res: Response): Promise<void> => {
     try {
+      this.schema = this.fullUserSchema;
       const user = res.locals.user;
       const { User } = await SequelizeManager.getInstance();
       const previousUser = await User.findByPk(user.id);

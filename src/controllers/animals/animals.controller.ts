@@ -7,9 +7,9 @@ import { Controller } from "../../core/controller";
 export class AnimalsController extends Controller {
   schema = yup.object().shape({
     name: yup.string().max(120).required(),
-    description: yup.string(),
+    description: yup.string().nullable(),
     birthdate: yup.date().required(),
-    image: yup.string(),
+    image: yup.string().nullable(),
     specieId: yup.number().required(),
     enclosureId: yup.number().required(),
   });

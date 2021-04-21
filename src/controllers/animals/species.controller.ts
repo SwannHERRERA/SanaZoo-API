@@ -8,7 +8,7 @@ export class SpeciesController extends Controller {
   schema = yup.object().shape({
     name: yup.string().max(120).required(),
     origin: yup.string().required(),
-    description: yup.string(),
+    description: yup.string().nullable(),
   });
 
   public getOneById = async (req: Request, res: Response): Promise<void> => {
