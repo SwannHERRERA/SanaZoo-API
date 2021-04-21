@@ -60,8 +60,8 @@ employeePlanningRouter.get("/openDate", employeeMiddleware, async function(req, 
   for (let instance of result) {
     if (instance.start_time !== date) {
       if (presence.indexOf(2) !== -1 &&
-        presence.indexOf(3) !== -1&&
-        presence.indexOf(4) !== -1&&
+        presence.indexOf(3) !== -1 &&
+        presence.indexOf(4) !== -1 &&
         presence.indexOf(5) !== -1) {
         calendar.push(date);
       }
@@ -71,8 +71,8 @@ employeePlanningRouter.get("/openDate", employeeMiddleware, async function(req, 
     presence.push(instance.user_role_id);
   }
   if (presence.indexOf(2) !== -1 &&
-    presence.indexOf(3) !== -1&&
-    presence.indexOf(4) !== -1&&
+    presence.indexOf(3) !== -1 &&
+    presence.indexOf(4) !== -1 &&
     presence.indexOf(5) !== -1) {
     calendar.push(date);
   }
