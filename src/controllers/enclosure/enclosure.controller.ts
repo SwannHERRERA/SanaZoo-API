@@ -122,6 +122,22 @@ export class Enclosure_Controller {
     });
   }
 
+  public async getAllByType(
+    enclosureTypeId: number,
+    params?: IEnclosure_Get_All_Params
+  ): Promise<IEnclosure_Instance[] | null> {
+    const limit = params?.limit || 20;
+    const offset = params?.offset || 0;
+
+    return this.Enclosure.findAll({
+      limit,
+      offset,
+      where: {
+        enclosureTypeId,
+      },
+    });
+  }
+
   public async getImages(
     id: number
   ): Promise<IEnclosure_Image_Instance[] | null> {

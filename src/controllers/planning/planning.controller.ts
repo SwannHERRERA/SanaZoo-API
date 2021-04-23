@@ -1,117 +1,137 @@
 import { ModelCtor, Op, QueryTypes, Sequelize } from "sequelize";
-import { IEmployee_Planning_Creation_Props, IEmployee_Planning_Instance, IPlaning_Result } from "../../models";
-import {SequelizeManager} from "../../utils/db";
-import {GetAllOptions} from "../../utils/sequelize_options";
-
+import {
+  IEmployee_Planning_Creation_Props,
+  IEmployee_Planning_Instance,
+  IPlaning_Result,
+} from "../../models";
+import { SequelizeManager } from "../../utils/db";
+import { GetAllOptions } from "../../utils/sequelize_options";
 
 export class Planning_Controller {
-    EmployeePlanning: ModelCtor<IEmployee_Planning_Instance>;
+  EmployeePlanning: ModelCtor<IEmployee_Planning_Instance>;
 
-    private static instance: Planning_Controller;
+  private static instance: Planning_Controller;
 
-    private formatDate(date: Date) {
-        let d = new Date(date),
-          month = '' + (d.getMonth() + 1),
-          day = '' + d.getDate(),
-          year = d.getFullYear();
+  private formatDate(date: Date) {
+    let d = new Date(date),
+      month = "" + (d.getMonth() + 1),
+      day = "" + d.getDate(),
+      year = d.getFullYear();
 
-        if (month.length < 2)
-            month = '0' + month;
-        if (day.length < 2)
-            day = '0' + day;
+    if (month.length < 2) month = "0" + month;
+    if (day.length < 2) day = "0" + day;
 
-        return [year, month, day].join('-');
+    return [year, month, day].join("-");
+  }
+
+  private constructor(
+    EmployeePlanning: ModelCtor<IEmployee_Planning_Instance>
+  ) {
+    this.EmployeePlanning = EmployeePlanning;
+  }
+
+  public static async getInstance(): Promise<Planning_Controller> {
+    if (Planning_Controller.instance === undefined) {
+      const { EmployeePlanning } = await SequelizeManager.getInstance();
+      Planning_Controller.instance = new Planning_Controller(EmployeePlanning);
     }
 
+    return Planning_Controller.instance;
+  }
 
-    private constructor(EmployeePlanning: ModelCtor<IEmployee_Planning_Instance>) {
-        this.EmployeePlanning = EmployeePlanning;
-    }
+  public async add(
+    props: IEmployee_Planning_Creation_Props
+  ): Promise<IEmployee_Planning_Instance | null> {
+    return this.EmployeePlanning.create({
+      ...props,
+    });
+  }
 
-    public static async getInstance(): Promise<Planning_Controller> {
-        if (Planning_Controller.instance === undefined) {
-            const {EmployeePlanning} = await SequelizeManager.getInstance();
-            Planning_Controller.instance = new Planning_Controller(EmployeePlanning);
-        }
+  public async remove(id: number): Promise<number> {
+    return this.EmployeePlanning.destroy({
+      where: {
+        id,
+      },
+    });
+  }
 
-        return Planning_Controller.instance;
-    }
+  public async update(id: number, props: IEmployee_Planning_Creation_Props) {
+    await this.EmployeePlanning.update(
+      {
+        ...props,
+      },
+      {
+        where: { id },
+      }
+    );
+    return this.EmployeePlanning.findByPk(id);
+  }
 
-    public async add(props: IEmployee_Planning_Creation_Props): Promise<IEmployee_Planning_Instance | null> {
-        return this.EmployeePlanning.create({
-            ...props
-        });
-    }
+  public async getOne(id: number): Promise<IEmployee_Planning_Instance | null> {
+    return this.EmployeePlanning.findByPk(id);
+  }
 
-    public async remove(id: number):Promise<number> {
-        return this.EmployeePlanning.destroy({
-            where: {
-                id
-            }
-        });
-    }
+  public async getAll(
+    params?: GetAllOptions
+  ): Promise<IEmployee_Planning_Instance[] | null> {
+    const limit = params?.limit || 20;
+    const offset = params?.offset || 0;
 
-    public async update(id: number, props: IEmployee_Planning_Creation_Props) {
-        await this.EmployeePlanning.update({
-            ...props
+    return this.EmployeePlanning.findAll({
+      offset,
+      limit,
+    });
+  }
+
+  public async getAllFromEmployee(
+    id: number
+  ): Promise<IEmployee_Planning_Instance[] | null> {
+    return this.EmployeePlanning.findAll({
+      where: {
+        userId: id,
+      },
+    });
+  }
+
+  public async getCalendar(
+    start?: Date,
+    number_of_day?: number
+  ): Promise<IEmployee_Planning_Instance[] | null> {
+    const date_start = start || new Date(Date.now());
+    const duration = number_of_day || 7;
+    const date_end = new Date(date_start);
+    date_end.setDate(date_end.getDate() + duration);
+
+    return this.EmployeePlanning.findAll({
+      where: {
+        start_time: {
+          [Op.between]: [date_start, date_end],
         },
-            {
-                where: {id}
-            });
-        return this.EmployeePlanning.findByPk(id);
-    }
+      },
+      order: [["start_time", "ASC"]],
+    });
+  }
 
-    public async getOne(id: number): Promise<IEmployee_Planning_Instance | null> {
-        return this.EmployeePlanning.findByPk(id);
-    }
+  public async getPlanning(
+    start?: Date,
+    number_of_day?: number
+  ): Promise<IPlaning_Result[]> {
+    const date_start = start || new Date(Date.now());
+    const duration = number_of_day || 7;
+    const date_end = new Date(date_start);
 
-    public async getAll(params?: GetAllOptions): Promise<IEmployee_Planning_Instance[] | null> {
-        const limit = params?.limit || 20;
-        const offset = params?.offset || 0;
-
-        return this.EmployeePlanning.findAll({
-            offset,
-            limit
-        });
-    }
-
-    public async getAllFromEmployee(id: number): Promise<IEmployee_Planning_Instance[] | null> {
-        return this.EmployeePlanning.findAll({
-            where: {
-                userId: id
-            }
-        });
-    }
-
-    public async getCalendar(start?: Date, number_of_day?: number): Promise<IEmployee_Planning_Instance[] | null> {
-        const date_start = start || new Date(Date.now());
-        const duration = number_of_day || 7;
-        const date_end = new Date(date_start);
-        date_end.setDate(date_end.getDate() + duration);
-
-        return this.EmployeePlanning.findAll({
-            where: {
-                start_time: {
-                    [Op.between]: [date_start, date_end]
-                }
-            },
-            order: [['start_time', 'ASC']]
-        });
-    }
-
-    public async getPlanning(start?: Date, number_of_day?: number): Promise<IPlaning_Result[]> {
-        const date_start = start || new Date(Date.now());
-        const duration = number_of_day || 7;
-        const date_end = new Date(date_start);
-
-        date_end.setDate(date_end.getDate() + duration);
-        const manager = await SequelizeManager.getInstance();
-        const result = await manager.sequelize.query(
-          `SELECT User.user_role_id, DATE(Employee_Planning.start_time) as start_time 
+    date_end.setDate(date_end.getDate() + duration);
+    const manager = await SequelizeManager.getInstance();
+    const result = await manager.sequelize.query(
+      `SELECT User.user_role_id, DATE(Employee_Planning.start_time) as start_time 
                FROM Employee_Planning INNER JOIN User ON Employee_Planning.user_id = User.id 
-               WHERE Employee_Planning.start_time BETWEEN '${this.formatDate(date_start)}' AND '${this.formatDate(date_end)}' 
-               ORDER BY Employee_Planning.start_time ASC`, {type: QueryTypes.SELECT});
-        console.log(result);
-        return result as IPlaning_Result[];
-    }
+               WHERE Employee_Planning.start_time BETWEEN '${this.formatDate(
+                 date_start
+               )}' AND '${this.formatDate(date_end)}' 
+               ORDER BY Employee_Planning.start_time ASC`,
+      { type: QueryTypes.SELECT }
+    );
+    console.log(result);
+    return result as IPlaning_Result[];
+  }
 }
