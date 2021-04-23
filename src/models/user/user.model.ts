@@ -28,7 +28,7 @@ export interface IUser_Props {
   userRoleId: number;
 }
 
-export interface IUser_Creation_Props extends Optional<IUser_Props, "id"> {}
+export type IUser_Creation_Props = Optional<IUser_Props, "id">;
 
 export interface IUser_Instance
   extends Model<IUser_Props, IUser_Creation_Props>,
@@ -78,6 +78,7 @@ export function userCreator(sequelize: Sequelize): ModelCtor<IUser_Instance> {
       },
       email: {
         type: DataTypes.STRING,
+        unique: true,
       },
       birthdate: {
         type: DataTypes.DATE,

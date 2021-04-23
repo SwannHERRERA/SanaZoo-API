@@ -18,8 +18,10 @@ export interface IAnimal_Health_Book_Props {
   userId: number;
 }
 
-export interface IAnimal_Health_Book_Creation_Props
-  extends Optional<IAnimal_Health_Book_Props, "id"> {}
+export type IAnimal_Health_Book_Creation_Props = Optional<
+  IAnimal_Health_Book_Props,
+  "id"
+>;
 
 export interface IAnimal_Health_Book_Instance
   extends Model<IAnimal_Health_Book_Props, IAnimal_Health_Book_Creation_Props>,
