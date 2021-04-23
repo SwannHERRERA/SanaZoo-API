@@ -128,15 +128,10 @@ export class AnimalsController extends Controller {
     req: Request,
     res: Response
   ): Promise<boolean> {
-    const animalId = Number(req.params.id);
     const moveEnclosureSchema = yup.object().shape({
       animalId: yup.number().required(),
       enclosureId: yup.number().required(),
     });
-    if (animalId !== req.body.animalId) {
-      res.status(StatusCode.BAD_REQUEST).end();
-      return false;
-    }
     try {
       await moveEnclosureSchema.validate(req.body);
       return true;
