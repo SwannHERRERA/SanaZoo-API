@@ -79,6 +79,25 @@ enclosureRouter.post("/", adminMiddleware, async function (req, res) {
     });
 });
 
+enclosureRouter.get("/type/:enclosureTypeId", async function (req, res) {
+  const offset: number = req.query.offset
+    ? Number.parseInt(req.query.offset as string)
+    : 1;
+  const limit: number = req.query.limit
+    ? Number.parseInt(req.query.limit as string)
+    : 1;
+
+  const controller = await Enclosure_Controller.getInstance();
+  const result = await controller.getAllByType(
+    Number.parseInt(req.params.enclosureTypeId),
+    {
+      limit,
+      offset,
+    }
+  );
+  res.status(200).json(result).end();
+});
+
 enclosureRouter.get("/:id", async function (req, res) {
   const controller = await Enclosure_Controller.getInstance();
   const result = await controller.getOne(Number.parseInt(req.params.id));
