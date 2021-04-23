@@ -29,8 +29,8 @@ enclosureMaintenanceRouter.get(
     }
 
     const result = await controller.getAllByState(state, {
-      offset: req.body.offset,
-      limit: req.body.limit,
+      offset: Number.parseInt(req.query.offset as string),
+      limit: Number.parseInt(req.query.limit as string),
     });
     res.status(200).json(result).end();
   }
