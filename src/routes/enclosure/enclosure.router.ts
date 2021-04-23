@@ -87,8 +87,8 @@ enclosureRouter.get("/:id", async function (req, res) {
 });
 
 enclosureRouter.get("/", async function (req, res) {
-  const offset: number = req.body.offset;
-  const limit: number = req.body.limit;
+  const offset: number = req.query.offset;
+  const limit: number = req.query.limit;
 
   const controller = await Enclosure_Controller.getInstance();
   const result = await controller.getAll({
