@@ -107,8 +107,8 @@ const enclosureSchema = yup.object().shape({
   handicapAccess: yup.boolean().required(),
   maintenance: yup.boolean().required(),
   enclosureTypeId: yup.number().required(),
-  openHour: yup.date().required(),
-  closeHour: yup.date().required(),
+  openHour: yup.string().matches(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/).required(),
+  closeHour: yup.string().matches(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/).required(),
 });
 
 export { enclosureMaintenanceRouter };
