@@ -17,7 +17,7 @@ export async function veterinaryMiddleware(
       console.error("User Role didn't exist");
       return;
     }
-    if (userRole.name !== "VETERINARY") {
+    if (userRole.name !== "VETERINAIRE") {
       res.status(StatusCode.FORBIDDEN).end();
       return;
     }

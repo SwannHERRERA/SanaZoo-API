@@ -9,6 +9,10 @@ export async function authMiddleware(
 ): Promise<void> {
   const authorization = req.headers.authorization || "";
   const token = getToken(authorization);
+  if (!token) {
+    res.status(StatusCode.UNAUTHORIZED).end();
+    return;
+  }
   const user = await findUserByToken(token);
   if (user === null) {
     res.status(StatusCode.UNAUTHORIZED).end();

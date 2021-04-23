@@ -9,7 +9,13 @@ export async function employeeMiddleware(
   next: NextFunction
 ): Promise<void> {
   await authMiddleware(req, res, async () => {
-    const EMPLOYEE_ROLES = ["ADMIN", "EMPLOYEE", "VETERINARY"];
+    const EMPLOYEE_ROLES = [
+      "ADMIN",
+      "VETERINAIRE",
+      "VENDEUR",
+      "AGENT D'ACCUEIL",
+      "AGENT D'ENTRETIENT",
+    ];
     const user = res.locals.user;
     const { UserRole } = await SequelizeManager.getInstance();
     const userRole = await UserRole.findByPk(user.userRoleId);

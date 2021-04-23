@@ -21,14 +21,14 @@ export class UserController extends Controller {
     firstName: yup.string().max(120).required(),
     email: yup.string().email().required(),
     password: yup.string().min(PASSWORD_MIN_LENGTH).required(),
-    birthdate: yup.date(),
+    birthdate: yup.date().nullable(),
   });
-  creationSchema = yup.object().shape({
+  fullUserSchema = yup.object().shape({
     lastName: yup.string().max(120).required(),
     firstName: yup.string().max(120).required(),
     email: yup.string().email().required(),
     password: yup.string().min(PASSWORD_MIN_LENGTH).required(),
-    birthdate: yup.date(),
+    birthdate: yup.date().nullable(),
     userRoleId: yup.number().required(),
   });
 
@@ -84,7 +84,7 @@ export class UserController extends Controller {
 
   public create = async (req: Request, res: Response): Promise<void> => {
     const user = req.body;
-    this.schema = this.creationSchema;
+    this.schema = this.fullUserSchema;
     const isValid = await this.validate(user, res);
     if (isValid === false) return;
     this.insert(user, res);
@@ -239,31 +239,54 @@ export class UserController extends Controller {
     res.json({ message: "Password updated" }).end();
   };
 
+  private async mergeUserWithPreviousVersion(
+    previousUser: IUser_Instance,
+    newUser: Partial<IUser_Instance>,
+    updateByAdmin = false
+  ) {
+    newUser.lastName = newUser.lastName || previousUser.lastName;
+    newUser.firstName = newUser.firstName || previousUser.firstName;
+    newUser.email = newUser.email || previousUser.email;
+    newUser.birthdate = newUser.birthdate || previousUser.birthdate;
+    if (updateByAdmin) {
+      newUser.userRoleId = newUser.userRoleId || previousUser.userRoleId;
+    } else {
+      newUser.userRoleId = previousUser.userRoleId;
+    }
+    if (newUser.password) {
+      newUser.password = await hash(newUser.password);
+    } else {
+      newUser.password = previousUser.password;
+    }
+    return newUser;
+  }
+
   public updateClient = async (req: Request, res: Response): Promise<void> => {
     try {
       const id = Number(req.params.id);
-      const newUser = req.body;
-      this.schema = this.creationSchema;
-      const isValid = await this.validate(newUser, res);
-      if (isValid === false) return;
+      let newUser = req.body;
       const { User, UserRole } = await SequelizeManager.getInstance();
-      const user = await User.findByPk(id);
-      if (user === null) {
+      const previousUser = await User.findByPk(id);
+      if (previousUser === null) {
         res.status(StatusCode.NOT_FOUND).end();
         return;
       }
+      newUser = await this.mergeUserWithPreviousVersion(previousUser, newUser);
+      this.schema = this.fullUserSchema;
+      const isValid = await this.validate(newUser, res);
+      if (isValid === false) return;
 
-      const userRole = await UserRole.findByPk(user.userRoleId);
+      const userRole = await UserRole.findByPk(previousUser.userRoleId);
       if (userRole === null) {
         res.status(StatusCode.SERVER_ERROR).end();
         return;
       }
-      if (userRole.name !== "CLIENT") {
+      if (userRole.name !== "VISITEUR") {
         res.status(StatusCode.FORBIDDEN).end();
         return;
       }
       newUser.password = await hash(newUser.password);
-      const userUpdated = await user.update(newUser);
+      const userUpdated = await previousUser.update(newUser);
       res.json(userUpdated);
     } catch (err) {
       console.error(err);
@@ -273,18 +296,45 @@ export class UserController extends Controller {
 
   public update = async (req: Request, res: Response): Promise<void> => {
     try {
+      this.schema = this.fullUserSchema;
       const id = Number(req.params.id);
-      const newUser = req.body;
-      const isValid = await this.validate(newUser, res);
-      if (isValid === false) return;
       const { User } = await SequelizeManager.getInstance();
-      const user = await User.findByPk(id);
-      if (user === null) {
+      const previousUser = await User.findByPk(id);
+      if (previousUser === null) {
         res.status(StatusCode.NOT_FOUND).end();
         return;
       }
-      newUser.password = await hash(newUser.password);
-      const userUpdated = await user.update(newUser);
+      let newUser = req.body;
+      newUser = await this.mergeUserWithPreviousVersion(
+        previousUser,
+        newUser,
+        true
+      );
+      const isValid = await this.validate(newUser, res);
+      if (isValid === false) return;
+      const userUpdated = await previousUser.update(newUser);
+      res.json(userUpdated);
+    } catch (err) {
+      console.error(err);
+      res.status(StatusCode.SERVER_ERROR).end();
+    }
+  };
+
+  public updateMe = async (req: Request, res: Response): Promise<void> => {
+    try {
+      this.schema = this.fullUserSchema;
+      const user = res.locals.user;
+      const { User } = await SequelizeManager.getInstance();
+      const previousUser = await User.findByPk(user.id);
+      if (previousUser === null) {
+        res.status(StatusCode.NOT_FOUND).end();
+        return;
+      }
+      let newUser = req.body;
+      newUser = await this.mergeUserWithPreviousVersion(previousUser, newUser);
+      const isValid = await this.validate(newUser, res);
+      if (isValid === false) return;
+      const userUpdated = await previousUser.update(newUser);
       res.json(userUpdated);
     } catch (err) {
       console.error(err);
