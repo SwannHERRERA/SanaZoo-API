@@ -35,36 +35,6 @@ export interface IEmployee_Planning_Instance
   getUser: BelongsToGetAssociationMixin<IUser_Instance>;
 }
 
-export function employeePlanningCreator(
-  sequelize: Sequelize
-): ModelCtor<IEmployee_Planning_Instance> {
-  return sequelize.define<IEmployee_Planning_Instance>(
-    "Employee_Planning",
-    {
-      id: {
-        type: DataTypes.BIGINT,
-        primaryKey: true,
-        autoIncrement: true,
-      },
-      day_of_week: {
-        type: DataTypes.STRING,
-      },
-      start_time: {
-        type: DataTypes.DATE,
-      },
-      end_time: {
-        type: DataTypes.DATE,
-      },
-    },
-    {
-      freezeTableName: true,
-      underscored: true,
-      paranoid: true,
-      timestamps: true,
-    }
-  );
-}
-
 export function employeePlanningCreator(sequelize: Sequelize): ModelCtor<IEmployee_Planning_Instance> {
     return sequelize.define<IEmployee_Planning_Instance>("Employee_Planning", {
         id: {
