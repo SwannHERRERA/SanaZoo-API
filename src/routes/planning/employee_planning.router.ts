@@ -131,8 +131,8 @@ employeePlanningRouter.get(
 );
 
 employeePlanningRouter.get("/", employeeMiddleware, async function (req, res) {
-  const offset = req.body.offset;
-  const limit = req.body.limit;
+  const offset = Number.parseInt(req.query.offset as string);
+  const limit = Number.parseInt(req.query.limit as string);
   const controller = await Planning_Controller.getInstance();
   const result = await controller.getAll({ offset, limit });
 
