@@ -17,6 +17,8 @@ enclosureRouter.post("/", adminMiddleware, async function (req, res) {
   const maintenance = req.body.maintenance;
   const enclosureTypeId = req.body.enclosureTypeId;
   const images = req.body.images;
+  const openHour = req.body.closeHour;
+  const closeHour = req.body.closeHour;
   enclosureSchemaCreat
     .validate({
       name,
@@ -27,6 +29,9 @@ enclosureRouter.post("/", adminMiddleware, async function (req, res) {
       maintenance,
       enclosureTypeId,
       images,
+      openHour,
+      closeHour
+
     })
     .then(async function () {
       const controller = await Enclosure_Controller.getInstance();
@@ -38,6 +43,8 @@ enclosureRouter.post("/", adminMiddleware, async function (req, res) {
         handicapAccess,
         maintenance,
         enclosureTypeId,
+        openHour,
+        closeHour
       });
       if (!result) {
         res.status(500).end();
@@ -130,6 +137,8 @@ enclosureRouter.put("/:id", adminMiddleware, async function (req, res) {
   const handicapAccess = req.body.handicapAccess || previous.handicapAccess;
   const maintenance = req.body.maintenance || previous.maintenance;
   const enclosureTypeId = req.body.enclosureTypeId || previous.enclosureTypeId;
+  const openHour = req.body.closeDate || previous.openHour;
+  const closeHour = req.body.closeDate || previous.closeHour;
   enclosureSchemaCreat
     .validate({
       name,
@@ -139,6 +148,8 @@ enclosureRouter.put("/:id", adminMiddleware, async function (req, res) {
       handicapAccess,
       maintenance,
       enclosureTypeId,
+      openHour,
+      closeHour
     })
     .then(async function () {
       const result = await controller.update(Number.parseInt(req.params.id), {
@@ -149,6 +160,8 @@ enclosureRouter.put("/:id", adminMiddleware, async function (req, res) {
         handicapAccess,
         maintenance,
         enclosureTypeId,
+        openHour,
+        closeHour
       });
       res.status(200).json(result).end();
     })
@@ -179,6 +192,8 @@ const enclosureSchemaCreat = yup.object().shape({
   maintenance: yup.boolean().required(),
   enclosureTypeId: yup.number().required(),
   images: yup.array().optional(),
+  openHour: yup.date().required(),
+  closeHour: yup.date().required(),
 });
 
 const imageSchemaCreat = yup.object().shape({
