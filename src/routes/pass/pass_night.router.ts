@@ -51,7 +51,7 @@ passNightRouter.get("/:id", authMiddleware, async function (req, res) {
 /**
  * Update pass night availability
  */
-passNightRouter.put("/:id", employeeMiddleware, async function (req, res) {
+passNightRouter.put("/:id", adminMiddleware, async function (req, res) {
   await (await getPassNightController()).updatePassNightAvailability(req, res);
 });
 
