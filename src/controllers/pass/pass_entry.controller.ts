@@ -9,6 +9,8 @@ import {
 } from "../../models";
 import { SequelizeManager } from "../../utils/db";
 import { Request, Response } from "express";
+import * as dateFns from "date-fns";
+import { boolean } from "yup";
 
 export class EntryController {
   PassType: ModelCtor<IPass_Type_Instance>;
@@ -128,7 +130,11 @@ export class EntryController {
     }
 
     if (enclosure.maintenance) {
-      res.status(403).json("Cet enclos est en maintenance").end();
+      res.status(423).json("This enclosure is in maintenance").end();
+      return;
+    }
+    if (!(await EntryController.checkEnclosureIsOpen(enclosure))) {
+      res.status(423).json("This enclosure is not open").end();
       return;
     }
 
@@ -139,6 +145,8 @@ export class EntryController {
 
     switch (pass.passTypeId) {
       case PassType.DAY:
+      case PassType.NIGHT:
+        // L'achat du pass night est déjà controllé, pas besoin de le controller à nouveau, il se comporte comme un pass day
         await this.dayEntry(res, date, pass, enclosure);
         break;
       case PassType.WEEKEND:
@@ -158,10 +166,6 @@ export class EntryController {
           enclosure,
           passEnclosureAccessList
         );
-        break;
-      case PassType.NIGHT:
-        //TODO night (verify pas date is valid with pass night availability)
-        console.log("Pass night");
         break;
       default:
         res.status(500).json("unknown pass type !").end();
@@ -284,7 +288,6 @@ export class EntryController {
       return;
     }
 
-    // TODO check if already composed or none
     const enclosureAccess:
       | IPass_Enclosure_Access_Instance
       | undefined = passEnclosureAccessList.find((e) => {
@@ -362,7 +365,7 @@ export class EntryController {
     res.status(200).json(entry).end();
   }
 
-  public async deleteEntry(req: Request, res: Response) {
+  public async deleteEntry(req: Request, res: Response): Promise<void> {
     const entryId = req.params.id;
     const entry: IEntry_Instance | null = await this.Entry.findByPk(entryId);
     if (!entry) {
@@ -371,6 +374,22 @@ export class EntryController {
     }
     await entry.destroy();
     res.status(204).json("deleted").end();
+  }
+
+  private static async checkEnclosureIsOpen(
+    enclosure: IEnclosure_Instance
+  ): Promise<boolean> {
+    const now: Date = new Date();
+    const currentTime: number =
+      dateFns.getHours(now) * 60 + dateFns.getMinutes(now);
+    const openingTimeArr: string[] = enclosure.openHour.split(":");
+    const openingTime =
+      Number(openingTimeArr[0]) * 60 + Number(openingTimeArr[1]);
+    const closingTimeArr: string[] = enclosure.closeHour.split(":");
+    const closingTime =
+      Number(closingTimeArr[0]) * 60 + Number(closingTimeArr[1]);
+
+    return currentTime <= closingTime && currentTime >= openingTime;
   }
 
   constructor(
