@@ -1,6 +1,6 @@
 # SanaZoo API
 
-Brizoo is a very popular zoo !
+SanaZoo is a very popular zoo !
 
 First created in C with XML files, it is now developped with nodejs and swagger, for your eyes only
 
@@ -177,14 +177,13 @@ First created in C with XML files, it is now developped with nodejs and swagger,
 
 <!-- tocstop -->
 --------
+
 # Our project
-
-
-
 
 # API Endpoints
 
 ## Postman Environment
+
 You can check our endpoints with postman directly on this URL:
 [https://documenter.getpostman.com/view/11568150/TzJvdwNA](https://documenter.getpostman.com/view/11568150/TzJvdwNA)
 
@@ -2879,5 +2878,11 @@ URL: {{baseURL}}/user/role/:userRoleId
 ```
 
 ---
-[Back to top](#sanazoo-api)
-> Made with &#9829; by [thedevsaddam](https://github.com/thedevsaddam) | Generated at: 2021-04-24 15:55:25 by [docgen](https://github.com/thedevsaddam/docgen)
+
+# Contributions
+
+|                                                  |                                                              |
+| ------------------------------------------------ | ------------------------------------------------------------ |
+| [Noé LARRIEU-LACOSTE](https://github.com/Nouuu)  | [![followers](https://img.shields.io/github/followers/nouuu)]((https://github.com/Nouuu)) |
+| [Swann HERRERA](https://github.com/SwannHERRERA) | [![followers](https://img.shields.io/github/followers/SwannHERRERA)](https://github.com/SwannHERRERA) |
+| [Clément BOSSARD](https://github.com/Huriumari)  | [![followers](https://img.shields.io/github/followers/Huriumari)](https://github.com/Huriumari) |
