@@ -59,7 +59,7 @@ This project was carried out using a gantt chart :
 
 Here is our DB model used for this project :
 
-![Planode Zoo](images/README/Planode Zoo.png)
+![Planode Zoo](images/README/Planode-Zoo.png)
 
 ## Contributions
 
