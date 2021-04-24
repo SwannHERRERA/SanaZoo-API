@@ -2,14 +2,13 @@ import faker from "faker";
 import { SequelizeManager } from "../utils/db";
 import { hash } from "argon2";
 import { Op } from "sequelize";
-import { IUser_Instance } from "../models";
 
 export async function initFaker(): Promise<void> {
   // await createUser();
   // await createEncosureType();
   // await createEncosures();
   // await createEnclosureImage();
-  await createEnclosureServiceBook();
+  // await createEnclosureServiceBook();
 }
 
 async function createUser(): Promise<void> {
