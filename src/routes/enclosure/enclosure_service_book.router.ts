@@ -140,8 +140,8 @@ enclosureServiceBookRouter.get(
   "/",
   employeeMiddleware,
   async function (req, res) {
-    const offset: number = req.body.offset;
-    const limit: number = req.body.limit;
+    const offset: number = Number.parseInt(req.body.offset as string);
+    const limit: number = Number.parseInt(req.body.limit as string);
 
     const controller = await Enclosure_Service_Book_Controller.getInstance();
     const result = await controller.getAll({

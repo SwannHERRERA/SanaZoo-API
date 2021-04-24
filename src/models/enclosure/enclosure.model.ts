@@ -20,6 +20,8 @@ export interface IEnclosure_Props {
   name: string;
   capacity: number;
   description: string;
+  openHour: string;
+  closeHour: string;
   visitDuration: number;
   handicapAccess: boolean;
   maintenance: boolean;
@@ -91,6 +93,12 @@ export function enclosureCreator(
       },
       maintenance: {
         type: DataTypes.BOOLEAN,
+      },
+      openHour: {
+        type: DataTypes.STRING,
+      },
+      closeHour: {
+        type: DataTypes.STRING,
       },
       enclosureTypeId: {
         type: DataTypes.BIGINT,

@@ -29,8 +29,8 @@ enclosureMaintenanceRouter.get(
     }
 
     const result = await controller.getAllByState(state, {
-      offset: req.body.offset,
-      limit: req.body.limit,
+      offset: Number.parseInt(req.query.offset as string),
+      limit: Number.parseInt(req.query.limit as string),
     });
     res.status(200).json(result).end();
   }
@@ -63,8 +63,9 @@ enclosureMaintenanceRouter.put(
     const visitDuration = req.body.visitDuration || previous.visitDuration;
     const maintenance = req.body.maintenance;
     const handicapAccess = req.body.handicapAccess || previous.handicapAccess;
-    const enclosureTypeId =
-      req.body.enclosureTypeId || previous.enclosureTypeId;
+    const enclosureTypeId = req.body.enclosureTypeId || previous.enclosureTypeId;
+    const openHour = req.body.closeHour;
+    const closeHour = req.body.closeHour;
     enclosureSchema
       .validate({
         name,
@@ -74,6 +75,8 @@ enclosureMaintenanceRouter.put(
         handicapAccess,
         maintenance,
         enclosureTypeId,
+        openHour,
+        closeHour
       })
       .then(async function () {
         const result = await controller.update(id, {
@@ -84,6 +87,9 @@ enclosureMaintenanceRouter.put(
           handicapAccess,
           maintenance,
           enclosureTypeId,
+          openHour,
+          closeHour
+
         });
         res.status(200).json(result).end();
       })
@@ -101,6 +107,8 @@ const enclosureSchema = yup.object().shape({
   handicapAccess: yup.boolean().required(),
   maintenance: yup.boolean().required(),
   enclosureTypeId: yup.number().required(),
+  openHour: yup.string().matches(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/).required(),
+  closeHour: yup.string().matches(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/).required(),
 });
 
 export { enclosureMaintenanceRouter };

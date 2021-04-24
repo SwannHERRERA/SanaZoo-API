@@ -1,6 +1,7 @@
 import express from "express";
 import { EntryController } from "../../controllers/pass/pass_entry.controller";
 import { employeeMiddleware } from "../../middlewares/employee.middleware";
+import { adminMiddleware, authMiddleware } from "../../middlewares";
 
 const passEntryRouter = express.Router();
 let entryController: EntryController;
@@ -50,7 +51,7 @@ passEntryRouter.post("/", employeeMiddleware, async (req, res) => {
 /**
  * Delete entry
  */
-passEntryRouter.post("/", employeeMiddleware, async (req, res) => {
+passEntryRouter.delete("/", adminMiddleware, async (req, res) => {
   await (await getEntryController()).deleteEntry(req, res);
 });
 

@@ -17,6 +17,8 @@ enclosureRouter.post("/", adminMiddleware, async function (req, res) {
   const maintenance = req.body.maintenance;
   const enclosureTypeId = req.body.enclosureTypeId;
   const images = req.body.images;
+  const openHour = req.body.closeHour;
+  const closeHour = req.body.closeHour;
   enclosureSchemaCreat
     .validate({
       name,
@@ -27,6 +29,8 @@ enclosureRouter.post("/", adminMiddleware, async function (req, res) {
       maintenance,
       enclosureTypeId,
       images,
+      openHour,
+      closeHour,
     })
     .then(async function () {
       const controller = await Enclosure_Controller.getInstance();
@@ -38,6 +42,8 @@ enclosureRouter.post("/", adminMiddleware, async function (req, res) {
         handicapAccess,
         maintenance,
         enclosureTypeId,
+        openHour,
+        closeHour,
       });
       if (!result) {
         res.status(500).end();
@@ -79,16 +85,39 @@ enclosureRouter.post("/", adminMiddleware, async function (req, res) {
     });
 });
 
-enclosureRouter.get("/:id", async function (req, res) {
+enclosureRouter.get("/type/:enclosureTypeId", authMiddleware, async function (req, res) {
+  const offset: number = req.query.offset
+    ? Number.parseInt(req.query.offset as string)
+    : 1;
+  const limit: number = req.query.limit
+    ? Number.parseInt(req.query.limit as string)
+    : 1;
+
+  const controller = await Enclosure_Controller.getInstance();
+  const result = await controller.getAllByType(
+    Number.parseInt(req.params.enclosureTypeId),
+    {
+      limit,
+      offset,
+    }
+  );
+  res.status(200).json(result).end();
+});
+
+enclosureRouter.get("/:id", authMiddleware, async function (req, res) {
   const controller = await Enclosure_Controller.getInstance();
   const result = await controller.getOne(Number.parseInt(req.params.id));
   if (!result) res.status(404).end();
   res.status(200).json(result).end();
 });
 
-enclosureRouter.get("/", async function (req, res) {
-  const offset: number = req.body.offset;
-  const limit: number = req.body.limit;
+enclosureRouter.get("/", authMiddleware, async function (req, res) {
+  const offset: number = req.query.offset
+    ? Number.parseInt(req.query.offset as string)
+    : 1;
+  const limit: number = req.query.limit
+    ? Number.parseInt(req.query.limit as string)
+    : 1;
 
   const controller = await Enclosure_Controller.getInstance();
   const result = await controller.getAll({
@@ -130,6 +159,8 @@ enclosureRouter.put("/:id", adminMiddleware, async function (req, res) {
   const handicapAccess = req.body.handicapAccess || previous.handicapAccess;
   const maintenance = req.body.maintenance || previous.maintenance;
   const enclosureTypeId = req.body.enclosureTypeId || previous.enclosureTypeId;
+  const openHour = req.body.closeDate || previous.openHour;
+  const closeHour = req.body.closeDate || previous.closeHour;
   enclosureSchemaCreat
     .validate({
       name,
@@ -139,6 +170,8 @@ enclosureRouter.put("/:id", adminMiddleware, async function (req, res) {
       handicapAccess,
       maintenance,
       enclosureTypeId,
+      openHour,
+      closeHour,
     })
     .then(async function () {
       const result = await controller.update(Number.parseInt(req.params.id), {
@@ -149,6 +182,8 @@ enclosureRouter.put("/:id", adminMiddleware, async function (req, res) {
         handicapAccess,
         maintenance,
         enclosureTypeId,
+        openHour,
+        closeHour,
       });
       res.status(200).json(result).end();
     })
@@ -159,13 +194,17 @@ enclosureRouter.put("/:id", adminMiddleware, async function (req, res) {
 
 enclosureRouter.get("/:id/animals", authMiddleware, async function (req, res) {
   const controller = await Enclosure_Controller.getInstance();
+
+  const limit = Number(req.query.limit) || 2000;
+  const offset = Number(req.query.offset) || 0;
+
   const enclosureId = Number.parseInt(req.params.id);
   const enclosure = await controller.getOne(enclosureId);
   if (!enclosure) {
     res.status(404).end();
     return;
   }
-  const animals = await controller.getAllAnimals(enclosureId);
+  const animals = await controller.getAllAnimals(enclosureId, limit, offset);
 
   res.json(animals);
 });
@@ -179,6 +218,14 @@ const enclosureSchemaCreat = yup.object().shape({
   maintenance: yup.boolean().required(),
   enclosureTypeId: yup.number().required(),
   images: yup.array().optional(),
+  openHour: yup
+    .string()
+    .matches(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/)
+    .required(),
+  closeHour: yup
+    .string()
+    .matches(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/)
+    .required(),
 });
 
 const imageSchemaCreat = yup.object().shape({

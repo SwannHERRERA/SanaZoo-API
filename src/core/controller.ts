@@ -1,4 +1,5 @@
 import { Response } from "express";
+import { StatusCode } from "../utils/statusCode";
 
 export class Controller {
   schema: any = null;
@@ -7,7 +8,8 @@ export class Controller {
       .validate(entry)
       .then(() => true)
       .catch((err: Error) => {
-        res.status(400).json(err.message).end();
+        console.log(err);
+        res.status(StatusCode.BAD_REQUEST).json(err.message).end();
         return false;
       });
   }

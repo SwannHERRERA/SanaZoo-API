@@ -1,11 +1,11 @@
 import express from "express";
 import { Enclosure_Type_Controller } from "../../controllers/enclosure/enclosure_type.controller";
-import { adminMiddleware } from "../../middlewares/admin.middleware";
+import { adminMiddleware, authMiddleware } from "../../middlewares";
 import * as yup from "yup";
 
 const enclosureTypeRouter = express.Router();
 
-enclosureTypeRouter.get("/:id", async function (req, res) {
+enclosureTypeRouter.get("/:id", authMiddleware, async function (req, res) {
   const controller = await Enclosure_Type_Controller.getInstance();
   const result = await controller.getOne(Number.parseInt(req.params.id));
 
@@ -13,9 +13,9 @@ enclosureTypeRouter.get("/:id", async function (req, res) {
   res.status(200).json(result).end();
 });
 
-enclosureTypeRouter.get("/", async function (req, res) {
-  const offset: number = req.body.offset;
-  const limit: number = req.body.limit;
+enclosureTypeRouter.get("/", authMiddleware, async function (req, res) {
+  const offset: number = Number.parseInt(req.query.offset as string);
+  const limit: number = Number.parseInt(req.query.limit as string);
 
   const controller = await Enclosure_Type_Controller.getInstance();
   const result = await controller.getAll({

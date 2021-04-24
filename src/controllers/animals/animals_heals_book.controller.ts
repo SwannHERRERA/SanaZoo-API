@@ -16,7 +16,7 @@ export class AnimalsHealsBookController extends Controller {
 
   public getOneById = async (req: Request, res: Response): Promise<void> => {
     try {
-      const healsId = Number(req.body.id);
+      const healsId = Number(req.params.id);
       const { AnimalHealthBook } = await SequelizeManager.getInstance();
       const healsBook = await AnimalHealthBook.findByPk(healsId);
       if (healsBook === null) {
@@ -96,31 +96,44 @@ export class AnimalsHealsBookController extends Controller {
   };
 
   public updateOne = async (req: Request, res: Response): Promise<void> => {
-    const healsId = Number(req.body.id);
-    const heals = req.body;
-    const isValid = await this.validate(heals, res);
-    if (isValid === false) {
-      return;
-    }
     try {
       const {
         AnimalHealthBook,
         Animal,
         User,
       } = await SequelizeManager.getInstance();
+      const healsId = Number(req.params.id);
+      const previousHealthBook = await AnimalHealthBook.findByPk(healsId);
+      if (previousHealthBook === null) {
+        res.status(StatusCode.NOT_FOUND).end();
+        return;
+      }
+      const healthEntry = req.body;
+      healthEntry.date = healthEntry.date || previousHealthBook.date;
+      healthEntry.description =
+        healthEntry.description || previousHealthBook.description;
+      healthEntry.userId = healthEntry.userId || previousHealthBook.userId;
+      healthEntry.animalId =
+        healthEntry.animalId || previousHealthBook.animalId;
+
+      const isValid = await this.validate(healthEntry, res);
+      if (isValid === false) {
+        return;
+      }
       const isUpadatable = await this.checkFKError(
         res,
         Animal,
         User,
-        heals.userId,
-        heals.animalId
+        healthEntry.userId,
+        healthEntry.animalId
       );
-      const animalHealsBook = await AnimalHealthBook.findByPk(healsId);
-      if (isUpadatable === false || !animalHealsBook) {
-        res.send(StatusCode.NOT_FOUND).end(); // for animalHealsBook === null
+      if (isUpadatable === false) {
+        res.send(StatusCode.NOT_FOUND).end();
         return;
       }
-      const animalHealsBookUpdated = await animalHealsBook.update(heals);
+      const animalHealsBookUpdated = await previousHealthBook.update(
+        healthEntry
+      );
 
       res.json(animalHealsBookUpdated);
     } catch (err) {
@@ -128,13 +141,14 @@ export class AnimalsHealsBookController extends Controller {
       res.status(StatusCode.SERVER_ERROR).end();
     }
   };
+
   public deleteOne = async (req: Request, res: Response): Promise<void> => {
-    const id = Number(req.body.id);
+    const id = Number(req.params.id);
     try {
       const { AnimalHealthBook } = await SequelizeManager.getInstance();
       const isDestroyed = await AnimalHealthBook.destroy({ where: { id } });
       if (isDestroyed) {
-        res.status(StatusCode.CREATED).end();
+        res.status(StatusCode.DELETED).end();
       } else {
         res.status(StatusCode.NOT_FOUND).end();
       }
@@ -148,8 +162,10 @@ export class AnimalsHealsBookController extends Controller {
     req: Request,
     res: Response
   ): Promise<void> => {
+    const limit = Number(req.query.limit) || 2000;
+    const offset = Number(req.query.offset) || 0;
+    const animalId = Number(req.params.animalId);
     try {
-      const animalId = Number(req.params.animalId);
       const { AnimalHealthBook, Animal } = await SequelizeManager.getInstance();
       const animal = await Animal.findByPk(animalId);
       if (!animal) {
@@ -159,7 +175,12 @@ export class AnimalsHealsBookController extends Controller {
           .end();
         return;
       }
-      AnimalHealthBook.findAll({ where: { animalId } });
+      const healthBook = await AnimalHealthBook.findAll({
+        where: { animalId },
+        limit,
+        offset,
+      });
+      res.json(healthBook);
     } catch (err) {
       console.error(err);
       res.status(StatusCode.SERVER_ERROR).end();
