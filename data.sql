@@ -10,18 +10,18 @@ insert into Pass_Type (id, name, price, created_at, updated_at)
 VALUES (5, 'PASS Escape game', 30, '2021-04-05', '2021-04-05');
 insert into Pass_Type (id, name, price, created_at, updated_at)
 VALUES (6, 'PASS Night', 40, '2021-04-05', '2021-04-05');
-insert into User_Role (id, name)
-VALUES (1, 'ADMIN');
-insert into User_Role (id, name)
-VALUES (2, 'VENDEUR');
-insert into User_Role (id, name)
-VALUES (3, 'AGENT D\'ACCUEIL');
-insert into User_Role (id, name)
-VALUES (4, 'AGENT d\'ENTRETIENT');
-insert into User_Role (id, name)
-VALUES (5, 'VETERINAIRE');
-insert into User_Role (id, name)
-VALUES (6, 'VISITEUR', 40);
+insert into User_Role (id, name, created_at, updated_at)
+VALUES (1, 'ADMIN', NOW(), NOW());
+insert into User_Role (id, name, created_at, updated_at)
+VALUES (2, 'VENDEUR', NOW(), NOW());
+insert into User_Role (id, name, created_at, updated_at)
+VALUES (3, "AGENT D'ACCUEIL", NOW(), NOW());
+insert into User_Role (id, name, created_at, updated_at)
+VALUES (4, "AGENT d'ENTRETIENT", NOW(), NOW());
+insert into User_Role (id, name, created_at, updated_at)
+VALUES (5, 'VETERINAIRE', NOW(), NOW());
+insert into User_Role (id, name, created_at, updated_at)
+VALUES (6, 'VISITEUR', NOW(), NOW());
 insert into User (first_name, last_name, email, birthdate, password, user_role_id, created_at, updated_at)
 VALUES ('Admin', 'Admin', 'Admin@Admin.com', '2000-12-20 13:21:00', "", 1, '2021-04-18', '2021-04-18'),
  ('Employee', 'Employee', 'Employee@Employee.com', '2000-08-20 13:22:00', "", 2, '2021-04-18', '2021-04-18'),
