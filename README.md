@@ -186,9 +186,19 @@ In this school project, we have to realize a complete API to manage a zoo, using
 
 This project has been tested and integrated both on heroku, but also thanks to docker whose image is detailed below
 
+Project Syllabus : [Syllabus](SyllabusDuProjet.pdf)
+
 ## Gantt chart
 
+This project was carried out using a gantt chart :
+
+![image-20210424163444370](images/README/image-20210424163444370.png)
+
 ## Data model used for DB
+
+Here is our DB model used for this project :
+
+![Planode Zoo](images/README/Planode Zoo.png)
 
 ## Contributions
 
@@ -198,7 +208,71 @@ This project has been tested and integrated both on heroku, but also thanks to d
 | [Swann HERRERA](https://github.com/SwannHERRERA) | [![followers](https://img.shields.io/github/followers/SwannHERRERA)](https://github.com/SwannHERRERA) |
 | [Clément BOSSARD](https://github.com/Huriumari)  | [![followers](https://img.shields.io/github/followers/Huriumari)](https://github.com/Huriumari) |
 
-# Docker integration
+# Informations about code
+
+## Docker integration
+
+Our docker image is built in 2 step :
+
+- First we build all the project with dev dependencies
+- Then we only keep production dependencies with compiled project
+
+This reduce drastictly the size of the image
+
+```dockerfile
+# Stage 1 building the code
+FROM node:lts-alpine as builder
+WORKDIR /usr/app
+COPY package*.json ./
+RUN npm ci
+COPY . .
+RUN npm run build
+
+# Stage 2 final stage with builded code
+FROM node:lts-alpine
+WORKDIR /usr/app
+COPY package*.json ./
+RUN npm ci --production
+
+COPY --from=builder /usr/app/dist ./dist
+
+ENV PORT=3000 \
+    DB_PORT=3306 \
+    DB_DRIVER='mysql' \
+    DB_HOST='localhost' \
+    DB_NAME='zoo' \
+    DB_USER='root' \
+    DB_PASSWORD=''
+
+CMD node dist/src/index.js
+```
+
+### Env
+
+| Environment variable | Default   | Description                             |
+| -------------------- | --------- | --------------------------------------- |
+| PORT                 | 3000      | Express listen port                     |
+| DB_DRIVER            | mysql     | Driver for sql connection for sequelize |
+| DB_HOST              | localhost | Host domain / IP for DB                 |
+| DB_NAME              | zoo       | DB Schema name                          |
+| DB_USER              | zoo       | DB user                                 |
+| DB_PASSWORD          | `empty`   | DB password                             |
+
+## Main dependencies
+
+| Dependency         | Version     | Description                                                  |
+| ------------------ | ----------- | ------------------------------------------------------------ |
+| Express            | ^4.17.1     | Web API Framework                                            |
+| Date FNS           | ^2.21.1     | Useful librairies to manipulates dates                       |
+| Dotenv             | ^8.2.0      | Used to load `.env` file                                     |
+| Argon2             | ^0.27.0     | Used to encrupt users password                               |
+| Mysql2             | ^2.2.5      | DB driver                                                    |
+| Sequelize          | ^6.6.2      | Orm librairies to bind class to DB entities                  |
+| Swagger-jsdoc      | ^7.0.0-rc.6 | Used to implements swagger page                              |
+| Swagger-ui-express | ^4.1.6      | Used to implements swagger page                              |
+| Yup                | ^0.32.9     | Form validation library used to validate data in post body of our requests |
+| Typescript         | ^4.2.3      | Very useful to use types in JS based framework               |
+
 
 
 # API Endpoints
