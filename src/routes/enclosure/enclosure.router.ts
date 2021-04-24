@@ -30,8 +30,7 @@ enclosureRouter.post("/", adminMiddleware, async function (req, res) {
       enclosureTypeId,
       images,
       openHour,
-      closeHour
-
+      closeHour,
     })
     .then(async function () {
       const controller = await Enclosure_Controller.getInstance();
@@ -44,7 +43,7 @@ enclosureRouter.post("/", adminMiddleware, async function (req, res) {
         maintenance,
         enclosureTypeId,
         openHour,
-        closeHour
+        closeHour,
       });
       if (!result) {
         res.status(500).end();
@@ -172,7 +171,7 @@ enclosureRouter.put("/:id", adminMiddleware, async function (req, res) {
       maintenance,
       enclosureTypeId,
       openHour,
-      closeHour
+      closeHour,
     })
     .then(async function () {
       const result = await controller.update(Number.parseInt(req.params.id), {
@@ -184,7 +183,7 @@ enclosureRouter.put("/:id", adminMiddleware, async function (req, res) {
         maintenance,
         enclosureTypeId,
         openHour,
-        closeHour
+        closeHour,
       });
       res.status(200).json(result).end();
     })
@@ -215,8 +214,14 @@ const enclosureSchemaCreat = yup.object().shape({
   maintenance: yup.boolean().required(),
   enclosureTypeId: yup.number().required(),
   images: yup.array().optional(),
-  openHour: yup.string().matches(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/).required(),
-  closeHour: yup.string().matches(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/).required(),
+  openHour: yup
+    .string()
+    .matches(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/)
+    .required(),
+  closeHour: yup
+    .string()
+    .matches(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/)
+    .required(),
 });
 
 const imageSchemaCreat = yup.object().shape({
