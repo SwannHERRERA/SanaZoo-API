@@ -44,7 +44,7 @@ export function animalHealthBookCreator(
         autoIncrement: true,
       },
       description: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
       },
       date: {
         type: DataTypes.DATE,
@@ -69,7 +69,6 @@ export function animalHealthBookCreator(
     {
       freezeTableName: true,
       underscored: true,
-      paranoid: true,
       timestamps: true,
     }
   );

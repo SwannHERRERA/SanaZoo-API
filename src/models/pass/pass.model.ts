@@ -77,7 +77,6 @@ export function passCreator(sequelize: Sequelize): ModelCtor<IPass_Instance> {
     {
       freezeTableName: true,
       underscored: true,
-      paranoid: true,
       timestamps: true,
     }
   );

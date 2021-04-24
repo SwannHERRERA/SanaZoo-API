@@ -69,7 +69,6 @@ export function passEnclosureCreator(
     {
       freezeTableName: true,
       underscored: true,
-      paranoid: true,
       timestamps: true,
     }
   );

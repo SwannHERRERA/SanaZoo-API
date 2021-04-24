@@ -74,7 +74,6 @@ export function enclosureServiceBookCreator(
     {
       freezeTableName: true,
       underscored: true,
-      paranoid: true,
       timestamps: true,
     }
   );
