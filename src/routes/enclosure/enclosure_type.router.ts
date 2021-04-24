@@ -5,7 +5,7 @@ import * as yup from "yup";
 
 const enclosureTypeRouter = express.Router();
 
-enclosureTypeRouter.get("/:id", authMiddleware, async function (req, res) {
+enclosureTypeRouter.get("/id/:id", authMiddleware, async function (req, res) {
   const controller = await Enclosure_Type_Controller.getInstance();
   const result = await controller.getOne(Number.parseInt(req.params.id));
 

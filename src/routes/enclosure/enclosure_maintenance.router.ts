@@ -1,14 +1,15 @@
 import express from "express";
-import { employeeMiddleware } from "../../middlewares/employee.middleware";
+import { employeeMiddleware } from "../../middlewares";
 import { Enclosure_Controller } from "../../controllers/enclosure/enclosure.controller";
 import * as yup from "yup";
 import { Enclosure_Maintenance_Controller } from "../../controllers/enclosure/enclosure_maintenance.controller";
+import { adminMiddleware } from "../../middlewares";
 
 const enclosureMaintenanceRouter = express.Router();
 
 enclosureMaintenanceRouter.get(
   "/month/:id",
-  employeeMiddleware,
+  adminMiddleware,
   async function (req, res) {
     const id = Number.parseInt(req.params.id);
     const controller = await Enclosure_Maintenance_Controller.getInstance();
@@ -36,17 +37,9 @@ enclosureMaintenanceRouter.get(
   }
 );
 
-enclosureMaintenanceRouter.delete("/", async function (req, res) {
-  res.status(404).end();
-});
-
-enclosureMaintenanceRouter.post("/", async function (req, res) {
-  res.status(404).end();
-});
-
 enclosureMaintenanceRouter.put(
   "/:id",
-  employeeMiddleware,
+  adminMiddleware,
   async function (req, res) {
     const id = Number.parseInt(req.params.id);
     const controller = await Enclosure_Controller.getInstance();
@@ -63,7 +56,8 @@ enclosureMaintenanceRouter.put(
     const visitDuration = req.body.visitDuration || previous.visitDuration;
     const maintenance = req.body.maintenance;
     const handicapAccess = req.body.handicapAccess || previous.handicapAccess;
-    const enclosureTypeId = req.body.enclosureTypeId || previous.enclosureTypeId;
+    const enclosureTypeId =
+      req.body.enclosureTypeId || previous.enclosureTypeId;
     const openHour = req.body.closeHour;
     const closeHour = req.body.closeHour;
     enclosureSchema
@@ -76,7 +70,7 @@ enclosureMaintenanceRouter.put(
         maintenance,
         enclosureTypeId,
         openHour,
-        closeHour
+        closeHour,
       })
       .then(async function () {
         const result = await controller.update(id, {
@@ -88,8 +82,7 @@ enclosureMaintenanceRouter.put(
           maintenance,
           enclosureTypeId,
           openHour,
-          closeHour
-
+          closeHour,
         });
         res.status(200).json(result).end();
       })
@@ -107,8 +100,14 @@ const enclosureSchema = yup.object().shape({
   handicapAccess: yup.boolean().required(),
   maintenance: yup.boolean().required(),
   enclosureTypeId: yup.number().required(),
-  openHour: yup.string().matches(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/).required(),
-  closeHour: yup.string().matches(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/).required(),
+  openHour: yup
+    .string()
+    .matches(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/)
+    .required(),
+  closeHour: yup
+    .string()
+    .matches(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/)
+    .required(),
 });
 
 export { enclosureMaintenanceRouter };
