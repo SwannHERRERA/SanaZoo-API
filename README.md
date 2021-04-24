@@ -1,7 +1,5 @@
 # SanaZoo API
 
-
-
 SanaZoo is a very popular zoo !
 
 First created in C with XML files, it is now developped with nodejs and swagger, for your eyes only
@@ -10,174 +8,37 @@ First created in C with XML files, it is now developped with nodejs and swagger,
 
 <!-- toc -->
 
-* [Affluence](#affluence)
-
-    * [Daily](#1-daily)
-    * [Daily by enclosure](#2-daily-by-enclosure)
-    * [Live enclosure affluence](#3-live-enclosure-affluence)
-    * [Monthly](#4-monthly)
-    * [Monthly by enclosure](#5-monthly-by-enclosure)
-    * [Total](#6-total)
-    * [Total by enclosure](#7-total-by-enclosure)
-    * [Weekly](#8-weekly)
-    * [Weekly by enclosure](#9-weekly-by-enclosure)
-    * [Yearly](#10-yearly)
-    * [Yearly by enclosure](#11-yearly-by-enclosure)
-
-* [Animal](#animal)
-
-    * [Create](#1-create)
-    * [Delete](#2-delete)
-    * [Get all](#3-get-all)
-    * [Get by id](#4-get-by-id)
-    * [Move Enclosure](#5-move-enclosure)
-    * [Update](#6-update)
-
-* [Animal Health Book](#animal-health-book)
-
-    * [Create entry](#1-create-entry)
-    * [Delete](#2-delete-1)
-    * [Get All](#3-get-all-1)
-    * [Get All By Animal](#4-get-all-by-animal)
-    * [Get One](#5-get-one)
-    * [Update](#6-update-1)
-
-* [Enclosure](#enclosure)
-
-    * [Add One](#1-add-one)
-    * [Delete One](#2-delete-one)
-    * [Edit One](#3-edit-one)
-    * [Get All](#4-get-all)
-    * [Get All Animals In Enclosure](#5-get-all-animals-in-enclosure)
-    * [Get All By Type](#6-get-all-by-type)
-    * [Get One](#7-get-one)
-
-* [Enclosure Images](#enclosure-images)
-
-    * [Add](#1-add)
-    * [Delete One](#2-delete-one-1)
-    * [Edit One](#3-edit-one-1)
-    * [Gell All From Enclosure](#4-gell-all-from-enclosure)
-    * [Get All](#5-get-all)
-    * [Get One](#6-get-one)
-
-* [Enclosure Service-book](#enclosure-service-book)
-
-    * [Create service-book](#1-create-service-book)
-    * [Delete service-book](#2-delete-service-book)
-    * [Edit service-book](#3-edit-service-book)
-    * [Gell All From Employee](#4-gell-all-from-employee)
-    * [Get All](#5-get-all-1)
-    * [Get All From Enclosure](#6-get-all-from-enclosure)
-    * [Get One](#7-get-one-1)
-
-* [Enclosure Type](#enclosure-type)
-
-    * [Create](#1-create-1)
-    * [Delete](#2-delete-2)
-    * [Get All](#3-get-all-2)
-    * [Get One](#4-get-one)
-    * [Update](#5-update)
-
-* [Entry](#entry)
-
-    * [Add entry](#1-add-entry)
-    * [Get all](#2-get-all)
-    * [Get by enclosure](#3-get-by-enclosure)
-    * [Get by pass](#4-get-by-pass)
-    * [Get by user](#5-get-by-user)
-    * [Remove entry](#6-remove-entry)
-
-* [Maintenance](#maintenance)
-
-    * [Get All by State](#1-get-all-by-state)
-    * [Get Best Month](#2-get-best-month)
-    * [Update Maintenance State](#3-update-maintenance-state)
-
-* [Pass](#pass)
-
-    * [Add enclosure access](#1-add-enclosure-access)
-    * [Create](#2-create)
-    * [Delete pass](#3-delete-pass)
-    * [Get all](#4-get-all-1)
-    * [Get all by user id](#5-get-all-by-user-id)
-    * [Get by id](#6-get-by-id)
-    * [Remove enclosure access](#7-remove-enclosure-access)
-    * [Update pass](#8-update-pass)
-
-* [Pass Night](#pass-night)
-
-    * [Add availability](#1-add-availability)
-    * [Delete passnight](#2-delete-passnight)
-    * [Get all](#3-get-all-3)
-    * [Get all valid](#4-get-all-valid)
-    * [Update  passnight](#5-update--passnight)
-
-* [Pass Type](#pass-type)
-
-    * [Add pass to pass type](#1-add-pass-to-pass-type)
-    * [Create](#2-create-1)
-    * [Delete](#3-delete)
-    * [Get all](#4-get-all-2)
-    * [Get by id](#5-get-by-id)
-    * [Update](#6-update-2)
-
-* [Planning](#planning)
-
-    * [Add](#1-add-1)
-    * [Delete](#2-delete-3)
-    * [Get All](#3-get-all-4)
-    * [Get Calendar](#4-get-calendar)
-    * [Get One](#5-get-one-1)
-    * [Get Open Date](#6-get-open-date)
-    * [Update](#7-update)
-
-* [Specie](#specie)
-
-    * [Create](#1-create-2)
-    * [Delete](#2-delete-4)
-    * [Get All](#3-get-all-5)
-    * [Get By Id](#4-get-by-id-1)
-    * [Update](#5-update-1)
-
-* [Statistics](#statistics)
-
-    * [Count all pass](#1-count-all-pass)
-    * [Count all pass by types](#2-count-all-pass-by-types)
-    * [Count animal](#3-count-animal)
-    * [Count animal by enclosure](#4-count-animal-by-enclosure)
-    * [Count enclosure](#5-count-enclosure)
-    * [Count expired pass](#6-count-expired-pass)
-    * [Count user](#7-count-user)
-    * [Count valid pass](#8-count-valid-pass)
-    * [Count valid pass by types](#9-count-valid-pass-by-types)
-
-* [User](#user)
-
-    * [Change Password](#1-change-password)
-    * [Create](#2-create-2)
-    * [Delete](#3-delete-1)
-    * [Force Delete](#4-force-delete)
-    * [Get All](#5-get-all-2)
-    * [Get By Id](#6-get-by-id-1)
-    * [Login](#7-login)
-    * [Logout](#8-logout)
-    * [ME](#9-me)
-    * [Register](#10-register)
-    * [Restaure User](#11-restaure-user)
-    * [Update by admin](#12-update-by-admin)
-    * [Update client only by employee](#13-update-client-only-by-employee)
-
-* [User Role](#user-role)
-
-    * [Affect User](#1-affect-user)
-    * [Create](#2-create-3)
-    * [Delete](#3-delete-2)
-    * [Get All](#4-get-all-3)
-    * [Get by Id](#5-get-by-id-1)
-    * [Update](#6-update-3)
+- [Our project](#our-project)
+    * [Gantt chart](#gantt-chart)
+    * [Data model used for DB](#data-model-used-for-db)
+    * [Contributions](#contributions)
+- [Informations about code](#informations-about-code)
+    * [Docker integration](#docker-integration)
+        + [Env](#env)
+    * [Main dependencies](#main-dependencies)
+- [API Endpoints](#api-endpoints)
+    * [Postman Environment](#postman-environment)
+    * [Affluence](#affluence)
+    * [Animal](#animal)
+    * [Animal Health Book](#animal-health-book)
+    * [Enclosure](#enclosure)
+    * [Enclosure Images](#enclosure-images)
+    * [Enclosure Service-book](#enclosure-service-book)
+    * [Enclosure Type](#enclosure-type)
+    * [Entry](#entry)
+    * [Maintenance](#maintenance)
+    * [Pass](#pass)
+    * [Pass Night](#pass-night)
+    * [Pass Type](#pass-type)
+    * [Planning](#planning)
+    * [Specie](#specie)    
+    * [Statistics](#statistics)
+    * [User](#user)
+    * [User Role](#user-role)
+    * [Swagger](#swagger)
 
 <!-- tocstop -->
+
 --------
 
 # Our project
@@ -273,14 +134,149 @@ CMD node dist/src/index.js
 | Yup                | ^0.32.9     | Form validation library used to validate data in post body of our requests |
 | Typescript         | ^4.2.3      | Very useful to use types in JS based framework               |
 
-
-
 # API Endpoints
 
 ## Postman Environment
 
 You can check our endpoints with postman directly on this URL:
 [https://documenter.getpostman.com/view/11568150/TzJvdwNA](https://documenter.getpostman.com/view/11568150/TzJvdwNA)
+
+**API Description :**
+
+* [Affluence](#affluence)
+    + [Daily](#1-daily)
+    + [Daily by enclosure](#2-daily-by-enclosure)
+    + [Live enclosure affluence](#3-live-enclosure-affluence)
+    + [Monthly](#4-monthly)
+    + [Monthly by enclosure](#5-monthly-by-enclosure)
+    + [Total](#6-total)
+    + [Total by enclosure](#7-total-by-enclosure)
+    + [Weekly](#8-weekly)
+    + [Weekly by enclosure](#9-weekly-by-enclosure)
+    + [1Yearly](#10-yearly)
+    + [1Yearly by enclosure](#11-yearly-by-enclosure)
+* [Animal](#animal)
+    + [Create](#1-create)
+    + [Delete](#2-delete)
+    + [Get all](#3-get-all)
+    + [Get by id](#4-get-by-id)
+    + [Move Enclosure](#5-move-enclosure)
+    + [Update](#6-update)
+* [Animal Health Book](#animal-health-book)
+    + [Create entry](#1-create-entry)
+    + [Delete](#2-delete-1)
+    + [Get All](#3-get-all)
+    + [Get All By Animal](#4-get-all-by-animal)
+    + [Get One](#5-get-one)
+    + [Update](#6-update-1)
+* [Enclosure](#enclosure)
+    + [Add One](#1-add-one)
+    + [Delete One](#2-delete-one)
+    + [Edit One](#3-edit-one)
+    + [Get All](#4-get-all)
+    + [Get All Animals In Enclosure](#5-get-all-animals-in-enclosure)
+    + [Get All By Type](#6-get-all-by-type)
+    + [Get One](#7-get-one)
+* [Enclosure Images](#enclosure-images)
+    + [Add](#1-add)
+    + [Delete One](#2-delete-one-1)
+    + [Edit One](#3-edit-one-1)
+    + [Gell All From Enclosure](#4-gell-all-from-enclosure)
+    + [Get All](#5-get-all)
+    + [Get One](#6-get-one)
+* [Enclosure Service-book](#enclosure-service-book)
+    + [Create service-book](#1-create-service-book)
+    + [Delete service-book](#2-delete-service-book)
+    + [Edit service-book](#3-edit-service-book)
+    + [Gell All From Employee](#4-gell-all-from-employee)
+    + [Get All](#5-get-all-1)
+    + [Get All From Enclosure](#6-get-all-from-enclosure)
+    + [Get One](#7-get-one-1)
+* [Enclosure Type](#enclosure-type)
+    + [Create](#1-create-1)
+    + [Delete](#2-delete-2)
+    + [Get All](#3-get-all-1)
+    + [Get One](#4-get-one)
+    + [Update](#5-update)
+* [Entry](#entry)
+    + [Add entry](#1-add-entry)
+    + [Get all](#2-get-all)
+    + [Get by enclosure](#3-get-by-enclosure)
+    + [Get by pass](#4-get-by-pass)
+    + [Get by user](#5-get-by-user)
+    + [Remove entry](#6-remove-entry)
+* [Maintenance](#maintenance)
+    + [Get All by State](#1-get-all-by-state)
+    + [Get Best Month](#2-get-best-month)
+    + [Update Maintenance State](#3-update-maintenance-state)
+* [Pass](#pass)
+    + [Add enclosure access](#1-add-enclosure-access)
+    + [Create](#2-create)
+    + [Delete pass](#3-delete-pass)
+    + [Get all](#4-get-all)
+    + [Get all by user id](#5-get-all-by-user-id)
+    + [Get by id](#6-get-by-id)
+    + [Remove enclosure access](#7-remove-enclosure-access)
+    + [Update pass](#8-update-pass)
+* [Pass Night](#pass-night)
+    + [Add availability](#1-add-availability)
+    + [Delete passnight](#2-delete-passnight)
+    + [Get all](#3-get-all-1)
+    + [Get all valid](#4-get-all-valid)
+    + [Update passnight](#5-update--passnight)
+* [Pass Type](#pass-type)
+    + [Add pass to pass type](#1-add-pass-to-pass-type)
+    + [Create](#2-create-1)
+    + [Delete](#3-delete)
+    + [Get all](#4-get-all-1)
+    + [Get by id](#5-get-by-id)
+    + [Update](#6-update-2)
+* [Planning](#planning)
+    + [Add](#1-add-1)
+    + [Delete](#2-delete-3)
+    + [Get All](#3-get-all-2)
+    + [Get Calendar](#4-get-calendar)
+    + [Get One](#5-get-one-1)
+    + [Get Open Date](#6-get-open-date)
+    + [Update](#7-update)
+* [Specie](#specie)
+    + [Create](#1-create-2)
+    + [Delete](#2-delete-4)
+    + [Get All](#3-get-all-3)
+    + [Get By Id](#4-get-by-id)
+    + [Update](#5-update-1)
+* [Statistics](#statistics)
+    + [Count all pass](#1-count-all-pass)
+    + [Count all pass by types](#2-count-all-pass-by-types)
+    + [Count animal](#3-count-animal)
+    + [Count animal by enclosure](#4-count-animal-by-enclosure)
+    + [Count enclosure](#5-count-enclosure)
+    + [Count expired pass](#6-count-expired-pass)
+    + [Count user](#7-count-user)
+    + [Count valid pass](#8-count-valid-pass)
+    + [Count valid pass by types](#9-count-valid-pass-by-types)
+* [User](#user)
+    + [Change Password](#1-change-password)
+    + [Create](#2-create-2)
+    + [Delete](#3-delete-1)
+    + [Force Delete](#4-force-delete)
+    + [Get All](#5-get-all-2)
+    + [Get By Id](#6-get-by-id)
+    + [Login](#7-login)
+    + [Logout](#8-logout)
+    + [ME](#9-me)
+    + [Register](#10-register)
+    + [Restaure User](#11-restaure-user)
+    + [Update by admin](#12-update-by-admin)
+    + [Update client only by employee](#13-update-client-only-by-employee)
+* [User Role](#user-role)
+    + [Affect User](#1-affect-user)
+    + [Create](#2-create-3)
+    + [Delete](#3-delete-2)
+    + [Get All](#4-get-all-1)
+    + [Get by Id](#5-get-by-id)
+    + [Update](#6-update-3)
+* [Swagger](#swagger)
 
 ## Affluence
 
@@ -2976,7 +2972,8 @@ URL: {{baseURL}}/user/role/:userRoleId
 
 ## Swagger
 
-This project contain a complete swagger test environment to use API, you can access it on `https://domain.example/swagger`
+This project contain a complete swagger test environment to use API, you can access it
+on `https://domain.example/swagger`
 
 It look FABULOUS :
 
