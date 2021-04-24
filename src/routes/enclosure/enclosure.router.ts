@@ -195,13 +195,17 @@ enclosureRouter.put("/:id", adminMiddleware, async function (req, res) {
 
 enclosureRouter.get("/:id/animals", authMiddleware, async function (req, res) {
   const controller = await Enclosure_Controller.getInstance();
+
+  const limit = Number(req.query.limit) || 2000;
+  const offset = Number(req.query.offset) || 0;
+
   const enclosureId = Number.parseInt(req.params.id);
   const enclosure = await controller.getOne(enclosureId);
   if (!enclosure) {
     res.status(404).end();
     return;
   }
-  const animals = await controller.getAllAnimals(enclosureId);
+  const animals = await controller.getAllAnimals(enclosureId, limit, offset);
 
   res.json(animals);
 });
