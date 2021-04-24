@@ -130,11 +130,11 @@ export class EntryController {
     }
 
     if (enclosure.maintenance) {
-      res.status(403).json("This enclosure is in maintenance").end();
+      res.status(423).json("This enclosure is in maintenance").end();
       return;
     }
     if (!(await EntryController.checkEnclosureIsOpen(enclosure))) {
-      res.status(500).json("This enclosure is not open").end();
+      res.status(423).json("This enclosure is not open").end();
       return;
     }
 
