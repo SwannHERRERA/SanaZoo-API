@@ -14,12 +14,12 @@ RUN npm ci --production
 
 COPY --from=builder /usr/app/dist ./dist
 
-ENV PORT=3000
-ENV DB_PORT=3306
-ENV DB_DRIVER='mysql'
-ENV DB_HOST='localhost'
-ENV DB_NAME='zoo'
-ENV DB_USER='root'
-ENV DB_PASSWORD=''
+ENV PORT=3000 \
+    DB_PORT=3306 \
+    DB_DRIVER='mysql' \
+    DB_HOST='localhost' \
+    DB_NAME='zoo' \
+    DB_USER='root' \
+    DB_PASSWORD=''
 
 CMD node dist/src/index.js

@@ -4,7 +4,6 @@ import { SequelizeManager } from "./utils/db";
 import swaggerUI from "swagger-ui-express";
 import swaggerJSON from "../docs/zoo.json";
 import { buildRoutes } from "./routes";
-import { adminMiddleware } from "./middlewares";
 
 config();
 
@@ -22,13 +21,9 @@ SequelizeManager.getInstance();
 /**
  * Just testing routes, will be deleted in final release
  */
-app.get(
-  "/",
-  adminMiddleware,
-  async (req: express.Request, res: express.Response) => {
-    res.send("Hello world !");
-  }
-);
+app.get("/", async (req: express.Request, res: express.Response) => {
+  res.send("Hello world !");
+});
 
 const port = process.env.PORT || 3000;
 app.listen(port, function () {
