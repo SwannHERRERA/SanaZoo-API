@@ -2977,4 +2977,5 @@ on `https://domain.example/swagger`
 
 It look FABULOUS :
 
-![image-20210424161611857](images/README/image-20210424161611857.png)
+![image-20210424170307083](images/README/image-20210424170307083.png)
+
