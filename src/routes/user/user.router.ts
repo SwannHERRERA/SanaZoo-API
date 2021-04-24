@@ -1,6 +1,4 @@
 import express from "express";
-
-const userRouter = express.Router();
 import controller from "../../controllers/user/user.controller";
 import {
   adminMiddleware,
@@ -8,10 +6,8 @@ import {
   employeeMiddleware,
 } from "../../middlewares";
 
-/**
- * ICI on a quelque chose de problématique ou un employee peur edité un admin
- * mais il faut faire en sorte que l'employee puisse édité les clients
- */
+const userRouter = express.Router();
+
 userRouter.put(
   "/update-client/:id",
   employeeMiddleware,

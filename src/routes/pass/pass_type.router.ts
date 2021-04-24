@@ -1,9 +1,11 @@
 import express from "express";
 import { PassTypeController } from "../../controllers/pass/pass_type.controller";
-import { authMiddleware } from "../../middlewares/auth.middleware";
+import {
+  adminMiddleware,
+  authMiddleware,
+  employeeMiddleware,
+} from "../../middlewares";
 import * as yup from "yup";
-import { adminMiddleware } from "../../middlewares/admin.middleware";
-import { employeeMiddleware } from "../../middlewares/employee.middleware";
 
 const passTypeRouter = express.Router();
 
