@@ -1,6 +1,6 @@
 import express from "express";
 import controller from "../../controllers/animals/animals.controller";
-import { authMiddleware, employeeMiddleware } from "../../middlewares";
+import { employeeMiddleware } from "../../middlewares";
 const animalRouter = express.Router();
 
 animalRouter.get("/", controller.getAll);
@@ -16,7 +16,7 @@ animalRouter.delete("/:id", employeeMiddleware, controller.deleteOne);
  * @param enclosureId
  */
 animalRouter.patch(
-  "/:id/move-enclosure",
+  "/move-enclosure",
   employeeMiddleware,
   controller.moveEnclosure
 );

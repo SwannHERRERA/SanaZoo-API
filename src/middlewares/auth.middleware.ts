@@ -1,10 +1,23 @@
 import { NextFunction, Request, Response } from "express";
+import { StatusCode } from "../utils/statusCode";
+import { findUserByToken, getToken } from "../utils/tokenHelper";
 
-export function authMiddleware(
+export async function authMiddleware(
   req: Request,
   res: Response,
   next: NextFunction
-): void {
-  console.info(`Auth middleware from : ${req.originalUrl}`);
+): Promise<void> {
+  const authorization = req.headers.authorization || "";
+  const token = getToken(authorization);
+  if (!token) {
+    res.status(StatusCode.UNAUTHORIZED).end();
+    return;
+  }
+  const user = await findUserByToken(token);
+  if (user === null) {
+    res.status(StatusCode.UNAUTHORIZED).end();
+    return;
+  }
+  res.locals.user = user;
   next();
 }

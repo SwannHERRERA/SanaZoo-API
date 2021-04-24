@@ -7,9 +7,9 @@ import { Controller } from "../../core/controller";
 export class AnimalsController extends Controller {
   schema = yup.object().shape({
     name: yup.string().max(120).required(),
-    description: yup.string(),
+    description: yup.string().nullable(),
     birthdate: yup.date().required(),
-    image: yup.string(),
+    image: yup.string().nullable(),
     specieId: yup.number().required(),
     enclosureId: yup.number().required(),
   });
@@ -50,12 +50,24 @@ export class AnimalsController extends Controller {
       return;
     }
     try {
-      const { Animal, Specie } = await SequelizeManager.getInstance();
+      const {
+        Animal,
+        Specie,
+        Enclosure,
+      } = await SequelizeManager.getInstance();
+      const enclosure = await Enclosure.findByPk(animalPost.enclosureId);
       const specie = await Specie.findByPk(animalPost.specieId);
       if (!specie) {
         res
           .status(StatusCode.NOT_FOUND)
           .json({ message: "specie not found" })
+          .end();
+        return;
+      }
+      if (!enclosure) {
+        res
+          .status(StatusCode.NOT_FOUND)
+          .json({ message: "enclosure not found" })
           .end();
         return;
       }
@@ -68,20 +80,28 @@ export class AnimalsController extends Controller {
   };
 
   public updateOne = async (req: Request, res: Response): Promise<void> => {
-    const id = Number(req.params.id);
-    const animalPost = req.body;
-    const isValid = await this.validate(animalPost, res);
-    if (isValid === false) {
-      return;
-    }
     try {
+      const id = Number(req.params.id);
+      const animalPost = req.body;
       const { Animal } = await SequelizeManager.getInstance();
-      const animal = await Animal.findByPk(id);
-      if (!animal) {
+      const previousAnimal = await Animal.findByPk(id);
+      if (previousAnimal === null) {
         res.status(StatusCode.NOT_FOUND).end();
         return;
       }
-      const animalUpdated = await animal.update(animalPost);
+      animalPost.name = animalPost.name || previousAnimal.name;
+      animalPost.description =
+        animalPost.description || previousAnimal.description;
+      animalPost.birthdate = animalPost.birthdate || previousAnimal.birthdate;
+      animalPost.image = animalPost.image || previousAnimal.image;
+      animalPost.specieId = animalPost.specieId || previousAnimal.specieId;
+      animalPost.enclosureId =
+        animalPost.enclosureId || previousAnimal.enclosureId;
+      const isValid = await this.validate(animalPost, res);
+      if (isValid === false) {
+        return;
+      }
+      const animalUpdated = await previousAnimal.update(animalPost);
       res.json(animalUpdated);
     } catch (err) {
       console.error(err);
@@ -108,15 +128,10 @@ export class AnimalsController extends Controller {
     req: Request,
     res: Response
   ): Promise<boolean> {
-    const animalId = Number(req.params.id);
     const moveEnclosureSchema = yup.object().shape({
       animalId: yup.number().required(),
       enclosureId: yup.number().required(),
     });
-    if (animalId !== req.body.animalId) {
-      res.status(StatusCode.BAD_REQUEST).end();
-      return false;
-    }
     try {
       await moveEnclosureSchema.validate(req.body);
       return true;
@@ -132,10 +147,22 @@ export class AnimalsController extends Controller {
       return;
     }
     try {
-      const { Animal } = await SequelizeManager.getInstance();
+      const { Animal, Enclosure } = await SequelizeManager.getInstance();
       const animal = await Animal.findByPk(req.body.animalId);
+      const enclosure = await Enclosure.findByPk(req.body.enclosureId);
       if (animal === null) {
-        throw new Error("animal doesn't exist");
+        res
+          .status(StatusCode.NOT_FOUND)
+          .json({ message: "animal not found" })
+          .end();
+        return;
+      }
+      if (enclosure === null) {
+        res
+          .status(StatusCode.NOT_FOUND)
+          .json({ message: "enclosure not found" })
+          .end();
+        return;
       }
       const animalUpdated = await animal.setEnclosure(req.body.enclosureId);
       res.json(animalUpdated);

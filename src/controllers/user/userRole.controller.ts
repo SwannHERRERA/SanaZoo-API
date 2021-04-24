@@ -10,9 +10,11 @@ export class UserRoleController extends Controller {
   });
 
   public getAll = async (req: Request, res: Response): Promise<void> => {
+    const limit = Number(req.query.limit) || 2000;
+    const offset = Number(req.query.offset) || 0;
     try {
       const { UserRole } = await SequelizeManager.getInstance();
-      const roles = await UserRole.findAll();
+      const roles = await UserRole.findAll({ limit, offset });
       res.json(roles);
     } catch (err) {
       res.status(StatusCode.SERVER_ERROR).end();
@@ -59,18 +61,19 @@ export class UserRoleController extends Controller {
   };
 
   public update = async (req: Request, res: Response): Promise<void> => {
-    const id = Number(req.params.id);
-    const newRole = req.body;
-    const isValid = await this.validate(newRole, res);
-    if (isValid === false) return;
     try {
+      const id = Number(req.params.id);
+      const newRole = req.body;
       const { UserRole } = await SequelizeManager.getInstance();
-      const role = await UserRole.findByPk(id);
-      if (role === null) {
+      const previousRole = await UserRole.findByPk(id);
+      if (previousRole === null) {
         res.status(StatusCode.NOT_FOUND).end();
         return;
       }
-      const roleUpdated = await role.update(newRole);
+      const isValid = await this.validate(newRole, res);
+      if (isValid === false) return;
+
+      const roleUpdated = await previousRole.update(newRole);
       res.json(roleUpdated);
     } catch (err) {
       console.error(err);

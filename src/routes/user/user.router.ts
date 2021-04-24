@@ -20,10 +20,11 @@ userRouter.put(
 userRouter.get("/", employeeMiddleware, controller.getAll);
 userRouter.post("/", adminMiddleware, controller.create);
 userRouter.get("/me", authMiddleware, controller.me);
+userRouter.put("/me", authMiddleware, controller.updateMe);
 userRouter.post("/register", controller.register);
 userRouter.post("/login", controller.login);
-userRouter.delete("/logout", controller.logout);
-userRouter.patch("/change-password", controller.changePassword);
+userRouter.delete("/logout", authMiddleware, controller.logout);
+userRouter.patch("/change-password", authMiddleware, controller.changePassword);
 userRouter.patch("/restaure/:id", adminMiddleware, controller.restaureOne);
 userRouter.delete(
   "/force-delete/:id",
