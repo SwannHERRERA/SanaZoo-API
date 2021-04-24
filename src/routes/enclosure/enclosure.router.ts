@@ -86,7 +86,7 @@ enclosureRouter.post("/", adminMiddleware, async function (req, res) {
     });
 });
 
-enclosureRouter.get("/type/:enclosureTypeId", async function (req, res) {
+enclosureRouter.get("/type/:enclosureTypeId", authMiddleware, async function (req, res) {
   const offset: number = req.query.offset
     ? Number.parseInt(req.query.offset as string)
     : 1;
@@ -105,14 +105,14 @@ enclosureRouter.get("/type/:enclosureTypeId", async function (req, res) {
   res.status(200).json(result).end();
 });
 
-enclosureRouter.get("/:id", async function (req, res) {
+enclosureRouter.get("/:id", authMiddleware, async function (req, res) {
   const controller = await Enclosure_Controller.getInstance();
   const result = await controller.getOne(Number.parseInt(req.params.id));
   if (!result) res.status(404).end();
   res.status(200).json(result).end();
 });
 
-enclosureRouter.get("/", async function (req, res) {
+enclosureRouter.get("/", authMiddleware, async function (req, res) {
   const offset: number = req.query.offset
     ? Number.parseInt(req.query.offset as string)
     : 1;
