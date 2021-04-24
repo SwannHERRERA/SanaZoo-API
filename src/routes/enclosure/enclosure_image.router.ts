@@ -3,6 +3,7 @@ import { adminMiddleware } from "../../middlewares/admin.middleware";
 import { Enclosure_Image_Controller } from "../../controllers/enclosure/enclosure_image.controller";
 import * as yup from "yup";
 import { employeeMiddleware } from "../../middlewares/employee.middleware";
+import { authMiddleware } from "../../middlewares";
 
 const enclosureImageRouter = express.Router();
 
@@ -21,7 +22,7 @@ enclosureImageRouter.delete("/:id", adminMiddleware, async function (req, res) {
   res.status(204).end();
 });
 
-enclosureImageRouter.get("/enclosure/:id", async function (req, res) {
+enclosureImageRouter.get("/enclosure/:id", authMiddleware, async function (req, res) {
   const id = Number.parseInt(req.params.id);
   if (id === undefined) {
     res.status(404).end();
@@ -32,7 +33,7 @@ enclosureImageRouter.get("/enclosure/:id", async function (req, res) {
   res.status(200).json(result).end();
 });
 
-enclosureImageRouter.get("/:id", async function (req, res) {
+enclosureImageRouter.get("/:id", authMiddleware, async function (req, res) {
   const id = Number.parseInt(req.params.id);
   if (id === undefined) {
     res.status(404).end();
@@ -43,7 +44,7 @@ enclosureImageRouter.get("/:id", async function (req, res) {
   res.status(200).json(result).end();
 });
 
-enclosureImageRouter.get("/", async function (req, res) {
+enclosureImageRouter.get("/", authMiddleware, async function (req, res) {
   const offset = req.body.offset;
   const limit = req.body.limit;
 

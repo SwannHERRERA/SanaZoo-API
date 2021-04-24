@@ -9,8 +9,8 @@ import {
 
 const animalHealthBookRouter = express.Router();
 
-animalHealthBookRouter.get("/:id", authMiddleware, controller.getOneById);
-animalHealthBookRouter.get("/", authMiddleware, controller.getAll);
+animalHealthBookRouter.get("/:id", employeeMiddleware, controller.getOneById);
+animalHealthBookRouter.get("/", employeeMiddleware, controller.getAll);
 animalHealthBookRouter.post("/", veterinaryMiddleware, controller.create);
 animalHealthBookRouter.put("/:id", veterinaryMiddleware, controller.updateOne);
 animalHealthBookRouter.delete("/:id", adminMiddleware, controller.deleteOne);

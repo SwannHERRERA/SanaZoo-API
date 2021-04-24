@@ -3,6 +3,7 @@ import { employeeMiddleware, adminMiddleware } from "../../middlewares";
 import { Planning_Controller } from "../../controllers/planning/planning.controller";
 import * as yup from "yup";
 import { IPlaning_Result } from "../../models";
+import * as dateFns from "date-fns";
 
 const employeePlanningRouter = express.Router();
 
@@ -52,8 +53,9 @@ employeePlanningRouter.get(
   "/openDate",
   employeeMiddleware,
   async function (req, res) {
-    const start_time = new Date(req.body.start_time);
-    const number_of_days = Number.parseInt(req.body.number_of_day);
+    const start_time = dateFns.startOfWeek(new Date(req.body.start_time));
+    const number_of_days = 7;
+    // const number_of_days = Number.parseInt(req.body.number_of_day);
 
     if (number_of_days <= 0) {
       res.status(500).end();

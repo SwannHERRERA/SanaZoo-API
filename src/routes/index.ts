@@ -4,7 +4,6 @@ import { enclosureMaintenanceRouter } from "./enclosure/enclosure_maintenance.ro
 import { animalRouter } from "./animal/animal.router";
 import { animalHealthBookRouter } from "./animal/animal_health_book.router";
 import { employeePlanningRouter } from "./planning/employee_planning.router";
-import { zooOpeningRouter } from "./planning/zoo_opening.router";
 import { passRouter } from "./pass/pass.router";
 import { passEntryRouter } from "./pass/pass_entry.router";
 import { passNightRouter } from "./pass/pass_night.router";
@@ -30,7 +29,6 @@ export function buildRoutes(app: Express) {
   app.use("/animal", animalRouter);
 
   app.use("/planning", employeePlanningRouter);
-  app.use("/zoo", zooOpeningRouter);
 
   app.use("/pass/entry", passEntryRouter);
   app.use("/pass/night", passNightRouter);
