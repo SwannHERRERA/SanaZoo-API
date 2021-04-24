@@ -1,7 +1,9 @@
 
 # SanaZoo API
 
+Brizoo is a very popular zoo !
 
+First created in C with XML files, it is now developped with nodejs and swagger, for your eyes only
 
 ## Indices
 
@@ -25,21 +27,54 @@
   * [Delete](#2-delete)
   * [Get all](#3-get-all)
   * [Get by id](#4-get-by-id)
-  * [Update](#5-update)
-  * [[to fix]Move Enclosure](#6-[to-fix]move-enclosure)
+  * [Move Enclosure](#5-move-enclosure)
+  * [Update](#6-update)
 
 * [Animal Health Book](#animal-health-book)
 
   * [Create entry](#1-create-entry)
   * [Delete](#2-delete-1)
   * [Get All](#3-get-all-1)
-  * [Get One](#4-get-one)
-  * [Update](#5-update-1)
-  * [[to fix] Get All By Animal](#6-[to-fix]-get-all-by-animal)
+  * [Get All By Animal](#4-get-all-by-animal)
+  * [Get One](#5-get-one)
+  * [Update](#6-update-1)
 
 * [Enclosure](#enclosure)
 
-  * [Get All Animals In An Enclosure](#1-get-all-animals-in-an-enclosure)
+  * [Add One](#1-add-one)
+  * [Delete One](#2-delete-one)
+  * [Edit One](#3-edit-one)
+  * [Get All](#4-get-all)
+  * [Get All Animals In Enclosure](#5-get-all-animals-in-enclosure)
+  * [Get All By Type](#6-get-all-by-type)
+  * [Get One](#7-get-one)
+
+* [Enclosure Images](#enclosure-images)
+
+  * [Add](#1-add)
+  * [Delete One](#2-delete-one-1)
+  * [Edit One](#3-edit-one-1)
+  * [Gell All From Enclosure](#4-gell-all-from-enclosure)
+  * [Get All](#5-get-all)
+  * [Get One](#6-get-one)
+
+* [Enclosure Service-book](#enclosure-service-book)
+
+  * [Create service-book](#1-create-service-book)
+  * [Delete service-book](#2-delete-service-book)
+  * [Edit service-book](#3-edit-service-book)
+  * [Gell All From Employee](#4-gell-all-from-employee)
+  * [Get All](#5-get-all-1)
+  * [Get All From Enclosure](#6-get-all-from-enclosure)
+  * [Get One](#7-get-one-1)
+
+* [Enclosure Type](#enclosure-type)
+
+  * [Create](#1-create-1)
+  * [Delete](#2-delete-2)
+  * [Get All](#3-get-all-2)
+  * [Get One](#4-get-one)
+  * [Update](#5-update)
 
 * [Entry](#entry)
 
@@ -50,12 +85,18 @@
   * [Get by user](#5-get-by-user)
   * [Remove entry](#6-remove-entry)
 
+* [Maintenance](#maintenance)
+
+  * [Get All by State](#1-get-all-by-state)
+  * [Get Best Month](#2-get-best-month)
+  * [Update Maintenance State](#3-update-maintenance-state)
+
 * [Pass](#pass)
 
   * [Add enclosure access](#1-add-enclosure-access)
   * [Create](#2-create)
   * [Delete pass](#3-delete-pass)
-  * [Get all](#4-get-all)
+  * [Get all](#4-get-all-1)
   * [Get all by user id](#5-get-all-by-user-id)
   * [Get by id](#6-get-by-id)
   * [Remove enclosure access](#7-remove-enclosure-access)
@@ -65,7 +106,7 @@
 
   * [Add availability](#1-add-availability)
   * [Delete passnight](#2-delete-passnight)
-  * [Get all](#3-get-all-2)
+  * [Get all](#3-get-all-3)
   * [Get all valid](#4-get-all-valid)
   * [Update  passnight](#5-update--passnight)
 
@@ -74,17 +115,27 @@
   * [Add pass to pass type](#1-add-pass-to-pass-type)
   * [Create](#2-create-1)
   * [Delete](#3-delete)
-  * [Get all](#4-get-all-1)
+  * [Get all](#4-get-all-2)
   * [Get by id](#5-get-by-id)
-  * [Update](#6-update)
+  * [Update](#6-update-2)
+
+* [Planning](#planning)
+
+  * [Add](#1-add-1)
+  * [Delete](#2-delete-3)
+  * [Get All](#3-get-all-4)
+  * [Get Calendar](#4-get-calendar)
+  * [Get One](#5-get-one-1)
+  * [Get Open Date](#6-get-open-date)
+  * [Update](#7-update)
 
 * [Specie](#specie)
 
-  * [Create](#1-create-1)
-  * [Delete](#2-delete-2)
-  * [Get All](#3-get-all-3)
+  * [Create](#1-create-2)
+  * [Delete](#2-delete-4)
+  * [Get All](#3-get-all-5)
   * [Get By Id](#4-get-by-id-1)
-  * [Update](#5-update-2)
+  * [Update](#5-update-1)
 
 * [Statistics](#statistics)
 
@@ -104,24 +155,24 @@
   * [Create](#2-create-2)
   * [Delete](#3-delete-1)
   * [Force Delete](#4-force-delete)
-  * [Get By Id](#5-get-by-id-1)
-  * [Login](#6-login)
-  * [Logout](#7-logout)
-  * [ME](#8-me)
-  * [Register](#9-register)
-  * [Restaure User](#10-restaure-user)
-  * [[to fix] Get All](#11-[to-fix]-get-all)
-  * [[to fix] Update by admin](#12-[to-fix]-update-by-admin)
-  * [[to fix] Update client only by employee](#13-[to-fix]-update-client-only-by-employee)
+  * [Get All](#5-get-all-2)
+  * [Get By Id](#6-get-by-id-1)
+  * [Login](#7-login)
+  * [Logout](#8-logout)
+  * [ME](#9-me)
+  * [Register](#10-register)
+  * [Restaure User](#11-restaure-user)
+  * [Update by admin](#12-update-by-admin)
+  * [Update client only by employee](#13-update-client-only-by-employee)
 
 * [User Role](#user-role)
 
-  * [Create](#1-create-2)
-  * [Delete](#2-delete-3)
-  * [Get All](#3-get-all-4)
-  * [Get by Id](#4-get-by-id-2)
-  * [Update](#5-update-3)
-  * [affect User](#6-affect-user)
+  * [Affect User](#1-affect-user)
+  * [Create](#2-create-3)
+  * [Delete](#3-delete-2)
+  * [Get All](#4-get-all-3)
+  * [Get by Id](#5-get-by-id-1)
+  * [Update](#6-update-3)
 
 
 --------
@@ -135,6 +186,7 @@ Concern affluence (entries) in the zoo
 ### 1. Daily
 
 
+#### Client permission minimum required
 Get for given day daily affluence
 
 
@@ -150,7 +202,7 @@ URL: {{BASE_URL}}/monitoring/affluence/daily
 
 ***Body:***
 
-```js        
+```json
 {
     "date":"2021-12-31"
 }
@@ -161,6 +213,7 @@ URL: {{BASE_URL}}/monitoring/affluence/daily
 ### 2. Daily by enclosure
 
 
+#### Client permission minimum required
 Get for given day and enclosure daily affluence
 
 
@@ -195,6 +248,7 @@ URL: {{BASE_URL}}/monitoring/affluence/daily/:enclosureId
 ### 3. Live enclosure affluence
 
 
+#### Client permission minimum required
 Get live enclosure affluence
 
 
@@ -219,6 +273,7 @@ URL: {{BASE_URL}}/monitoring/affluence/live/:enclosureId
 ### 4. Monthly
 
 
+#### Client permission minimum required
 Get given month total affluence
 
 If month parameter invalid or empty, it will return for current month
@@ -245,6 +300,7 @@ URL: {{BASE_URL}}/monitoring/affluence/monthly/:month
 ### 5. Monthly by enclosure
 
 
+#### Client permission minimum required
 Get given month enclosure's total affluence
 
 If month parameter invalid or empty, it will return for current month
@@ -272,6 +328,7 @@ URL: {{BASE_URL}}/monitoring/affluence/monthly-enclosure/:enclosureId/:month
 ### 6. Total
 
 
+#### Client permission minimum required
 Get total affluence of the ZOO since it's creation
 
 
@@ -288,6 +345,7 @@ URL: {{BASE_URL}}/monitoring/affluence/total
 ### 7. Total by enclosure
 
 
+#### Client permission minimum required
 Get total enclosure's affluence of the ZOO since it's creation
 
 
@@ -312,6 +370,7 @@ URL: {{BASE_URL}}/monitoring/affluence/total/:enclosureId
 ### 8. Weekly
 
 
+#### Client permission minimum required
 Get current week total affluence
 
 
@@ -328,6 +387,7 @@ URL: {{BASE_URL}}/monitoring/affluence/weekly
 ### 9. Weekly by enclosure
 
 
+#### Client permission minimum required
 Get current week enclosure total affluence
 
 
@@ -352,6 +412,7 @@ URL: {{BASE_URL}}/monitoring/affluence/weekly/:enclosureId
 ### 10. Yearly
 
 
+#### Client permission minimum required
 Get yearly affluence with details per month.
 
 If year invalid or empty, return for current year
@@ -378,6 +439,7 @@ URL: {{BASE_URL}}/monitoring/affluence/yearly/:year
 ### 11. Yearly by enclosure
 
 
+#### Client permission minimum required
 Get yearly enclosure's affluence with details per month.
 
 If year invalid or empty, return for current year
@@ -403,11 +465,14 @@ URL: {{BASE_URL}}/monitoring/affluence/yearly-enclosure/:enclosureId/:year
 
 
 ## Animal
+You can manage all animals in our zoo from theses endpoints
 
 
 
 ### 1. Create
 
+
+#### Employee permission minimum required
 
 Add new animal to the zoo with given body properties
 
@@ -438,6 +503,8 @@ URL: {{BASE_URL}}/animal
 ### 2. Delete
 
 
+#### Employee permission minimum required
+
 Delete animal by id
 
 
@@ -462,6 +529,7 @@ URL: {{BASE_URL}}/animal/:animalId
 ### 3. Get all
 
 
+#### Client permission minimum required
 Get all animals with optional
 - limit
 - offset
@@ -489,6 +557,8 @@ URL: {{BASE_URL}}/animal
 ### 4. Get by id
 
 
+#### Client permission minimum required
+
 Get one specific animal by id
 
 
@@ -510,8 +580,39 @@ URL: {{BASE_URL}}/animal/:animalId
 
 
 
-### 5. Update
+### 5. Move Enclosure
 
+
+#### Employee permission minimum required
+
+Move animal to another enclosure
+
+
+***Endpoint:***
+
+```bash
+Method: PATCH
+Type: RAW
+URL: {{BASE_URL}}/animal/move-enclosure/
+```
+
+
+
+***Body:***
+
+```js        
+{
+    "animalId": 3,
+    "enclosureId": 2
+}
+```
+
+
+
+### 6. Update
+
+
+#### Employee permission minimum required
 
 Update animal with given body parameters
 
@@ -547,47 +648,15 @@ URL: {{BASE_URL}}/animal/:animalId
 
 
 
-### 6. [to fix]Move Enclosure
-
-
-Move animal to another enclosure
-
-
-***Endpoint:***
-
-```bash
-Method: PATCH
-Type: RAW
-URL: {{BASE_URL}}/animal/:animalId/move-enclosure/
-```
-
-
-
-***URL variables:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| animalId |  | Animal ID |
-
-
-
-***Body:***
-
-```js        
-{
-    "animalId": 3,
-    "enclosureId": 2
-}
-```
-
-
-
 ## Animal Health Book
+Theses entries points allows veterinaries to manage animal health and employees to see it
 
 
 
 ### 1. Create entry
 
+
+#### Veterinary permission minimum required
 
 Add to an animal, a healthbook entry
 
@@ -618,6 +687,8 @@ URL: {{BASE_URL}}/animal/health
 ### 2. Delete
 
 
+#### Admin permission minimum required
+
 Remove an animal's health book entry
 
 
@@ -641,6 +712,8 @@ URL: {{BASE_URL}}/animal/health/:healthBookId
 
 ### 3. Get All
 
+
+#### Employee permission minimum required
 
 Get all animal health book entries with optional
 - limit
@@ -666,8 +739,36 @@ URL: {{BASE_URL}}/animal/health
 
 
 
-### 4. Get One
+### 4. Get All By Animal
 
+
+#### Employee permission minimum required
+
+Get all specific animal health book entries
+
+
+***Endpoint:***
+
+```bash
+Method: GET
+Type: 
+URL: {{BASE_URL}}/animal/health/animal/:animalId
+```
+
+
+
+***URL variables:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| animalId | 3 |  |
+
+
+
+### 5. Get One
+
+
+#### Employee permission minimum required
 
 Get one animal health book entry by id
 
@@ -690,8 +791,10 @@ URL: {{baseURL}}/animal/health/:healthBookId
 
 
 
-### 5. Update
+### 6. Update
 
+
+#### Veterinary permission minimum required
 
 Update a health book entry
 
@@ -727,18 +830,67 @@ URL: {{BASE_URL}}/animal/health/:healthBookId
 
 
 
-### 6. [to fix] Get All By Animal
+## Enclosure
+This is where we can access and manage the differents enclosure in the zoo.
+We cn have different species in one enclosure
 
 
-Get all specific animal health book entries
+
+### 1. Add One
+
+
+#### Admin permission minimum required
+Create a new enclosure.  
+- optional : images
 
 
 ***Endpoint:***
 
 ```bash
-Method: GET
+Method: POST
+Type: RAW
+URL: {{BASE_URL}}/enclosure
+```
+
+
+
+***Body:***
+
+```js        
+{
+    "name": "Le grand enclos a...",
+    "capacity": "7",
+    "description": "Le grand enclos a Ricardo Milos",
+    "visitDuration": 999999999,
+    "handicapAccess": true,
+    "maintenance": false,
+    "openHour": "01:00",
+    "closeHour": "23:58",
+    "enclosureTypeId": 1,
+    "images": [
+        {
+            "title": "Une image chocante",
+            "path": "https://media.tenor.com/images/78896a158781e5da8bd3a795d8431b09/tenor.gif"
+        }
+    ]
+}
+```
+
+
+
+### 2. Delete One
+
+
+#### Admin permission minimum required
+Delete one enclosure by Id.
+
+
+***Endpoint:***
+
+```bash
+Method: DELETE
 Type: 
-URL: {{BASE_URL}}/animal/health/animal/:animalId
+URL: {{BASE_URL}}/enclosure/:enclosureId
 ```
 
 
@@ -747,17 +899,91 @@ URL: {{BASE_URL}}/animal/health/animal/:animalId
 
 | Key | Value | Description |
 | --- | ------|-------------|
-| animalId | 3 |  |
+| enclosureId | 1 | Enclosure ID |
 
 
 
-## Enclosure
+### 3. Edit One
+
+
+#### Employee permission minimum required
+Update one enclosure by Id. 
+
+Body params are optional, only give what needs to be updated
+
+
+***Endpoint:***
+
+```bash
+Method: PUT
+Type: RAW
+URL: {{BASE_URL}}/enclosure/:enclosureId
+```
 
 
 
-### 1. Get All Animals In An Enclosure
+***URL variables:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| enclosureId | 1 | Enclosure ID |
 
 
+
+***Body:***
+
+```js        
+ {
+    "name": "Le grand enclos a...",
+    "capacity": "7",
+    "description": "Le grand enclos a Ricardo Milos. Attention à la sensibilité des plus jeunes",
+    "visitDuration": 999999999,
+    "handicapAccess": true,
+    "maintenance": false,
+    "openHour": "01:00",
+    "closeHour": "23:58",
+    "enclosureTypeId": 1
+}
+ 
+
+```
+
+
+
+### 4. Get All
+
+
+#### Client permission minimum required
+
+Get all enclosure  
+params optional : 
+- offset
+- limit
+
+
+***Endpoint:***
+
+```bash
+Method: GET
+Type: RAW
+URL: {{BASE_URL}}/enclosure
+```
+
+
+
+***Query params:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| limit | 10 |  |
+| offset | 1 |  |
+
+
+
+### 5. Get All Animals In Enclosure
+
+
+#### Client permission minimum required
 Retrieve all animals in specified enclosure
 
 
@@ -766,7 +992,7 @@ Retrieve all animals in specified enclosure
 ```bash
 Method: GET
 Type: 
-URL: {{baseURL}}/enclosure/:enclosureId/animals
+URL: {{BASE_URL}}/enclosure/:enclosureId/animals
 ```
 
 
@@ -779,6 +1005,602 @@ URL: {{baseURL}}/enclosure/:enclosureId/animals
 
 
 
+### 6. Get All By Type
+
+
+#### Client permission minimum required
+
+Get all enclosure by type
+params optional : 
+- offset
+- limit
+
+
+***Endpoint:***
+
+```bash
+Method: GET
+Type: RAW
+URL: {{BASE_URL}}/enclosure/type/:enclosureTypeId
+```
+
+
+
+***Query params:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| limit | 10 |  |
+| offset | 1 |  |
+
+
+
+***URL variables:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| enclosureTypeId |  |  |
+
+
+
+### 7. Get One
+
+
+#### Client permission minimum required
+Get one enclosure by ID
+
+
+***Endpoint:***
+
+```bash
+Method: GET
+Type: 
+URL: {{BASE_URL}}/enclosure/:enclosureId
+```
+
+
+
+***URL variables:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| enclosureId | 1 | Enclosure ID |
+
+
+
+## Enclosure Images
+Each enclosure can have some images
+
+
+
+### 1. Add
+
+
+#### Employee permission minimum required
+Add new image url with a name to specified anclosure
+
+
+***Endpoint:***
+
+```bash
+Method: POST
+Type: RAW
+URL: {{BASE_URL}}/enclosure/image/
+```
+
+
+
+***Body:***
+
+```js        
+{
+    "title": "On ne s'y attend pas",
+    "path": "https://i.redd.it/2pa8ffkyl3t41.jpg",
+    "enclosureId": 1
+}
+```
+
+
+
+### 2. Delete One
+
+
+#### Admin permission minimum required
+Delete one image by Id.
+
+
+***Endpoint:***
+
+```bash
+Method: DELETE
+Type: 
+URL: {{BASE_URL}}/enclosure/image/:imageId
+```
+
+
+
+***URL variables:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| imageId | 1 | Image ID |
+
+
+
+### 3. Edit One
+
+
+#### Employee permission minimum required
+edit one image by Id.  
+Params are optional
+
+
+***Endpoint:***
+
+```bash
+Method: PUT
+Type: RAW
+URL: {{BASE_URL}}/enclosure/image/:imageId
+```
+
+
+
+***URL variables:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| imageId | 1 | Image ID |
+
+
+
+***Body:***
+
+```js        
+{
+    "title": "Et celui la encore moins",
+    "path": "https://i.pinimg.com/originals/88/82/bc/8882bcf327896ab79fb97e85ae63a002.gif",
+    "enclosureId": 1
+}
+```
+
+
+
+### 4. Gell All From Enclosure
+
+
+#### Client permission minimum required
+Get all image from a enclosure.
+
+
+***Endpoint:***
+
+```bash
+Method: GET
+Type: 
+URL: {{BASE_URL}}/enclosure/image/enclosure/:enclosureId
+```
+
+
+
+***URL variables:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| enclosureId | 1 | Enclosure ID |
+
+
+
+### 5. Get All
+
+
+#### Client permission minimum required
+Get all images
+params optional : 
+- offset
+- limit
+
+
+***Endpoint:***
+
+```bash
+Method: GET
+Type: RAW
+URL: {{BASE_URL}}/enclosure/image/
+```
+
+
+
+***Query params:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| limit | 20 | Optionnel |
+| offset | 1 | Optionnel |
+
+
+
+***Body:***
+
+```js        
+{
+    "offset": 42,
+    "limit": 1337
+}
+```
+
+
+
+### 6. Get One
+
+
+#### Client permission minimum required
+Get one image by ID
+
+
+***Endpoint:***
+
+```bash
+Method: GET
+Type: 
+URL: {{BASE_URL}}/enclosure/image/:imageId
+```
+
+
+
+***URL variables:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| imageId | 1 | Image ID |
+
+
+
+## Enclosure Service-book
+Employee service book help employees too manage enclosure's health
+
+
+
+### 1. Create service-book
+
+
+#### Employee permission minimum required
+Create a service-book's entry.
+
+
+***Endpoint:***
+
+```bash
+Method: POST
+Type: RAW
+URL: {{BASE_URL}}/enclosure/service-book
+```
+
+
+
+***Body:***
+
+```js        
+{
+    "date": "2012-12-21",
+    "description": "La fin du monde est arrivé sur l'enclos numero 1. Il n'y a aucun dégat",
+    "enclosureId": 1,
+    "userId": 1
+}
+```
+
+
+
+### 2. Delete service-book
+
+
+#### Admin permission minimum required
+Delete a service-book entry
+
+
+***Endpoint:***
+
+```bash
+Method: DELETE
+Type: 
+URL: {{BASE_URL}}/enclosure/service-book/:serviceBookId
+```
+
+
+
+***URL variables:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| serviceBookId | 1 | Service Book ID |
+
+
+
+### 3. Edit service-book
+
+
+#### Employee permission minimum required
+Edit a existing service-book entry
+
+
+***Endpoint:***
+
+```bash
+Method: PUT
+Type: RAW
+URL: {{BASE_URL}}/enclosure/service-book/:serviceBookId
+```
+
+
+
+***URL variables:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| serviceBookId | 1 | Service Book ID |
+
+
+
+***Body:***
+
+```js        
+{
+    "date": "2021-12-21",
+    "description": "Finalement il n'y a pas eu la fin du monde",
+    "enclosureId": 1,
+    "userId": 1
+}
+```
+
+
+
+### 4. Gell All From Employee
+
+
+#### Employee permission minimum required
+Get All service-book from a employee
+
+
+***Endpoint:***
+
+```bash
+Method: GET
+Type: 
+URL: {{BASE_URL}}/enclosure/service-book/enclosure/:employeeId
+```
+
+
+
+***URL variables:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| employeeId | 1 | Employee ID |
+
+
+
+### 5. Get All
+
+
+#### Employee permission minimum required
+
+Get all service book instance.  
+Optional params:
+- offset
+- limit
+
+
+***Endpoint:***
+
+```bash
+Method: GET
+Type: RAW
+URL: {{BASE_URL}}/enclosure/service-book
+```
+
+
+
+***Query params:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| limit | 10 |  |
+| offset | 1 |  |
+
+
+
+### 6. Get All From Enclosure
+
+
+#### Employee permission minimum required
+Get all service-book from a enclosure
+
+
+***Endpoint:***
+
+```bash
+Method: GET
+Type: 
+URL: {{BASE_URL}}/enclosure/service-book/enclosure/:enclosureId
+```
+
+
+
+***URL variables:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| enclosureId | 1 | Enclosure ID |
+
+
+
+### 7. Get One
+
+
+#### Employee permission minimum required
+Get a specific service-book
+
+
+***Endpoint:***
+
+```bash
+Method: GET
+Type: 
+URL: {{BASE_URL}}/enclosure/service-book/:serviceBookId
+```
+
+
+
+***URL variables:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| serviceBookId | 1 | Service Book ID |
+
+
+
+## Enclosure Type
+Enclosure type help to categories the enclosures and help to manages animals inside (water enclosure will be unplaisant to host lions...)
+
+
+
+### 1. Create
+
+
+#### Admin permission minimum required
+Create a enclosure type
+
+
+***Endpoint:***
+
+```bash
+Method: POST
+Type: RAW
+URL: {{BASE_URL}}/enclosure/type
+```
+
+
+
+***Body:***
+
+```js        
+{
+    "Name": "Un enclos pour les gouverner tous"
+}
+```
+
+
+
+### 2. Delete
+
+
+#### Admin permission minimum required
+Soft delete a enclosure type (keeps enclosure associated)
+
+
+***Endpoint:***
+
+```bash
+Method: DELETE
+Type: 
+URL: {{BASE_URL}}/enclosure/type/:enclosureTypeId
+```
+
+
+
+***URL variables:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| enclosureTypeId | 1 | Enclosure Type ID |
+
+
+
+### 3. Get All
+
+
+#### Client permission minimum required
+Get all enclosure type
+
+
+***Endpoint:***
+
+```bash
+Method: GET
+Type: RAW
+URL: {{BASE_URL}}/enclosure/type
+```
+
+
+
+***Query params:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| limit | 20 |  |
+| offset | 1 |  |
+
+
+
+### 4. Get One
+
+
+#### Client permission minimum required
+Get one enclosure type
+
+
+***Endpoint:***
+
+```bash
+Method: GET
+Type: RAW
+URL: {{BASE_URL}}/enclosure/type/id/:enclosureTypeId
+```
+
+
+
+***URL variables:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| enclosureTypeId |  |  |
+
+
+
+### 5. Update
+
+
+#### Admin permission minimum required
+Edit a enclosure type
+
+
+***Endpoint:***
+
+```bash
+Method: PUT
+Type: RAW
+URL: {{BASE_URL}}enclosure/type/:enclosureTypeId
+```
+
+
+
+***URL variables:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| enclosureTypeId | 1 | Enclosure Type ID |
+
+
+
+***Body:***
+
+```js        
+{
+    "Name": "Un enclos pour les laisser tous tranquille"
+}
+```
+
+
+
 ## Entry
 You can here manage pass entries
 
@@ -787,6 +1609,7 @@ You can here manage pass entries
 ### 1. Add entry
 
 
+#### Employee permission minimum required
 Add new entry between existing Pass and Enclosure
 
 
@@ -804,8 +1627,8 @@ URL: {{BASE_URL}}/pass/entry/
 
 ```js        
 {
-    "passId":0,
-    "enclosureId":0
+    "passId":1,
+    "enclosureId":1
 }
 ```
 
@@ -814,6 +1637,7 @@ URL: {{BASE_URL}}/pass/entry/
 ### 2. Get all
 
 
+#### Employee permission minimum required
 Get all entries with optional
 - limit
 - offset
@@ -841,6 +1665,7 @@ URL: {{BASE_URL}}/pass/entry/
 ### 3. Get by enclosure
 
 
+#### Employee permission minimum required
 Get all enclosure's entries with optional 
 - limit
 - offset
@@ -876,6 +1701,7 @@ URL: {{BASE_URL}}/pass/entry/enclosure/:enclosureId
 ### 4. Get by pass
 
 
+#### Employee permission minimum required
 Get all entries on a Pass with optional 
 - limit
 - offset
@@ -911,6 +1737,7 @@ URL: {{BASE_URL}}/pass/entry/pass/:passId
 ### 5. Get by user
 
 
+#### Employee permission minimum required
 Get all user entries with optional 
 - limit
 - offset
@@ -946,6 +1773,7 @@ URL: {{BASE_URL}}/pass/entry/user/:userId
 ### 6. Remove entry
 
 
+#### Admin permission minimum required
 Remove entry between existing Pass and Enclosure
 
 
@@ -967,13 +1795,117 @@ URL: {{BASE_URL}}/pass/entry/:entryId
 
 
 
+## Maintenance
+Help to manage enclosure maintenance when needed
+
+
+
+### 1. Get All by State
+
+
+#### Employee permission minimum required
+Get all enclosure by state with optional
+- limit
+- offset
+
+
+***Endpoint:***
+
+```bash
+Method: GET
+Type: RAW
+URL: {{BASE_URL}}/enclosure/maintenance/:state
+```
+
+
+
+***Query params:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| limit |  |  |
+| offset |  |  |
+
+
+
+***URL variables:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| state | true | True: in maintenance
+False : not in maintenance |
+
+
+
+### 2. Get Best Month
+
+
+#### Admin permission minimum required
+Get the best month to maintain a enclosure (based on affluence)
+
+
+***Endpoint:***
+
+```bash
+Method: GET
+Type: RAW
+URL: {{BASE_URL}}/enclosure/maintenance/month/:enclosureId
+```
+
+
+
+***URL variables:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| enclosureId | 1 | Enclosure ID |
+
+
+
+### 3. Update Maintenance State
+
+
+#### Admin permission minimum required
+Change the maintenance state of a enclosure
+
+
+***Endpoint:***
+
+```bash
+Method: PUT
+Type: RAW
+URL: {{BASE_URL}}/enclosure/maintenance/:enclosureId
+```
+
+
+
+***URL variables:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| enclosureId |  | Enclosure ID |
+
+
+
+***Body:***
+
+```js        
+{
+    "maintenance": true
+}
+```
+
+
+
 ## Pass
+Pass is one main feature. I help to access on enclosures
 
 
 
 ### 1. Add enclosure access
 
 
+#### Employee permission minimum required
 Add to an existing pass enclosure access
 
 
@@ -1001,6 +1933,7 @@ URL: {{BASE_URL}}/pass/enclosure-access
 ### 2. Create
 
 
+#### Employee permission minimum required
 Create a new pass with enclosure access list
 
 
@@ -1032,6 +1965,7 @@ URL: {{BASE_URL}}/pass/
 ### 3. Delete pass
 
 
+#### Employee permission minimum required
 Delete a pass
 
 
@@ -1056,6 +1990,7 @@ URL: {{BASE_URL}}/pass/:passId
 ### 4. Get all
 
 
+#### Employee permission minimum required
 Get all pass with optional 
 - limit
 - offset
@@ -1083,6 +2018,7 @@ URL: {{BASE_URL}}/pass
 ### 5. Get all by user id
 
 
+#### Client permission minimum required
 Get all user pass
 
 
@@ -1107,6 +2043,7 @@ URL: {{BASE_URL}}/pass/user/:userId
 ### 6. Get by id
 
 
+#### Client permission minimum required
 Get a specific pass by given ID with 
 - all it's enclosure access
 - all it's enclosure entries
@@ -1133,6 +2070,7 @@ URL: {{BASE_URL}}/pass/:passId
 ### 7. Remove enclosure access
 
 
+#### Employee permission minimum required
 Remove to an existing pass an enclosure access
 
 
@@ -1158,6 +2096,7 @@ URL: {{BASE_URL}}/pass/enclosure-access/:passId/:enclosureId
 ### 8. Update pass
 
 
+#### Employee permission minimum required
 Update a pass
 
 Only Type is updatable by this endpoint.
@@ -1200,6 +2139,7 @@ You can here manage pass night availabilities
 ### 1. Add availability
 
 
+#### Admin permission minimum required
 Add new pass night availability
 
 
@@ -1226,6 +2166,7 @@ URL: {{BASE_URL}}/pass/night/
 ### 2. Delete passnight
 
 
+#### Admin permission minimum required
 Remove a Pass Night availability
 
 
@@ -1250,6 +2191,7 @@ URL: {{BASE_URL}}/pass/night/:passNightAvailabilityId
 ### 3. Get all
 
 
+#### Client permission minimum required
 Get all pass night with optional 
 - limit
 - offset
@@ -1277,6 +2219,7 @@ URL: {{BASE_URL}}/pass/night/
 ### 4. Get all valid
 
 
+#### Client permission minimum required
 Get all available pass night with optional
 - limit
 - offset
@@ -1304,6 +2247,7 @@ URL: {{BASE_URL}}/pass/night/available
 ### 5. Update  passnight
 
 
+#### Admin permission minimum required
 Update a availability date for pass night
 
 
@@ -1343,6 +2287,7 @@ You can here manage pass type
 ### 1. Add pass to pass type
 
 
+#### Employee permission minimum required
 Assign a Pass to an existing Pass Type
 
 
@@ -1370,6 +2315,7 @@ URL: {{BASE_URL}}/pass/type/add-pass
 ### 2. Create
 
 
+#### Admin permission minimum required
 Add a new pass type
 
 
@@ -1397,6 +2343,7 @@ URL: {{BASE_URL}}pass/type/
 ### 3. Delete
 
 
+#### Admin permission minimum required
 Delete an existing Pass Type
 
 
@@ -1421,6 +2368,7 @@ URL: {{BASE_URL}}/pass/type/:passTypeId
 ### 4. Get all
 
 
+#### Client permission minimum required
 Get all passType
 
 
@@ -1437,6 +2385,7 @@ URL: {{BASE_URL}}/pass/type/
 ### 5. Get by id
 
 
+#### Client permission minimum required
 Get one pass type by id
 
 
@@ -1461,6 +2410,7 @@ URL: {{BASE_URL}}/pass/type/:passTypeId
 ### 6. Update
 
 
+#### Admin permission minimum required
 Update an existing Pass Type with given body values
 
 
@@ -1486,12 +2436,223 @@ URL: {{BASE_URL}}/pass/type/
 
 
 
+## Planning
+Theses routes are for employees and help to manage planning and zoo opening days
+
+
+
+### 1. Add
+
+
+#### Employee permission minimum required
+Create a new planning entry.
+
+
+***Endpoint:***
+
+```bash
+Method: POST
+Type: RAW
+URL: {{BASE_URL}}/planning
+```
+
+
+
+***Body:***
+
+```js        
+{
+    "day_of_week": "Sunday",
+    "start_time": "2021-05-01T08:00:00",
+    "end_time": "2021-05-01T19:00:00",
+    "userId": 1
+}
+```
+
+
+
+### 2. Delete
+
+
+#### Admin permission minimum required
+Delete one planning by Id.
+
+
+***Endpoint:***
+
+```bash
+Method: DELETE
+Type: 
+URL: {{BASE_URL}}planning/:planningId
+```
+
+
+
+***URL variables:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| planningId | 1 |  |
+
+
+
+### 3. Get All
+
+
+#### Employee permission minimum required
+Get all planning
+params optional :
+- offset
+- limit
+
+
+***Endpoint:***
+
+```bash
+Method: GET
+Type: RAW
+URL: {{BASE_URL}}/planning
+```
+
+
+
+***Query params:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| limit | 1337 |  |
+| offset | 42 |  |
+
+
+
+### 4. Get Calendar
+
+
+#### Employee permission minimum required
+Get Zoo's open date from a period
+
+
+***Endpoint:***
+
+```bash
+Method: GET
+Type: RAW
+URL: {{BASE_URL}}/planning/openDate
+```
+
+
+
+***Body:***
+
+```js        
+{
+    "start_time": "1337-09-22",
+    "number_of_day": 5598
+}
+```
+
+
+
+### 5. Get One
+
+
+#### Employee permission minimum required
+Get one planning entry by ID
+
+
+***Endpoint:***
+
+```bash
+Method: GET
+Type: 
+URL: {{BASE_URL}}/planning/:planningId
+```
+
+
+
+***URL variables:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| planningId | 1 | Planning entry ID |
+
+
+
+### 6. Get Open Date
+
+
+#### Employee permission minimum required
+Get Zoo's planning from a period group by days
+
+
+***Endpoint:***
+
+```bash
+Method: GET
+Type: RAW
+URL: {{BASE_URL}}planning/openDate
+```
+
+
+
+***Body:***
+
+```js        
+{
+    "start_time": "1337-09-22"
+}
+```
+
+
+
+### 7. Update
+
+
+#### Employee permission minimum required
+Edit one planning by Id.
+
+
+***Endpoint:***
+
+```bash
+Method: PUT
+Type: RAW
+URL: {{BASE_URL}}planning/:planningId
+```
+
+
+
+***URL variables:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| planningId | 1 |  |
+
+
+
+***Body:***
+
+```js        
+{
+    "day_of_week": "Saturday",
+    "start_time": "2021-05-01T08:00:00",
+    "end_time": "2021-05-01T19:00:00",
+    "userId": 1
+}
+
+```
+
+
+
 ## Specie
+Here is to manage animal's species in zoo
 
 
 
 ### 1. Create
 
+
+#### Employee permission minimum required
 
 Create new specie with given parameters
 
@@ -1521,6 +2682,7 @@ URL: {{BASE_URL}}/animal/specie
 ### 2. Delete
 
 
+#### Admin permission minimum required
 Soft remove specie (don't delete concerned animals)
 
 
@@ -1529,7 +2691,7 @@ Soft remove specie (don't delete concerned animals)
 ```bash
 Method: DELETE
 Type: 
-URL: {{baseURL}}/animal/specie/:specieId
+URL: {{BASE_URL}}/animal/specie/:specieId
 ```
 
 
@@ -1544,6 +2706,8 @@ URL: {{baseURL}}/animal/specie/:specieId
 
 ### 3. Get All
 
+
+#### Client permission minimum required
 
 Get all species with optional
 - limit
@@ -1572,6 +2736,8 @@ URL: {{BASE_URL}}/animal/specie
 ### 4. Get By Id
 
 
+#### Client permission minimum required
+
 Get one specie by ID
 
 
@@ -1595,6 +2761,8 @@ URL: {{BASE_URL}}/animal/specie/:specieId
 
 ### 5. Update
 
+
+#### Employee permission minimum required
 
 Update specie with given parameters in body
 
@@ -1637,6 +2805,7 @@ Concern global stats
 ### 1. Count all pass
 
 
+#### Client permission minimum required
 Count total of both valid or expired pass
 
 
@@ -1653,6 +2822,7 @@ URL: {{BASE_URL}}/monitoring/statistic/count/pass/
 ### 2. Count all pass by types
 
 
+#### Client permission minimum required
 Count total of both valid or expired pass by types
 
 
@@ -1669,6 +2839,7 @@ URL: {{BASE_URL}}/monitoring/statistic/count/pass/types
 ### 3. Count animal
 
 
+#### Client permission minimum required
 Count total of animals
 
 
@@ -1685,6 +2856,7 @@ URL: {{BASE_URL}}/monitoring/statistic/count/animal/
 ### 4. Count animal by enclosure
 
 
+#### Client permission minimum required
 Count total of enclosure's animals
 
 
@@ -1709,6 +2881,7 @@ URL: {{BASE_URL}}/monitoring/statistic/count/animal/:enclosureId
 ### 5. Count enclosure
 
 
+#### Client permission minimum required
 Count total of enclosures
 
 
@@ -1725,6 +2898,7 @@ URL: {{BASE_URL}}/monitoring/statistic/count/enclosure
 ### 6. Count expired pass
 
 
+#### Client permission minimum required
 Count total of expired pass
 
 
@@ -1741,6 +2915,7 @@ URL: {{BASE_URL}}/monitoring/statistic/count/pass/expired
 ### 7. Count user
 
 
+#### Client permission minimum required
 Count total of active users
 
 
@@ -1757,6 +2932,7 @@ URL: {{BASE_URL}}/monitoring/statistic/count/user
 ### 8. Count valid pass
 
 
+#### Client permission minimum required
 Count total of valid pass
 
 
@@ -1773,6 +2949,7 @@ URL: {{BASE_URL}}/monitoring/statistic/count/pass/valid/
 ### 9. Count valid pass by types
 
 
+#### Client permission minimum required
 Count total of valid pass by types
 
 
@@ -1787,12 +2964,14 @@ URL: {{BASE_URL}}/monitoring/statistic/count/pass/valid/types
 
 
 ## User
+Theses routes  are both for client and employees and help manage everything concerning user account
 
 
 
 ### 1. Change Password
 
 
+#### Client permission minimum required
 Update connected user password
 
 
@@ -1821,6 +3000,7 @@ URL: {{BASE_URL}}/user/change-password
 ### 2. Create
 
 
+#### Admin permission minimum required
 Create new user with required parameters in body
 
 
@@ -1851,6 +3031,7 @@ URL: {{BASE_URL}}/user
 ### 3. Delete
 
 
+#### Admin permission minimum required
 Soft remove user
 
 
@@ -1875,7 +3056,7 @@ URL: {{BASE_URL}}/user/:userId
 ### 4. Force Delete
 
 
-### Admin Middleware
+#### Admin permission minimum required
 Remove user from db (hard delete)
 
 
@@ -1897,9 +3078,38 @@ URL: {{BASE_URL}}/user/force-delete/:userId
 
 
 
-### 5. Get By Id
+### 5. Get All
 
 
+#### Employee permission minimum required
+Get all users with optional 
+- limit
+- offset
+
+
+***Endpoint:***
+
+```bash
+Method: GET
+Type: 
+URL: {{BASE_URL}}/user
+```
+
+
+
+***Query params:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| limit | 20 |  |
+| offset | 1 |  |
+
+
+
+### 6. Get By Id
+
+
+#### Employee permission minimum required
 Get one user by id
 
 
@@ -1921,7 +3131,7 @@ URL: {{BASE_URL}}/user/:userId
 
 
 
-### 6. Login
+### 7. Login
 
 
 Login with email and password, return bearer token if successful
@@ -1948,9 +3158,10 @@ URL: {{BASE_URL}}/user/login
 
 
 
-### 7. Logout
+### 8. Logout
 
 
+#### Client permission minimum required
 Logout to release token session
 
 
@@ -1964,9 +3175,10 @@ URL: {{BASE_URL}}/user/logout
 
 
 
-### 8. ME
+### 9. ME
 
 
+#### Client permission minimum required
 Retrieve current connected user with beaver token given in header
 
 
@@ -1980,7 +3192,7 @@ URL: {{BASE_URL}}/user/me
 
 
 
-### 9. Register
+### 10. Register
 
 
 Register to create account with simple user role
@@ -2009,10 +3221,10 @@ URL: {{BASE_URL}}/user/register
 
 
 
-### 10. Restaure User
+### 11. Restaure User
 
 
-### Admin middleware
+#### Admin permission minimum required
 Restaure soft deleted user
 
 
@@ -2021,7 +3233,7 @@ Restaure soft deleted user
 ```bash
 Method: PATCH
 Type: 
-URL: {{baseURL}}/user/restaure/:userId
+URL: {{BASE_URL}}/user/restore/:userId
 ```
 
 
@@ -2034,37 +3246,10 @@ URL: {{baseURL}}/user/restaure/:userId
 
 
 
-### 11. [to fix] Get All
+### 12. Update by admin
 
 
-Get all users with optional 
-- limit
-- offset
-
-
-***Endpoint:***
-
-```bash
-Method: GET
-Type: 
-URL: {{BASE_URL}}/user
-```
-
-
-
-***Query params:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| limit | 20 |  |
-| offset | 1 |  |
-
-
-
-### 12. [to fix] Update by admin
-
-
-### ADMIN ROUTE
+#### Admin permission minimum required
 
 Can update any user
 
@@ -2091,7 +3276,6 @@ URL: {{BASE_URL}}/user/:userId
 
 ```js        
 {
-    "id": 11,
     "firstName": "Capsule",
     "lastName": "Herrera",
     "email": "capsule3@gmail.com",
@@ -2103,10 +3287,10 @@ URL: {{BASE_URL}}/user/:userId
 
 
 
-### 13. [to fix] Update client only by employee
+### 13. Update client only by employee
 
 
-### Employee route
+#### Employee permission minimum required
 
 Can only update client
 
@@ -2133,7 +3317,6 @@ URL: {{BASE_URL}}/user/update-client/:userId
 
 ```js        
 {
-    "id": 11,
     "firstName": "Capsule",
     "lastName": "Herrera",
     "email": "capsule3@gmail.com",
@@ -2146,12 +3329,37 @@ URL: {{BASE_URL}}/user/update-client/:userId
 
 
 ## User Role
+User roles are very importannt to determine rights on API
 
 
 
-### 1. Create
+### 1. Affect User
 
 
+
+***Endpoint:***
+
+```bash
+Method: PATCH
+Type: 
+URL: {{baseURL}}/user/role/:roleId/affect-user/:userId
+```
+
+
+
+***URL variables:***
+
+| Key | Value | Description |
+| --- | ------|-------------|
+| roleId |  |  |
+| userId |  |  |
+
+
+
+### 2. Create
+
+
+#### Admin permission minimum required
 Create new user role
 
 
@@ -2175,9 +3383,10 @@ URL: {{baseURL}}/user/role
 
 
 
-### 2. Delete
+### 3. Delete
 
 
+#### Admin permission minimum required
 Remove user role (keeps users with this role)
 
 
@@ -2199,9 +3408,10 @@ URL: {{baseURL}}/user/role/:userRoleId
 
 
 
-### 3. Get All
+### 4. Get All
 
 
+#### Employee permission minimum required
 Get all user roles
 
 
@@ -2215,9 +3425,10 @@ URL: {{BASE_URL}}/user/role
 
 
 
-### 4. Get by Id
+### 5. Get by Id
 
 
+#### Employee permission minimum required
 Get one user role by id
 
 
@@ -2239,9 +3450,10 @@ URL: {{BASE_URL}}/user/role/:userRoleId
 
 
 
-### 5. Update
+### 6. Update
 
 
+#### Admin permission minimum required
 Update existing user role
 
 
@@ -2273,29 +3485,6 @@ URL: {{baseURL}}/user/role/:userRoleId
 
 
 
-### 6. affect User
-
-
-
-***Endpoint:***
-
-```bash
-Method: PATCH
-Type: 
-URL: {{baseURL}}/user/role/:role-id/affect-user/:user-id
-```
-
-
-
-***URL variables:***
-
-| Key | Value | Description |
-| --- | ------|-------------|
-| role-id | 3 |  |
-| user-id | 1 |  |
-
-
-
 ---
 [Back to top](#sanazoo-api)
-> Made with &#9829; by [thedevsaddam](https://github.com/thedevsaddam) | Generated at: 2021-04-21 23:17:12 by [docgen](https://github.com/thedevsaddam/docgen)
+> Made with &#9829; by [thedevsaddam](https://github.com/thedevsaddam) | Generated at: 2021-04-24 15:55:25 by [docgen](https://github.com/thedevsaddam/docgen)
