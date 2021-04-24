@@ -2,7 +2,7 @@ import express from "express";
 import { config } from "dotenv";
 import { SequelizeManager } from "./utils/db";
 import swaggerUI from "swagger-ui-express";
-import swaggerJSON from "../docs/zoo.json";
+import swaggerJSON from "../swagger/zoo.json";
 import { buildRoutes } from "./routes";
 
 config();

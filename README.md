@@ -1,5 +1,7 @@
 # SanaZoo API
 
+
+
 SanaZoo is a very popular zoo !
 
 First created in C with XML files, it is now developped with nodejs and swagger, for your eyes only
@@ -179,6 +181,25 @@ First created in C with XML files, it is now developped with nodejs and swagger,
 --------
 
 # Our project
+
+In this school project, we have to realize a complete API to manage a zoo, using Express and Sequelize as a base.
+
+This project has been tested and integrated both on heroku, but also thanks to docker whose image is detailed below
+
+## Gantt chart
+
+## Data model used for DB
+
+## Contributions
+
+|                                                  |                                                              |
+| ------------------------------------------------ | ------------------------------------------------------------ |
+| [Noé LARRIEU-LACOSTE](https://github.com/Nouuu)  | [![followers](https://img.shields.io/github/followers/nouuu)]((https://github.com/Nouuu)) |
+| [Swann HERRERA](https://github.com/SwannHERRERA) | [![followers](https://img.shields.io/github/followers/SwannHERRERA)](https://github.com/SwannHERRERA) |
+| [Clément BOSSARD](https://github.com/Huriumari)  | [![followers](https://img.shields.io/github/followers/Huriumari)](https://github.com/Huriumari) |
+
+# Docker integration
+
 
 # API Endpoints
 
@@ -2879,10 +2900,10 @@ URL: {{baseURL}}/user/role/:userRoleId
 
 ---
 
-# Contributions
+## Swagger
 
-|                                                  |                                                              |
-| ------------------------------------------------ | ------------------------------------------------------------ |
-| [Noé LARRIEU-LACOSTE](https://github.com/Nouuu)  | [![followers](https://img.shields.io/github/followers/nouuu)]((https://github.com/Nouuu)) |
-| [Swann HERRERA](https://github.com/SwannHERRERA) | [![followers](https://img.shields.io/github/followers/SwannHERRERA)](https://github.com/SwannHERRERA) |
-| [Clément BOSSARD](https://github.com/Huriumari)  | [![followers](https://img.shields.io/github/followers/Huriumari)](https://github.com/Huriumari) |
+This project contain a complete swagger test environment to use API, you can access it on `https://domain.example/swagger`
+
+It look FABULOUS :
+
+![image-20210424161611857](images/README/image-20210424161611857.png)
