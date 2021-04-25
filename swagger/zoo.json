@@ -64,7 +64,12 @@
                   "birthdate": "2016-08-10 14:00:54"
                 }
               },
-              "example": "{\n    \"name\": \"rihanna\",\n    \"enclosureId\": 1,\n    \"specieId\": 2,\n    \"birthdate\": \"2016-08-10 14:00:54\"\n}"
+              "example": {
+                "name": "rihanna",
+                "enclosureId": 1,
+                "specieId": 2,
+                "birthdate": "2016-08-10 14:00:54"
+              }
             }
           }
         },
@@ -129,7 +134,12 @@
                   "birthdate": "2016-08-10 14:00:54"
                 }
               },
-              "example": "{\n    \"name\": \"chô7\",\n    \"enclosureId\": 1,\n    \"specieId\": 1,\n    \"birthdate\": \"2016-08-10 14:00:54\"\n}"
+              "example": {
+                "name": "chô7",
+                "enclosureId": 1,
+                "specieId": 1,
+                "birthdate": "2016-08-10 14:00:54"
+              }
             }
           }
         },
@@ -187,7 +197,10 @@
                   "enclosureId": 2
                 }
               },
-              "example": "{\n    \"animalId\": 3,\n    \"enclosureId\": 2\n}"
+              "example": {
+                "animalId": 3,
+                "enclosureId": 2
+              }
             }
           }
         },
@@ -256,7 +269,12 @@
                   "description": "tout vas plus que bien"
                 }
               },
-              "example": "{\n    \"userId\": 2,\n    \"animalId\": 3,\n    \"date\": \"2021-04-04 22:58:21\",\n    \"description\": \"tout vas plus que bien\"\n}"
+              "example": {
+                "userId": 2,
+                "animalId": 3,
+                "date": "2021-04-04 22:58:21",
+                "description": "tout vas plus que bien"
+              }
             }
           }
         },
@@ -321,7 +339,12 @@
                   "description": "il est mort"
                 }
               },
-              "example": "{\n    \"userId\": 2,\n    \"animalId\": 3,\n    \"date\": \"2021-04-04 22:58:21\",\n    \"description\": \"il est mort\"\n}"
+              "example": {
+                "userId": 2,
+                "animalId": 3,
+                "date": "2021-04-04 22:58:21",
+                "description": "il est mort"
+              }
             }
           }
         },
@@ -392,7 +415,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -413,7 +437,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -430,7 +455,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -458,7 +484,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -479,7 +506,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -517,7 +545,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -538,7 +567,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -576,7 +606,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -593,7 +624,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -621,7 +653,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -649,7 +682,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -685,7 +719,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -700,7 +735,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "requestBody": {
@@ -728,7 +764,23 @@
                   ]
                 }
               },
-              "example": "{\r\n    \"name\": \"Le grand enclos a...\",\r\n    \"capacity\": \"7\",\r\n    \"description\": \"Le grand enclos a Ricardo Milos\",\r\n    \"visitDuration\": 999999999,\r\n    \"handicapAccess\": true,\r\n    \"maintenance\": false,\r\n    \"openHour\": \"01:00\",\r\n    \"closeHour\": \"23:58\",\r\n    \"enclosureTypeId\": 1,\r\n    \"images\": [\r\n        {\r\n            \"title\": \"Une image chocante\",\r\n            \"path\": \"https://media.tenor.com/images/78896a158781e5da8bd3a795d8431b09/tenor.gif\"\r\n        }\r\n    ]\r\n}"
+              "example": {
+                "name": "Le grand enclos a...",
+                "capacity": "7",
+                "description": "Le grand enclos a Ricardo Milos",
+                "visitDuration": 999999999,
+                "handicapAccess": true,
+                "maintenance": false,
+                "openHour": "01:00",
+                "closeHour": "23:58",
+                "enclosureTypeId": 1,
+                "images": [
+                  {
+                    "title": "Une image chocante",
+                    "path": "https://media.tenor.com/images/78896a158781e5da8bd3a795d8431b09/tenor.gif"
+                  }
+                ]
+              }
             }
           }
         },
@@ -768,7 +820,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -794,7 +847,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -822,7 +876,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -850,7 +905,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -876,9 +932,13 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
+        "tags": [
+          "Enclosure"
+        ],
         "requestBody": {
           "description": "#### Employee permission minimum required\nUpdate one enclosure by Id. \n \nBody params are optional, only give what needs to be updated",
           "required": true,
@@ -897,14 +957,10 @@
                   "closeHour": "23:58",
                   "enclosureTypeId": 1
                 }
-              },
-              "example": " {\r\n    \"name\": \"Le grand enclos a...\",\r\n    \"capacity\": \"7\",\r\n    \"description\": \"Le grand enclos a Ricardo Milos. Attention à la sensibilité des plus jeunes\",\r\n    \"visitDuration\": 999999999,\r\n    \"handicapAccess\": true,\r\n    \"maintenance\": false,\r\n    \"openHour\": \"01:00\",\r\n    \"closeHour\": \"23:58\",\r\n    \"enclosureTypeId\": 1\r\n}\r\n \r\n"
+              }
             }
           }
-        },
-        "tags": [
-          "Enclosure"
-        ]
+        }
       },
       "delete": {
         "summary": "Delete One",
@@ -925,7 +981,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -963,7 +1020,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -978,7 +1036,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "requestBody": {
@@ -994,7 +1053,11 @@
                   "enclosureId": 1
                 }
               },
-              "example": "{\r\n    \"title\": \"On ne s'y attend pas\",\r\n    \"path\": \"https://i.redd.it/2pa8ffkyl3t41.jpg\",\r\n    \"enclosureId\": 1\r\n}"
+              "example": {
+                "title": "On ne s'y attend pas",
+                "path": "https://i.redd.it/2pa8ffkyl3t41.jpg",
+                "enclosureId": 1
+              }
             }
           }
         },
@@ -1016,7 +1079,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -1042,7 +1106,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "requestBody": {
@@ -1058,7 +1123,11 @@
                   "enclosureId": 1
                 }
               },
-              "example": "{\r\n    \"title\": \"Et celui la encore moins\",\r\n    \"path\": \"https://i.pinimg.com/originals/88/82/bc/8882bcf327896ab79fb97e85ae63a002.gif\",\r\n    \"enclosureId\": 1\r\n}"
+              "example": {
+                "title": "Et celui la encore moins",
+                "path": "https://i.pinimg.com/originals/88/82/bc/8882bcf327896ab79fb97e85ae63a002.gif",
+                "enclosureId": 1
+              }
             }
           }
         },
@@ -1085,7 +1154,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -1113,7 +1183,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -1149,7 +1220,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -1164,7 +1236,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "requestBody": {
@@ -1181,7 +1254,12 @@
                   "userId": 1
                 }
               },
-              "example": "{\r\n    \"date\": \"2012-12-21\",\r\n    \"description\": \"La fin du monde est arrivé sur l'enclos numero 1. Il n'y a aucun dégat\",\r\n    \"enclosureId\": 1,\r\n    \"userId\": 1\r\n}"
+              "example": {
+                "date": "2012-12-21",
+                "description": "La fin du monde est arrivé sur l'enclos numero 1. Il n'y a aucun dégat",
+                "enclosureId": 1,
+                "userId": 1
+              }
             }
           }
         },
@@ -1203,7 +1281,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -1229,7 +1308,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "requestBody": {
@@ -1246,7 +1326,12 @@
                   "userId": 1
                 }
               },
-              "example": "{\r\n    \"date\": \"2021-12-21\",\r\n    \"description\": \"Finalement il n'y a pas eu la fin du monde\",\r\n    \"enclosureId\": 1,\r\n    \"userId\": 1\r\n}"
+              "example": {
+                "date": "2021-12-21",
+                "description": "Finalement il n'y a pas eu la fin du monde",
+                "enclosureId": 1,
+                "userId": 1
+              }
             }
           }
         },
@@ -1273,7 +1358,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -1301,7 +1387,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -1322,7 +1409,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -1358,7 +1446,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -1373,7 +1462,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "requestBody": {
@@ -1387,7 +1477,9 @@
                   "Name": "Un enclos pour les gouverner tous"
                 }
               },
-              "example": "{\r\n    \"Name\": \"Un enclos pour les gouverner tous\"\r\n}"
+              "example": {
+                "Name": "Un enclos pour les gouverner tous"
+              }
             }
           }
         },
@@ -1415,7 +1507,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -1443,7 +1536,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "requestBody": {
@@ -1457,7 +1551,9 @@
                   "Name": "Un enclos pour les laisser tous tranquille"
                 }
               },
-              "example": "{\r\n    \"Name\": \"Un enclos pour les laisser tous tranquille\"\r\n}"
+              "example": {
+                "Name": "Un enclos pour les laisser tous tranquille"
+              }
             }
           }
         },
@@ -1494,7 +1590,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -1509,7 +1606,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "requestBody": {
@@ -1524,7 +1622,10 @@
                   "enclosureId": 1
                 }
               },
-              "example": "{\r\n    \"passId\":1,\r\n    \"enclosureId\":1\r\n}"
+              "example": {
+                "passId": 1,
+                "enclosureId": 1
+              }
             }
           }
         },
@@ -1564,7 +1665,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -1603,7 +1705,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -1648,7 +1751,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -1669,7 +1773,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -1697,7 +1802,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -1734,7 +1840,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -1762,7 +1869,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -1790,7 +1898,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -1816,7 +1925,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "requestBody": {
@@ -1830,7 +1940,9 @@
                   "passTypeId": 4
                 }
               },
-              "example": "{\r\n    \"passTypeId\":4\r\n}"
+              "example": {
+                "passTypeId": 4
+              }
             }
           }
         },
@@ -1857,7 +1969,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -1874,7 +1987,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "requestBody": {
@@ -1893,7 +2007,14 @@
                   ]
                 }
               },
-              "example": "{\r\n    \"validDate\":\"2021-12-31\",\r\n    \"userId\":0,\r\n    \"passTypeId\":0,\r\n    \"enclosureAccessList\":[\r\n        0\r\n    ]\r\n}"
+              "example": {
+                "validDate": "2021-12-31",
+                "userId": 0,
+                "passTypeId": 0,
+                "enclosureAccessList": [
+                  0
+                ]
+              }
             }
           }
         },
@@ -1911,7 +2032,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "requestBody": {
@@ -1926,7 +2048,10 @@
                   "passId": 0
                 }
               },
-              "example": "{\r\n    \"enclosureId\":0,\r\n    \"passId\":0\r\n}"
+              "example": {
+                "enclosureId": 0,
+                "passId": 0
+              }
             }
           }
         },
@@ -1965,7 +2090,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -2001,7 +2127,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -2016,7 +2143,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "requestBody": {
@@ -2030,7 +2158,9 @@
                   "date": "2021-12-31"
                 }
               },
-              "example": "{\r\n \"date\":\"2021-12-31\"\r\n}"
+              "example": {
+                "date": "2021-12-31"
+              }
             }
           }
         },
@@ -2067,7 +2197,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -2088,7 +2219,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "requestBody": {
@@ -2102,7 +2234,9 @@
                   "date": "2021-04-18"
                 }
               },
-              "example": "{\r\n    \"date\":\"2021-04-18\"\r\n}"
+              "example": {
+                "date": "2021-04-18"
+              }
             }
           }
         },
@@ -2129,7 +2263,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -2146,7 +2281,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -2161,7 +2297,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "requestBody": {
@@ -2177,7 +2314,11 @@
                   "price": 0
                 }
               },
-              "example": "{\r\n    \"id\": 0,\r\n    \"name\":\"new name\",\r\n    \"price\":0\r\n    }"
+              "example": {
+                "id": 0,
+                "name": "new name",
+                "price": 0
+              }
             }
           }
         },
@@ -2199,7 +2340,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -2225,7 +2367,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -2242,7 +2385,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "requestBody": {
@@ -2257,7 +2401,10 @@
                   "price": 0
                 }
               },
-              "example": "{\r\n    \"name\":\"string\",\r\n    \"price\":0\r\n}"
+              "example": {
+                "name": "string",
+                "price": 0
+              }
             }
           }
         },
@@ -2275,7 +2422,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "requestBody": {
@@ -2290,7 +2438,10 @@
                   "passTypeId": 0
                 }
               },
-              "example": "{\r\n    \"passId\": 0,\r\n    \"passTypeId\": 0\r\n}"
+              "example": {
+                "passId": 0,
+                "passTypeId": 0
+              }
             }
           }
         },
@@ -2327,7 +2478,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -2342,7 +2494,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "requestBody": {
@@ -2359,7 +2512,12 @@
                   "userId": 1
                 }
               },
-              "example": "{\r\n    \"day_of_week\": \"Sunday\",\r\n    \"start_time\": \"2021-05-01T08:00:00\",\r\n    \"end_time\": \"2021-05-01T19:00:00\",\r\n    \"userId\": 1\r\n}"
+              "example": {
+                "day_of_week": "Sunday",
+                "start_time": "2021-05-01T08:00:00",
+                "end_time": "2021-05-01T19:00:00",
+                "userId": 1
+              }
             }
           }
         },
@@ -2381,7 +2539,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -2408,7 +2567,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "requestBody": {
@@ -2425,7 +2585,12 @@
                   "userId": 1
                 }
               },
-              "example": "{\r\n    \"day_of_week\": \"Saturday\",\r\n    \"start_time\": \"2021-05-01T08:00:00\",\r\n    \"end_time\": \"2021-05-01T19:00:00\",\r\n    \"userId\": 1\r\n}\r\n"
+              "example": {
+                "day_of_week": "Saturday",
+                "start_time": "2021-05-01T08:00:00",
+                "end_time": "2021-05-01T19:00:00",
+                "userId": 1
+              }
             }
           }
         },
@@ -2451,7 +2616,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -2468,7 +2634,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -2485,7 +2652,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -2521,7 +2689,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -2536,7 +2705,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "requestBody": {
@@ -2552,7 +2722,11 @@
                   "description": "le tem de max evo"
                 }
               },
-              "example": "{\n    \"origin\": \"numerique\",\n    \"name\": \"Hoglip\",\n    \"description\": \"le tem de max evo\"\n}"
+              "example": {
+                "origin": "numerique",
+                "name": "Hoglip",
+                "description": "le tem de max evo"
+              }
             }
           }
         },
@@ -2574,7 +2748,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -2600,7 +2775,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "requestBody": {
@@ -2616,7 +2792,11 @@
                   "description": "Le tem de max no evo"
                 }
               },
-              "example": "{\n    \"origin\": \"numerique\",\n    \"name\": \"oree\",\n    \"description\": \"Le tem de max no evo\"\n}"
+              "example": {
+                "origin": "numerique",
+                "name": "oree",
+                "description": "Le tem de max no evo"
+              }
             }
           }
         },
@@ -2643,7 +2823,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -2660,7 +2841,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -2677,7 +2859,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -2694,7 +2877,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -2722,7 +2906,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -2739,7 +2924,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -2756,7 +2942,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -2773,7 +2960,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -2790,7 +2978,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -2807,7 +2996,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -2824,7 +3014,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -2839,7 +3030,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "requestBody": {
@@ -2853,7 +3045,9 @@
                   "name": "SINGE"
                 }
               },
-              "example": "{\n    \"name\": \"SINGE\"\n}"
+              "example": {
+                "name": "SINGE"
+              }
             }
           }
         },
@@ -2875,7 +3069,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -2901,7 +3096,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "requestBody": {
@@ -2915,7 +3111,9 @@
                   "name": "Grand signe"
                 }
               },
-              "example": "{\n    \"name\": \"Grand signe\"\n}"
+              "example": {
+                "name": "Grand signe"
+              }
             }
           }
         },
@@ -2942,7 +3140,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -2971,7 +3170,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -3007,7 +3207,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -3022,7 +3223,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "requestBody": {
@@ -3040,7 +3242,13 @@
                   "password": "ggirigizol"
                 }
               },
-              "example": "{\n    \"email\": \"testSinge@jungle.lol\",\n    \"firstName\": \"Singe\",\n    \"lastName\": \"Poilu\",\n    \"userRoleId\": 2,\n    \"password\": \"ggirigizol\"\n}"
+              "example": {
+                "email": "testSinge@jungle.lol",
+                "firstName": "Singe",
+                "lastName": "Poilu",
+                "userRoleId": 2,
+                "password": "ggirigizol"
+              }
             }
           }
         },
@@ -3068,7 +3276,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -3094,7 +3303,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "requestBody": {
@@ -3113,7 +3323,14 @@
                   "userRoleId": 3
                 }
               },
-              "example": "{\n    \"firstName\": \"Capsule\",\n    \"lastName\": \"Herrera\",\n    \"email\": \"capsule3@gmail.com\",\n    \"birthdate\": \"2021-01-01 12:21:51\",\n    \"password\": \"briatvmhr\",\n    \"userRoleId\": 3\n}"
+              "example": {
+                "firstName": "Capsule",
+                "lastName": "Herrera",
+                "email": "capsule3@gmail.com",
+                "birthdate": "2021-01-01 12:21:51",
+                "password": "briatvmhr",
+                "userRoleId": 3
+              }
             }
           }
         },
@@ -3140,7 +3357,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -3157,7 +3375,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -3174,7 +3393,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "requestBody": {
@@ -3189,7 +3409,10 @@
                   "password": "azerty"
                 }
               },
-              "example": "{\n    \"email\": \"EMPLOYEE@EMPLOYEE.com\",\n    \"password\": \"azerty\"\n}"
+              "example": {
+                "email": "EMPLOYEE@EMPLOYEE.com",
+                "password": "azerty"
+              }
             }
           }
         },
@@ -3207,7 +3430,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "requestBody": {
@@ -3224,7 +3448,12 @@
                   "lastName": "herrera"
                 }
               },
-              "example": "{\n    \"email\": \"capsule3@gmail.com\",\n    \"password\": \"azerty\",\n    \"firstName\": \"capsule\",\n    \"lastName\": \"herrera\"\n}"
+              "example": {
+                "email": "capsule3@gmail.com",
+                "password": "azerty",
+                "firstName": "capsule",
+                "lastName": "herrera"
+              }
             }
           }
         },
@@ -3253,7 +3482,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "requestBody": {
@@ -3272,7 +3502,14 @@
                   "userRoleId": 3
                 }
               },
-              "example": "{\n    \"firstName\": \"Capsule\",\n    \"lastName\": \"Herrera\",\n    \"email\": \"capsule3@gmail.com\",\n    \"birthdate\": \"2021-01-01 12:21:51\",\n    \"password\": \"shadolebest\",\n    \"userRoleId\": 3\n}"
+              "example": {
+                "firstName": "Capsule",
+                "lastName": "Herrera",
+                "email": "capsule3@gmail.com",
+                "birthdate": "2021-01-01 12:21:51",
+                "password": "shadolebest",
+                "userRoleId": 3
+              }
             }
           }
         },
@@ -3301,7 +3538,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -3318,7 +3556,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [
@@ -3335,7 +3574,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "requestBody": {
@@ -3351,7 +3591,11 @@
                   "newPasswordConfirm": "azerty"
                 }
               },
-              "example": "{\n    \"actualPassword\": \"tytyty\",\n    \"newPassword\": \"azerty\",\n    \"newPasswordConfirm\": \"azerty\"\n}"
+              "example": {
+                "actualPassword": "tytyty",
+                "newPassword": "azerty",
+                "newPasswordConfirm": "azerty"
+              }
             }
           }
         },
@@ -3380,7 +3624,8 @@
         "responses": {
           "200": {
             "description": "",
-            "headers": {}
+            "headers": {
+            }
           }
         },
         "tags": [

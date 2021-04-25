@@ -10,7 +10,6 @@ import {
 import { SequelizeManager } from "../../utils/db";
 import { Request, Response } from "express";
 import * as dateFns from "date-fns";
-import { boolean } from "yup";
 
 export class EntryController {
   PassType: ModelCtor<IPass_Type_Instance>;

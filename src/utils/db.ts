@@ -127,9 +127,9 @@ export class SequelizeManager implements SequelizeManagerProps {
       UserRole: userRoleCreator(sequelize),
     };
     SequelizeManager.associate(managerProps);
-    // await sequelize.sync({
-    //   force: false,
-    // });
+    /*    await sequelize.sync({
+      force: true,
+    });*/
     return new SequelizeManager(managerProps);
   }
 
