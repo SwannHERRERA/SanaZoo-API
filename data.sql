@@ -24,6 +24,6 @@ insert into User_Role (id, name, created_at, updated_at)
 VALUES (6, 'VISITEUR', NOW(), NOW());
 insert into User (first_name, last_name, email, birthdate, password, user_role_id, created_at, updated_at)
 VALUES ('Admin', 'Admin', 'Admin@Admin.com', '2000-12-20 13:21:00', '', 1, NOW(), NOW()),
-       ('Employee', 'Employee', 'Employee@Employee.com', '2000-08-20 13:22:00', '', 2, NOW(), NOW()),
-       ('VETERINAIRE', 'VETERINAIRE', 'VETERINAIRE@VETERINAIRE.com', '2000-08-20 13:22:00', '', 3, NOW(), NOW()),
-       ('CLIENT', 'CLIENT', 'CLIENT@CLIENT.com', '2000-08-20 13:22:00', '', 4, NOW(), NOW());
+       ('Employee', 'Vendeur', 'Employee@Employee.com', '2000-08-20 13:22:00', '', 2, NOW(), NOW()),
+       ('VETERINAIRE', 'VETERINAIRE', 'VETERINAIRE@VETERINAIRE.com', '2000-08-20 13:22:00', '', 5, NOW(), NOW()),
+       ('CLIENT', 'CLIENT', 'CLIENT@CLIENT.com', '2000-08-20 13:22:00', '', 6, NOW(), NOW());
