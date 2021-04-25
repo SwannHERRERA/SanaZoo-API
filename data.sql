@@ -15,15 +15,15 @@ VALUES (1, 'ADMIN', NOW(), NOW());
 insert into User_Role (id, name, created_at, updated_at)
 VALUES (2, 'VENDEUR', NOW(), NOW());
 insert into User_Role (id, name, created_at, updated_at)
-VALUES (3, "AGENT D'ACCUEIL", NOW(), NOW());
+VALUES (3, 'AGENT D\'ACCUEIL', NOW(), NOW());
 insert into User_Role (id, name, created_at, updated_at)
-VALUES (4, "AGENT d'ENTRETIENT", NOW(), NOW());
+VALUES (4, 'AGENT d\'ENTRETIENT', NOW(), NOW());
 insert into User_Role (id, name, created_at, updated_at)
 VALUES (5, 'VETERINAIRE', NOW(), NOW());
 insert into User_Role (id, name, created_at, updated_at)
 VALUES (6, 'VISITEUR', NOW(), NOW());
 insert into User (first_name, last_name, email, birthdate, password, user_role_id, created_at, updated_at)
-VALUES ('Admin', 'Admin', 'Admin@Admin.com', '2000-12-20 13:21:00', "", 1, '2021-04-18', '2021-04-18'),
- ('Employee', 'Employee', 'Employee@Employee.com', '2000-08-20 13:22:00', "", 2, '2021-04-18', '2021-04-18'),
- ('VETERINAIRE', 'VETERINAIRE', 'VETERINAIRE@VETERINAIRE.com', '2000-08-20 13:22:00', "", 3, '2021-04-18', '2021-04-18'),
- ('CLIENT', 'CLIENT', 'CLIENT@CLIENT.com', '2000-08-20 13:22:00', "", 4, '2021-04-18', '2021-04-18');
+VALUES ('Admin', 'Admin', 'Admin@Admin.com', '2000-12-20 13:21:00', '', 1, '2021-04-18', '2021-04-18'),
+ ('Employee', 'Employee', 'Employee@Employee.com', '2000-08-20 13:22:00', '', 2, '2021-04-18', '2021-04-18'),
+ ('VETERINAIRE', 'VETERINAIRE', 'VETERINAIRE@VETERINAIRE.com', '2000-08-20 13:22:00', '', 3, '2021-04-18', '2021-04-18'),
+ ('CLIENT', 'CLIENT', 'CLIENT@CLIENT.com', '2000-08-20 13:22:00', '', 4, '2021-04-18', '2021-04-18');
