@@ -31,7 +31,7 @@ app.get("/", async (req: express.Request, res: express.Response) => {
     "<h1>Welcome to SanaZoo API !</h1>" +
       'To test our API, go on <a target="_blank" href="https://zoo.nospy.fr/swagger">https://zoo.nospy.fr/swagger</a>' +
       "<p>" +
-      'Check our github repo on <a target="_blank" href="https://github.com/SwannHERRERA/api-zoo">https://github.com/SwannHERRERA/api-zoo</a>' +
+      'Check our github repo on <a target="_blank" href="https://github.com/SwannHERRERA/SanaZoo-API">https://github.com/SwannHERRERA/SanaZoo-API</a>' +
       "</p><p>" +
       "Contributors : <ul>" +
       '<li><a target="_blank" href="https://github.com/Nouuu">Noé Larrieu-Lacoste</a></li>' +
