@@ -22,16 +22,20 @@ enclosureImageRouter.delete("/:id", adminMiddleware, async function (req, res) {
   res.status(204).end();
 });
 
-enclosureImageRouter.get("/enclosure/:id", authMiddleware, async function (req, res) {
-  const id = Number.parseInt(req.params.id);
-  if (id === undefined) {
-    res.status(404).end();
-    return;
+enclosureImageRouter.get(
+  "/enclosure/:id",
+  authMiddleware,
+  async function (req, res) {
+    const id = Number.parseInt(req.params.id);
+    if (id === undefined) {
+      res.status(404).end();
+      return;
+    }
+    const controller = await Enclosure_Image_Controller.getInstance();
+    const result = await controller.getAllFromEnclosure(id);
+    res.status(200).json(result).end();
   }
-  const controller = await Enclosure_Image_Controller.getInstance();
-  const result = await controller.getAllFromEnclosure(id);
-  res.status(200).json(result).end();
-});
+);
 
 enclosureImageRouter.get("/:id", authMiddleware, async function (req, res) {
   const id = Number.parseInt(req.params.id);

@@ -1,5 +1,5 @@
 import express from "express";
-import { employeeMiddleware, adminMiddleware } from "../../middlewares";
+import { adminMiddleware, employeeMiddleware } from "../../middlewares";
 import { Planning_Controller } from "../../controllers/planning/planning.controller";
 import * as yup from "yup";
 import { IPlaning_Result } from "../../models";

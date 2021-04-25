@@ -1,6 +1,10 @@
 import express from "express";
 import controller from "../../controllers/animals/species.controller";
-import { adminMiddleware, authMiddleware, employeeMiddleware } from "../../middlewares";
+import {
+  adminMiddleware,
+  authMiddleware,
+  employeeMiddleware,
+} from "../../middlewares";
 
 const animalSpecieRouter = express.Router();
 

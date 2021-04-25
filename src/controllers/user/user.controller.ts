@@ -87,13 +87,25 @@ export class UserController extends Controller {
     this.schema = this.fullUserSchema;
     const isValid = await this.validate(user, res);
     if (isValid === false) return;
+    const { User } = await SequelizeManager.getInstance();
+    const haveOtherUserWithTheSameEmail = await User.findOne({
+      where: { email: user.email },
+      paranoid: false,
+    });
+    if (haveOtherUserWithTheSameEmail !== null) {
+      res
+        .status(StatusCode.BAD_REQUEST)
+        .json({ message: "Cette email est déjà utilisé" })
+        .end();
+      return;
+    }
     this.insert(user, res);
   };
 
   public register = async (req: Request, res: Response): Promise<void> => {
     const newUser = req.body;
     this.schema = this.registerSchema;
-    const { UserRole } = await SequelizeManager.getInstance();
+    const { UserRole, User } = await SequelizeManager.getInstance();
     const clientRole = await UserRole.findOne({ where: { name: "CLIENT" } });
     if (clientRole === null) {
       res.status(StatusCode.SERVER_ERROR).end();
@@ -102,6 +114,17 @@ export class UserController extends Controller {
     newUser.userRoleId = clientRole.id;
     const isValid = await this.validate(newUser, res);
     if (isValid === false) return;
+    const haveOtherUserWithTheSameEmail = await User.findOne({
+      where: { email: newUser.email },
+      paranoid: false,
+    });
+    if (haveOtherUserWithTheSameEmail !== null) {
+      res
+        .status(StatusCode.BAD_REQUEST)
+        .json({ message: "Cette email est déjà utilisé" })
+        .end();
+      return;
+    }
     this.insert(newUser, res);
   };
 

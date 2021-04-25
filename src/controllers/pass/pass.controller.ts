@@ -220,8 +220,8 @@ export class PassController {
     req: Request,
     res: Response
   ): Promise<void> {
-    const passId = req.query.passId;
-    const enclosureId = req.query.enclosureId;
+    const passId = req.params.passId;
+    const enclosureId = req.params.enclosureId;
     console.log("ici");
     this.passEnclosureAccessSchema
       .validate({
