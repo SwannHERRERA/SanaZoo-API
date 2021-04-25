@@ -1,0 +1,3 @@
+insert into zoo.Session (id, token, expire_date, user_id, created_at, updated_at)
+values  (1, '$argon2i$v=19$m=4096,t=3,p=1$bkv9MC7U/So6j11VPs95fA$4Ap1wOAtIwTvA1KlFvzh2YFWmhLXY7myesvIS3c+5sY', '2021-04-26 12:53:22', 9, '2021-04-25 12:53:22', '2021-04-25 12:53:22'),
+        (2, '$argon2i$v=19$m=4096,t=3,p=1$4Iam5YTeyeqzNeNdsI8y8g$BtWoTPdfEPSlsriBSXkqVH/B/345HQKkk7YARxvs8bo', '2021-04-26 13:29:54', 7, '2021-04-25 13:29:54', '2021-04-25 13:29:54');
