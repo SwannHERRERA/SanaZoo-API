@@ -20,7 +20,7 @@ export async function findUserByToken(
     where: {
       token,
       expireDate: {
-        [Op.gt]: now.toISOString(),
+        [Op.gte]: now.toISOString(),
       },
     },
   });
