@@ -1,0 +1,3678 @@
+{
+  "openapi": "3.0.0",
+  "servers": [
+    {
+      "url": "https://docker.zoo.nospy.fr",
+      "description": "",
+      "variables": {}
+    }
+  ],
+  "info": {
+    "version": "1.7",
+    "title": "SanaZoo API",
+    "description": "SanaZoo is a very popular zoo !\n\nFirst created in C with XML files, it is now developped with nodejs and swagger, for your eyes only",
+    "contact": {
+      "name": "Nospy, Wilk65537, Dieu citron"
+    }
+  },
+  "paths": {
+    "/animal": {
+      "get": {
+        "summary": "Get all",
+        "description": "#### Client permission minimum required\nGet all animals with optional\n- limit\n- offset",
+        "operationId": "Getall",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/limit"
+          },
+          {
+            "$ref": "#/components/parameters/offset"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Animal"
+        ]
+      },
+      "post": {
+        "summary": "Create",
+        "description": "#### Employee permission minimum required\n\nAdd new animal to the zoo with given body properties",
+        "operationId": "Create",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "requestBody": {
+          "description": "#### Employee permission minimum required\n\nAdd new animal to the zoo with given body properties",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string",
+                "example": {
+                  "name": "rihanna",
+                  "enclosureId": 1,
+                  "specieId": 2,
+                  "birthdate": "2016-08-10 14:00:54"
+                }
+              },
+              "example": "{\n    \"name\": \"rihanna\",\n    \"enclosureId\": 1,\n    \"specieId\": 2,\n    \"birthdate\": \"2016-08-10 14:00:54\"\n}"
+            }
+          }
+        },
+        "tags": [
+          "Animal"
+        ]
+      }
+    },
+    "/animal/{animalId}": {
+      "get": {
+        "summary": "Get by id",
+        "description": "#### Client permission minimum required\n\nGet one specific animal by id",
+        "operationId": "Getbyid",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/animalId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Animal"
+        ]
+      },
+      "put": {
+        "summary": "Update",
+        "description": "#### Employee permission minimum required\n\nUpdate animal with given body parameters",
+        "operationId": "Update",
+        "parameters": [
+          {
+            "name": "animalId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "number"
+            },
+            "description": "Animal ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "requestBody": {
+          "description": "#### Employee permission minimum required\n\nUpdate animal with given body parameters",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string",
+                "example": {
+                  "name": "chô7",
+                  "enclosureId": 1,
+                  "specieId": 1,
+                  "birthdate": "2016-08-10 14:00:54"
+                }
+              },
+              "example": "{\n    \"name\": \"chô7\",\n    \"enclosureId\": 1,\n    \"specieId\": 1,\n    \"birthdate\": \"2016-08-10 14:00:54\"\n}"
+            }
+          }
+        },
+        "tags": [
+          "Animal"
+        ]
+      },
+      "delete": {
+        "summary": "Delete",
+        "description": "#### Employee permission minimum required\n\nDelete animal by id",
+        "operationId": "Delete",
+        "parameters": [
+          {
+            "name": "animalId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Animal"
+        ]
+      }
+    },
+    "/animal/move-enclosure/": {
+      "patch": {
+        "summary": "Move Enclosure",
+        "description": "#### Employee permission minimum required\n\nMove animal to another enclosure",
+        "operationId": "MoveEnclosure",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "requestBody": {
+          "description": "#### Employee permission minimum required\n\nMove animal to another enclosure",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string",
+                "example": {
+                  "animalId": 3,
+                  "enclosureId": 2
+                }
+              },
+              "example": "{\n    \"animalId\": 3,\n    \"enclosureId\": 2\n}"
+            }
+          }
+        },
+        "tags": [
+          "Animal"
+        ]
+      }
+    },
+    "/animal/health": {
+      "get": {
+        "summary": "Get All",
+        "description": "#### Employee permission minimum required\n\nGet all animal health book entries with optional\n- limit\n- offset",
+        "operationId": "GetAll",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": true,
+            "style": "form",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": true,
+            "style": "form",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Animal Health Book"
+        ]
+      },
+      "post": {
+        "summary": "Create entry",
+        "description": "#### Veterinary permission minimum required\n\nAdd to an animal, a healthbook entry",
+        "operationId": "Createentry",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "requestBody": {
+          "description": "#### Veterinary permission minimum required\n\nAdd to an animal, a healthbook entry",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string",
+                "example": {
+                  "userId": 2,
+                  "animalId": 3,
+                  "date": "2021-04-04 22:58:21",
+                  "description": "tout vas plus que bien"
+                }
+              },
+              "example": "{\n    \"userId\": 2,\n    \"animalId\": 3,\n    \"date\": \"2021-04-04 22:58:21\",\n    \"description\": \"tout vas plus que bien\"\n}"
+            }
+          }
+        },
+        "tags": [
+          "Animal Health Book"
+        ]
+      }
+    },
+    "/animal/health/{healthBookId}": {
+      "get": {
+        "summary": "Get One",
+        "description": "#### Employee permission minimum required\n\nGet one animal health book entry by id",
+        "operationId": "GetOne",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/healthBookId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Animal Health Book"
+        ]
+      },
+      "put": {
+        "summary": "Update",
+        "description": "#### Veterinary permission minimum required\n\nUpdate a health book entry",
+        "operationId": "Update4",
+        "parameters": [
+          {
+            "name": "healthBookId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "number"
+            },
+            "description": "Animal health book ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "requestBody": {
+          "description": "#### Veterinary permission minimum required\n\nUpdate a health book entry",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string",
+                "example": {
+                  "userId": 2,
+                  "animalId": 3,
+                  "date": "2021-04-04 22:58:21",
+                  "description": "il est mort"
+                }
+              },
+              "example": "{\n    \"userId\": 2,\n    \"animalId\": 3,\n    \"date\": \"2021-04-04 22:58:21\",\n    \"description\": \"il est mort\"\n}"
+            }
+          }
+        },
+        "tags": [
+          "Animal Health Book"
+        ]
+      },
+      "delete": {
+        "summary": "Delete",
+        "description": "#### Admin permission minimum required\n\nRemove an animal's health book entry",
+        "operationId": "Delete5",
+        "parameters": [
+          {
+            "name": "healthBookId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "number"
+            },
+            "description": "Animal health book ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Animal Health Book"
+        ]
+      }
+    },
+    "/animal/health/animal/{animalId}": {
+      "get": {
+        "summary": "Get All By Animal",
+        "description": "#### Employee permission minimum required\n\nGet all specific animal health book entries",
+        "operationId": "GetAllByAnimal",
+        "parameters": [
+          {
+            "name": "animalId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Animal Health Book"
+        ]
+      }
+    },
+    "/monitoring/affluence/daily": {
+      "get": {
+        "summary": "Daily",
+        "description": "#### Client permission minimum required\nGet for given day daily affluence",
+        "operationId": "Daily",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Affluence"
+        ]
+      }
+    },
+    "/monitoring/affluence/daily/{enclosureId}": {
+      "get": {
+        "summary": "Daily by enclosure",
+        "description": "#### Client permission minimum required\nGet for given day and enclosure daily affluence",
+        "operationId": "Dailybyenclosure",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/enclosureId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Affluence"
+        ]
+      }
+    },
+    "/monitoring/affluence/weekly": {
+      "get": {
+        "summary": "Weekly",
+        "description": "#### Client permission minimum required\nGet current week total affluence",
+        "operationId": "Weekly",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Affluence"
+        ]
+      }
+    },
+    "/monitoring/affluence/weekly/{enclosureId}": {
+      "get": {
+        "summary": "Weekly by enclosure",
+        "description": "#### Client permission minimum required\nGet current week enclosure total affluence",
+        "operationId": "Weeklybyenclosure",
+        "parameters": [
+          {
+            "name": "enclosureId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "number"
+            },
+            "description": "Enclosure ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Affluence"
+        ]
+      }
+    },
+    "/monitoring/affluence/monthly/{month}": {
+      "get": {
+        "summary": "Monthly",
+        "description": "#### Client permission minimum required\nGet given month total affluence\n\nIf month parameter invalid or empty, it will return for current month",
+        "operationId": "Monthly",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/month"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Affluence"
+        ]
+      }
+    },
+    "/monitoring/affluence/monthly-enclosure/{enclosureId}/{month}": {
+      "get": {
+        "summary": "Monthly by enclosure",
+        "description": "#### Client permission minimum required\nGet given month enclosure's total affluence\n\nIf month parameter invalid or empty, it will return for current month",
+        "operationId": "Monthlybyenclosure",
+        "parameters": [
+          {
+            "name": "enclosureId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "number"
+            },
+            "description": "Enclosure ID"
+          },
+          {
+            "name": "month",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "number"
+            },
+            "description": "Month number (1-12)"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Affluence"
+        ]
+      }
+    },
+    "/monitoring/affluence/yearly/{year}": {
+      "get": {
+        "summary": "Yearly",
+        "description": "#### Client permission minimum required\nGet yearly affluence with details per month.\n\nIf year invalid or empty, return for current year",
+        "operationId": "Yearly",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/year"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Affluence"
+        ]
+      }
+    },
+    "/monitoring/affluence/yearly-enclosure/{enclosureId}/{year}": {
+      "get": {
+        "summary": "Yearly by enclosure",
+        "description": "#### Client permission minimum required\nGet yearly enclosure's affluence with details per month.\n\nIf year invalid or empty, return for current year",
+        "operationId": "Yearlybyenclosure",
+        "parameters": [
+          {
+            "name": "enclosureId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "number"
+            },
+            "description": "Enclosure ID"
+          },
+          {
+            "name": "year",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "number"
+            },
+            "description": "Year"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Affluence"
+        ]
+      }
+    },
+    "/monitoring/affluence/total": {
+      "get": {
+        "summary": "Total",
+        "description": "#### Client permission minimum required\nGet total affluence of the ZOO since it's creation",
+        "operationId": "Total",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Affluence"
+        ]
+      }
+    },
+    "/monitoring/affluence/total/{enclosureId}": {
+      "get": {
+        "summary": "Total by enclosure",
+        "description": "#### Client permission minimum required\nGet total enclosure's affluence of the ZOO since it's creation",
+        "operationId": "Totalbyenclosure",
+        "parameters": [
+          {
+            "name": "enclosureId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "number"
+            },
+            "description": "Enclosure ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Affluence"
+        ]
+      }
+    },
+    "/monitoring/affluence/live/{enclosureId}": {
+      "get": {
+        "summary": "Live enclosure affluence",
+        "description": "#### Client permission minimum required\nGet live enclosure affluence",
+        "operationId": "Liveenclosureaffluence",
+        "parameters": [
+          {
+            "name": "enclosureId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "number"
+            },
+            "description": "Enclosure ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Affluence"
+        ]
+      }
+    },
+    "/enclosure": {
+      "get": {
+        "summary": "Get All",
+        "description": "#### Client permission minimum required\n\nGet all enclosure  \nparams optional : \n- offset\n- limit",
+        "operationId": "GetAll0",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": true,
+            "style": "form",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": true,
+            "style": "form",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Enclosure"
+        ]
+      },
+      "post": {
+        "summary": "Add One",
+        "description": "#### Admin permission minimum required\nCreate a new enclosure.  \n- optional : images",
+        "operationId": "AddOne",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "requestBody": {
+          "description": "#### Admin permission minimum required\nCreate a new enclosure.  \n- optional : images",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string",
+                "example": {
+                  "name": "Le grand enclos a...",
+                  "capacity": "7",
+                  "description": "Le grand enclos a Ricardo Milos",
+                  "visitDuration": 999999999,
+                  "handicapAccess": true,
+                  "maintenance": false,
+                  "openHour": "01:00",
+                  "closeHour": "23:58",
+                  "enclosureTypeId": 1,
+                  "images": [
+                    {
+                      "title": "Une image chocante",
+                      "path": "https://media.tenor.com/images/78896a158781e5da8bd3a795d8431b09/tenor.gif"
+                    }
+                  ]
+                }
+              },
+              "example": "{\r\n    \"name\": \"Le grand enclos a...\",\r\n    \"capacity\": \"7\",\r\n    \"description\": \"Le grand enclos a Ricardo Milos\",\r\n    \"visitDuration\": 999999999,\r\n    \"handicapAccess\": true,\r\n    \"maintenance\": false,\r\n    \"openHour\": \"01:00\",\r\n    \"closeHour\": \"23:58\",\r\n    \"enclosureTypeId\": 1,\r\n    \"images\": [\r\n        {\r\n            \"title\": \"Une image chocante\",\r\n            \"path\": \"https://media.tenor.com/images/78896a158781e5da8bd3a795d8431b09/tenor.gif\"\r\n        }\r\n    ]\r\n}"
+            }
+          }
+        },
+        "tags": [
+          "Enclosure"
+        ]
+      }
+    },
+    "/enclosure/type/{enclosureTypeId}": {
+      "get": {
+        "summary": "Get All By Type",
+        "description": "#### Client permission minimum required\n\nGet all enclosure by type\nparams optional : \n- offset\n- limit",
+        "operationId": "GetAllByType",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": true,
+            "style": "form",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": true,
+            "style": "form",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/enclosureTypeId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Enclosure"
+        ]
+      },
+      "delete": {
+        "summary": "Delete",
+        "description": "#### Admin permission minimum required\nSoft delete a enclosure type (keeps enclosure associated)",
+        "operationId": "Delete4",
+        "parameters": [
+          {
+            "name": "enclosureTypeId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "number"
+            },
+            "description": "Enclosure Type ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Enclosure Type"
+        ]
+      }
+    },
+    "/enclosure/{enclosureId}/animals": {
+      "get": {
+        "summary": "Get All Animals In Enclosure",
+        "description": "#### Client permission minimum required\nRetrieve all animals in specified enclosure",
+        "operationId": "GetAllAnimalsInEnclosure",
+        "parameters": [
+          {
+            "name": "enclosureId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "number"
+            },
+            "description": "Enclosure ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Enclosure"
+        ]
+      }
+    },
+    "/enclosure/{enclosureId}": {
+      "get": {
+        "summary": "Get One",
+        "description": "#### Client permission minimum required\nGet one enclosure by ID",
+        "operationId": "GetOne3",
+        "parameters": [
+          {
+            "name": "enclosureId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "number"
+            },
+            "description": "Enclosure ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Enclosure"
+        ]
+      },
+      "put": {
+        "summary": "Edit One",
+        "description": "#### Employee permission minimum required\nUpdate one enclosure by Id. \n \nBody params are optional, only give what needs to be updated",
+        "operationId": "EditOne",
+        "parameters": [
+          {
+            "name": "enclosureId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "number"
+            },
+            "description": "Enclosure ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "requestBody": {
+          "description": "#### Employee permission minimum required\nUpdate one enclosure by Id. \n \nBody params are optional, only give what needs to be updated",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string",
+                "example": {
+                  "name": "Le grand enclos a...",
+                  "capacity": "7",
+                  "description": "Le grand enclos a Ricardo Milos. Attention à la sensibilité des plus jeunes",
+                  "visitDuration": 999999999,
+                  "handicapAccess": true,
+                  "maintenance": false,
+                  "openHour": "01:00",
+                  "closeHour": "23:58",
+                  "enclosureTypeId": 1
+                }
+              },
+              "example": " {\r\n    \"name\": \"Le grand enclos a...\",\r\n    \"capacity\": \"7\",\r\n    \"description\": \"Le grand enclos a Ricardo Milos. Attention à la sensibilité des plus jeunes\",\r\n    \"visitDuration\": 999999999,\r\n    \"handicapAccess\": true,\r\n    \"maintenance\": false,\r\n    \"openHour\": \"01:00\",\r\n    \"closeHour\": \"23:58\",\r\n    \"enclosureTypeId\": 1\r\n}\r\n \r\n"
+            }
+          }
+        },
+        "tags": [
+          "Enclosure"
+        ]
+      },
+      "delete": {
+        "summary": "Delete One",
+        "description": "#### Admin permission minimum required\nDelete one enclosure by Id.",
+        "operationId": "DeleteOne",
+        "parameters": [
+          {
+            "name": "enclosureId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "number"
+            },
+            "description": "Enclosure ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Enclosure"
+        ]
+      }
+    },
+    "/enclosure/image/": {
+      "get": {
+        "summary": "Get All",
+        "description": "#### Client permission minimum required\nGet all images\nparams optional : \n- offset\n- limit",
+        "operationId": "GetAll0",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": true,
+            "style": "form",
+            "schema": {
+              "type": "number"
+            },
+            "description": "Optionnel"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": true,
+            "style": "form",
+            "schema": {
+              "type": "number"
+            },
+            "description": "Optionnel"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Enclosure Images"
+        ]
+      },
+      "post": {
+        "summary": "Add",
+        "description": "#### Employee permission minimum required\nAdd new image url with a name to specified anclosure",
+        "operationId": "Add",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "requestBody": {
+          "description": "#### Employee permission minimum required\nAdd new image url with a name to specified anclosure",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string",
+                "example": {
+                  "title": "On ne s'y attend pas",
+                  "path": "https://i.redd.it/2pa8ffkyl3t41.jpg",
+                  "enclosureId": 1
+                }
+              },
+              "example": "{\r\n    \"title\": \"On ne s'y attend pas\",\r\n    \"path\": \"https://i.redd.it/2pa8ffkyl3t41.jpg\",\r\n    \"enclosureId\": 1\r\n}"
+            }
+          }
+        },
+        "tags": [
+          "Enclosure Images"
+        ]
+      }
+    },
+    "/enclosure/image/{imageId}": {
+      "get": {
+        "summary": "Get One",
+        "description": "#### Client permission minimum required\nGet one image by ID",
+        "operationId": "GetOne1",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/imageId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Enclosure Images"
+        ]
+      },
+      "put": {
+        "summary": "Edit One",
+        "description": "#### Employee permission minimum required\nedit one image by Id.  \nParams are optional",
+        "operationId": "EditOne4",
+        "parameters": [
+          {
+            "name": "imageId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "number"
+            },
+            "description": "Image ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "requestBody": {
+          "description": "#### Employee permission minimum required\nedit one image by Id.  \nParams are optional",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string",
+                "example": {
+                  "title": "Et celui la encore moins",
+                  "path": "https://i.pinimg.com/originals/88/82/bc/8882bcf327896ab79fb97e85ae63a002.gif",
+                  "enclosureId": 1
+                }
+              },
+              "example": "{\r\n    \"title\": \"Et celui la encore moins\",\r\n    \"path\": \"https://i.pinimg.com/originals/88/82/bc/8882bcf327896ab79fb97e85ae63a002.gif\",\r\n    \"enclosureId\": 1\r\n}"
+            }
+          }
+        },
+        "tags": [
+          "Enclosure Images"
+        ]
+      },
+      "delete": {
+        "summary": "Delete One",
+        "description": "#### Admin permission minimum required\nDelete one image by Id.",
+        "operationId": "DeleteOne5",
+        "parameters": [
+          {
+            "name": "imageId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "number"
+            },
+            "description": "Image ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Enclosure Images"
+        ]
+      }
+    },
+    "/enclosure/image/enclosure/{enclosureId}": {
+      "get": {
+        "summary": "Gell All From Enclosure",
+        "description": "#### Client permission minimum required\nGet all image from a enclosure.",
+        "operationId": "GellAllFromEnclosure",
+        "parameters": [
+          {
+            "name": "enclosureId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "number"
+            },
+            "description": "Enclosure ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Enclosure Images"
+        ]
+      }
+    },
+    "/enclosure/service-book": {
+      "get": {
+        "summary": "Get All",
+        "description": "#### Employee permission minimum required\n\nGet all service book instance.  \nOptional params:\n- offset\n- limit",
+        "operationId": "GetAll0",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": true,
+            "style": "form",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": true,
+            "style": "form",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Enclosure Service-book"
+        ]
+      },
+      "post": {
+        "summary": "Create service-book",
+        "description": "#### Employee permission minimum required\nCreate a service-book's entry.",
+        "operationId": "Createservice-book",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "requestBody": {
+          "description": "#### Employee permission minimum required\nCreate a service-book's entry.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string",
+                "example": {
+                  "date": "2012-12-21",
+                  "description": "La fin du monde est arrivé sur l'enclos numero 1. Il n'y a aucun dégat",
+                  "enclosureId": 1,
+                  "userId": 1
+                }
+              },
+              "example": "{\r\n    \"date\": \"2012-12-21\",\r\n    \"description\": \"La fin du monde est arrivé sur l'enclos numero 1. Il n'y a aucun dégat\",\r\n    \"enclosureId\": 1,\r\n    \"userId\": 1\r\n}"
+            }
+          }
+        },
+        "tags": [
+          "Enclosure Service-book"
+        ]
+      }
+    },
+    "/enclosure/service-book/{serviceBookId}": {
+      "get": {
+        "summary": "Get One",
+        "description": "#### Employee permission minimum required\nGet a specific service-book",
+        "operationId": "GetOne1",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/serviceBookId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Enclosure Service-book"
+        ]
+      },
+      "put": {
+        "summary": "Edit service-book",
+        "description": "#### Employee permission minimum required\nEdit a existing service-book entry",
+        "operationId": "Editservice-book",
+        "parameters": [
+          {
+            "name": "serviceBookId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "number"
+            },
+            "description": "Service Book ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "requestBody": {
+          "description": "#### Employee permission minimum required\nEdit a existing service-book entry",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string",
+                "example": {
+                  "date": "2021-12-21",
+                  "description": "Finalement il n'y a pas eu la fin du monde",
+                  "enclosureId": 1,
+                  "userId": 1
+                }
+              },
+              "example": "{\r\n    \"date\": \"2021-12-21\",\r\n    \"description\": \"Finalement il n'y a pas eu la fin du monde\",\r\n    \"enclosureId\": 1,\r\n    \"userId\": 1\r\n}"
+            }
+          }
+        },
+        "tags": [
+          "Enclosure Service-book"
+        ]
+      },
+      "delete": {
+        "summary": "Delete service-book",
+        "description": "#### Admin permission minimum required\nDelete a service-book entry",
+        "operationId": "Deleteservice-book",
+        "parameters": [
+          {
+            "name": "serviceBookId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "number"
+            },
+            "description": "Service Book ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Enclosure Service-book"
+        ]
+      }
+    },
+    "/enclosure/service-book/enclosure/{enclosureId}": {
+      "get": {
+        "summary": "Get All From Enclosure",
+        "description": "#### Employee permission minimum required\nGet all service-book from a enclosure",
+        "operationId": "GetAllFromEnclosure",
+        "parameters": [
+          {
+            "name": "enclosureId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "number"
+            },
+            "description": "Enclosure ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Enclosure Service-book"
+        ]
+      }
+    },
+    "/enclosure/service-book/enclosure/{employeeId}": {
+      "get": {
+        "summary": "Gell All From Employee",
+        "description": "#### Employee permission minimum required\nGet All service-book from a employee",
+        "operationId": "GellAllFromEmployee",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/employeeId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Enclosure Service-book"
+        ]
+      }
+    },
+    "/enclosure/type": {
+      "get": {
+        "summary": "Get All",
+        "description": "#### Client permission minimum required\nGet all enclosure type",
+        "operationId": "GetAll0",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": true,
+            "style": "form",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": true,
+            "style": "form",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Enclosure Type"
+        ]
+      },
+      "post": {
+        "summary": "Create",
+        "description": "#### Admin permission minimum required\nCreate a enclosure type",
+        "operationId": "Create2",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "requestBody": {
+          "description": "#### Admin permission minimum required\nCreate a enclosure type",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string",
+                "example": {
+                  "Name": "Un enclos pour les gouverner tous"
+                }
+              },
+              "example": "{\r\n    \"Name\": \"Un enclos pour les gouverner tous\"\r\n}"
+            }
+          }
+        },
+        "tags": [
+          "Enclosure Type"
+        ]
+      }
+    },
+    "/enclosure/type/id/{enclosureTypeId}": {
+      "get": {
+        "summary": "Get One",
+        "description": "#### Client permission minimum required\nGet one enclosure type",
+        "operationId": "GetOne1",
+        "parameters": [
+          {
+            "name": "enclosureTypeId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Enclosure Type"
+        ]
+      }
+    },
+    "/type/{enclosureTypeId}": {
+      "put": {
+        "summary": "Update",
+        "description": "#### Admin permission minimum required\nEdit a enclosure type",
+        "operationId": "Update3",
+        "parameters": [
+          {
+            "name": "enclosureTypeId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "number"
+            },
+            "description": "Enclosure Type ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "requestBody": {
+          "description": "#### Admin permission minimum required\nEdit a enclosure type",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string",
+                "example": {
+                  "Name": "Un enclos pour les laisser tous tranquille"
+                }
+              },
+              "example": "{\r\n    \"Name\": \"Un enclos pour les laisser tous tranquille\"\r\n}"
+            }
+          }
+        },
+        "tags": [
+          "Enclosure Type"
+        ]
+      }
+    },
+    "/pass/entry/": {
+      "get": {
+        "summary": "Get all",
+        "description": "#### Employee permission minimum required\nGet all entries with optional\n- limit\n- offset",
+        "operationId": "Getall0",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": true,
+            "style": "form",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": true,
+            "style": "form",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Entry"
+        ]
+      },
+      "post": {
+        "summary": "Add entry",
+        "description": "#### Employee permission minimum required\nAdd new entry between existing Pass and Enclosure",
+        "operationId": "Addentry",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "requestBody": {
+          "description": "#### Employee permission minimum required\nAdd new entry between existing Pass and Enclosure",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string",
+                "example": {
+                  "passId": 1,
+                  "enclosureId": 1
+                }
+              },
+              "example": "{\r\n    \"passId\":1,\r\n    \"enclosureId\":1\r\n}"
+            }
+          }
+        },
+        "tags": [
+          "Entry"
+        ]
+      }
+    },
+    "/pass/entry/user/{userId}": {
+      "get": {
+        "summary": "Get by user",
+        "description": "#### Employee permission minimum required\nGet all user entries with optional \n- limit\n- offset",
+        "operationId": "Getbyuser",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": true,
+            "style": "form",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": true,
+            "style": "form",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/userId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Entry"
+        ]
+      }
+    },
+    "/pass/entry/pass/{passId}": {
+      "get": {
+        "summary": "Get by pass",
+        "description": "#### Employee permission minimum required\nGet all entries on a Pass with optional \n- limit\n- offset",
+        "operationId": "Getbypass",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": true,
+            "style": "form",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": true,
+            "style": "form",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/passId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Entry"
+        ]
+      }
+    },
+    "/pass/entry/enclosure/{enclosureId}": {
+      "get": {
+        "summary": "Get by enclosure",
+        "description": "#### Employee permission minimum required\nGet all enclosure's entries with optional \n- limit\n- offset",
+        "operationId": "Getbyenclosure",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": true,
+            "style": "form",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": true,
+            "style": "form",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "enclosureId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Entry"
+        ]
+      }
+    },
+    "/pass/entry/{entryId}": {
+      "delete": {
+        "summary": "Remove entry",
+        "description": "#### Admin permission minimum required\nRemove entry between existing Pass and Enclosure",
+        "operationId": "Removeentry",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/entryId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Entry"
+        ]
+      }
+    },
+    "/enclosure/maintenance/month/{enclosureId}": {
+      "get": {
+        "summary": "Get Best Month",
+        "description": "#### Admin permission minimum required\nGet the best month to maintain a enclosure (based on affluence)",
+        "operationId": "GetBestMonth",
+        "parameters": [
+          {
+            "name": "enclosureId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "number"
+            },
+            "description": "Enclosure ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Maintenance"
+        ]
+      }
+    },
+    "/enclosure/maintenance/{state}": {},
+    "/pass": {
+      "get": {
+        "summary": "Get all",
+        "description": "#### Employee permission minimum required\nGet all pass with optional \n- limit\n- offset",
+        "operationId": "Getall0",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": true,
+            "style": "form",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": true,
+            "style": "form",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Pass"
+        ]
+      }
+    },
+    "/pass/user/{userId}": {
+      "get": {
+        "summary": "Get all by user id",
+        "description": "#### Client permission minimum required\nGet all user pass",
+        "operationId": "Getallbyuserid",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "number"
+            },
+            "description": "User ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Pass"
+        ]
+      }
+    },
+    "/pass/{passId}": {
+      "get": {
+        "summary": "Get by id",
+        "description": "#### Client permission minimum required\nGet a specific pass by given ID with \n- all it's enclosure access\n- all it's enclosure entries",
+        "operationId": "Getbyid2",
+        "parameters": [
+          {
+            "name": "passId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "number"
+            },
+            "description": "Pass ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Pass"
+        ]
+      },
+      "put": {
+        "summary": "Update pass",
+        "description": "#### Employee permission minimum required\nUpdate a pass\n\nOnly Type is updatable by this endpoint.",
+        "operationId": "Updatepass",
+        "parameters": [
+          {
+            "name": "passId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "number"
+            },
+            "description": "Pass ID\n"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "requestBody": {
+          "description": "#### Employee permission minimum required\nUpdate a pass\n\nOnly Type is updatable by this endpoint.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string",
+                "example": {
+                  "passTypeId": 4
+                }
+              },
+              "example": "{\r\n    \"passTypeId\":4\r\n}"
+            }
+          }
+        },
+        "tags": [
+          "Pass"
+        ]
+      },
+      "delete": {
+        "summary": "Delete pass",
+        "description": "#### Employee permission minimum required\nDelete a pass",
+        "operationId": "Deletepass",
+        "parameters": [
+          {
+            "name": "passId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "number"
+            },
+            "description": "Pass ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Pass"
+        ]
+      }
+    },
+    "/pass/": {
+      "post": {
+        "summary": "Create",
+        "description": "#### Employee permission minimum required\nCreate a new pass with enclosure access list",
+        "operationId": "Create3",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "requestBody": {
+          "description": "#### Employee permission minimum required\nCreate a new pass with enclosure access list",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string",
+                "example": {
+                  "validDate": "2021-12-31",
+                  "userId": 0,
+                  "passTypeId": 0,
+                  "enclosureAccessList": [
+                    0
+                  ]
+                }
+              },
+              "example": "{\r\n    \"validDate\":\"2021-12-31\",\r\n    \"userId\":0,\r\n    \"passTypeId\":0,\r\n    \"enclosureAccessList\":[\r\n        0\r\n    ]\r\n}"
+            }
+          }
+        },
+        "tags": [
+          "Pass"
+        ]
+      }
+    },
+    "/pass/enclosure-access": {
+      "post": {
+        "summary": "Add enclosure access",
+        "description": "#### Employee permission minimum required\nAdd to an existing pass enclosure access",
+        "operationId": "Addenclosureaccess",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "requestBody": {
+          "description": "#### Employee permission minimum required\nAdd to an existing pass enclosure access",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string",
+                "example": {
+                  "enclosureId": 0,
+                  "passId": 0
+                }
+              },
+              "example": "{\r\n    \"enclosureId\":0,\r\n    \"passId\":0\r\n}"
+            }
+          }
+        },
+        "tags": [
+          "Pass"
+        ]
+      }
+    },
+    "/pass/enclosure-access/{passId}/{enclosureId}": {
+      "delete": {
+        "summary": "Remove enclosure access",
+        "description": "#### Employee permission minimum required\nRemove to an existing pass an enclosure access",
+        "operationId": "Removeenclosureaccess",
+        "parameters": [
+          {
+            "name": "passId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "number"
+            },
+            "description": "Pass ID"
+          },
+          {
+            "name": "enclosureId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "number"
+            },
+            "description": "Enclosure ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Pass"
+        ]
+      }
+    },
+    "/pass/night/": {
+      "get": {
+        "summary": "Get all",
+        "description": "#### Client permission minimum required\nGet all pass night with optional \n- limit\n- offset",
+        "operationId": "Getall0",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": true,
+            "style": "form",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": true,
+            "style": "form",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Pass Night"
+        ]
+      },
+      "post": {
+        "summary": "Add availability",
+        "description": "#### Admin permission minimum required\nAdd new pass night availability",
+        "operationId": "Addavailability",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "requestBody": {
+          "description": "#### Admin permission minimum required\nAdd new pass night availability",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string",
+                "example": {
+                  "date": "2021-12-31"
+                }
+              },
+              "example": "{\r\n \"date\":\"2021-12-31\"\r\n}"
+            }
+          }
+        },
+        "tags": [
+          "Pass Night"
+        ]
+      }
+    },
+    "/pass/night/available": {
+      "get": {
+        "summary": "Get all valid",
+        "description": "#### Client permission minimum required\nGet all available pass night with optional\n- limit\n- offset",
+        "operationId": "Getallvalid",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": true,
+            "style": "form",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": true,
+            "style": "form",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Pass Night"
+        ]
+      }
+    },
+    "/pass/night/{passNightAvailabilityId}": {
+      "put": {
+        "summary": "Update  passnight",
+        "description": "#### Admin permission minimum required\nUpdate a availability date for pass night",
+        "operationId": "Updatepassnight",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/passNightAvailabilityId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "requestBody": {
+          "description": "#### Admin permission minimum required\nUpdate a availability date for pass night",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string",
+                "example": {
+                  "date": "2021-04-18"
+                }
+              },
+              "example": "{\r\n    \"date\":\"2021-04-18\"\r\n}"
+            }
+          }
+        },
+        "tags": [
+          "Pass Night"
+        ]
+      },
+      "delete": {
+        "summary": "Delete passnight",
+        "description": "#### Admin permission minimum required\nRemove a Pass Night availability",
+        "operationId": "Deletepassnight",
+        "parameters": [
+          {
+            "name": "passNightAvailabilityId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "number"
+            },
+            "description": "Pass Night Availability ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Pass Night"
+        ]
+      }
+    },
+    "/pass/type/": {
+      "get": {
+        "summary": "Get all",
+        "description": "#### Client permission minimum required\nGet all passType",
+        "operationId": "Getall0",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Pass Type"
+        ]
+      },
+      "put": {
+        "summary": "Update",
+        "description": "#### Admin permission minimum required\nUpdate an existing Pass Type with given body values",
+        "operationId": "Update4",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "requestBody": {
+          "description": "#### Admin permission minimum required\nUpdate an existing Pass Type with given body values",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string",
+                "example": {
+                  "id": 0,
+                  "name": "new name",
+                  "price": 0
+                }
+              },
+              "example": "{\r\n    \"id\": 0,\r\n    \"name\":\"new name\",\r\n    \"price\":0\r\n    }"
+            }
+          }
+        },
+        "tags": [
+          "Pass Type"
+        ]
+      }
+    },
+    "/pass/type/{passTypeId}": {
+      "get": {
+        "summary": "Get by id",
+        "description": "#### Client permission minimum required\nGet one pass type by id",
+        "operationId": "Getbyid1",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/passTypeId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Pass Type"
+        ]
+      },
+      "delete": {
+        "summary": "Delete",
+        "description": "#### Admin permission minimum required\nDelete an existing Pass Type",
+        "operationId": "Delete5",
+        "parameters": [
+          {
+            "name": "passTypeId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "number"
+            },
+            "description": "Pass Type Id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Pass Type"
+        ]
+      }
+    },
+    "/type/": {
+      "post": {
+        "summary": "Create",
+        "description": "#### Admin permission minimum required\nAdd a new pass type",
+        "operationId": "Create2",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "requestBody": {
+          "description": "#### Admin permission minimum required\nAdd a new pass type",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string",
+                "example": {
+                  "name": "string",
+                  "price": 0
+                }
+              },
+              "example": "{\r\n    \"name\":\"string\",\r\n    \"price\":0\r\n}"
+            }
+          }
+        },
+        "tags": [
+          "Pass Type"
+        ]
+      }
+    },
+    "/pass/type/add-pass": {
+      "post": {
+        "summary": "Add pass to pass type",
+        "description": "#### Employee permission minimum required\nAssign a Pass to an existing Pass Type",
+        "operationId": "Addpasstopasstype",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "requestBody": {
+          "description": "#### Employee permission minimum required\nAssign a Pass to an existing Pass Type",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string",
+                "example": {
+                  "passId": 0,
+                  "passTypeId": 0
+                }
+              },
+              "example": "{\r\n    \"passId\": 0,\r\n    \"passTypeId\": 0\r\n}"
+            }
+          }
+        },
+        "tags": [
+          "Pass Type"
+        ]
+      }
+    },
+    "/planning": {
+      "get": {
+        "summary": "Get All",
+        "description": "#### Employee permission minimum required\nGet all planning\nparams optional :\n- offset\n- limit",
+        "operationId": "GetAll0",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": true,
+            "style": "form",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": true,
+            "style": "form",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Planning"
+        ]
+      },
+      "post": {
+        "summary": "Add",
+        "description": "#### Employee permission minimum required\nCreate a new planning entry.",
+        "operationId": "Add2",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "requestBody": {
+          "description": "#### Employee permission minimum required\nCreate a new planning entry.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string",
+                "example": {
+                  "day_of_week": "Sunday",
+                  "start_time": "2021-05-01T08:00:00",
+                  "end_time": "2021-05-01T19:00:00",
+                  "userId": 1
+                }
+              },
+              "example": "{\r\n    \"day_of_week\": \"Sunday\",\r\n    \"start_time\": \"2021-05-01T08:00:00\",\r\n    \"end_time\": \"2021-05-01T19:00:00\",\r\n    \"userId\": 1\r\n}"
+            }
+          }
+        },
+        "tags": [
+          "Planning"
+        ]
+      }
+    },
+    "/planning/{planningId}": {
+      "get": {
+        "summary": "Get One",
+        "description": "#### Employee permission minimum required\nGet one planning entry by ID",
+        "operationId": "GetOne1",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/planningId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Planning"
+        ]
+      }
+    },
+    "/{planningId}": {
+      "put": {
+        "summary": "Update",
+        "description": "#### Employee permission minimum required\nEdit one planning by Id.",
+        "operationId": "Update3",
+        "parameters": [
+          {
+            "name": "planningId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "requestBody": {
+          "description": "#### Employee permission minimum required\nEdit one planning by Id.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string",
+                "example": {
+                  "day_of_week": "Saturday",
+                  "start_time": "2021-05-01T08:00:00",
+                  "end_time": "2021-05-01T19:00:00",
+                  "userId": 1
+                }
+              },
+              "example": "{\r\n    \"day_of_week\": \"Saturday\",\r\n    \"start_time\": \"2021-05-01T08:00:00\",\r\n    \"end_time\": \"2021-05-01T19:00:00\",\r\n    \"userId\": 1\r\n}\r\n"
+            }
+          }
+        },
+        "tags": [
+          "Planning"
+        ]
+      },
+      "delete": {
+        "summary": "Delete",
+        "description": "#### Admin permission minimum required\nDelete one planning by Id.",
+        "operationId": "Delete4",
+        "parameters": [
+          {
+            "name": "planningId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Planning"
+        ]
+      }
+    },
+    "/planning/openDate": {
+      "get": {
+        "summary": "Get Calendar",
+        "description": "#### Employee permission minimum required\nGet Zoo's open date from a period",
+        "operationId": "GetCalendar",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Planning"
+        ]
+      }
+    },
+    "/openDate": {
+      "get": {
+        "summary": "Get Open Date",
+        "description": "#### Employee permission minimum required\nGet Zoo's planning from a period group by days",
+        "operationId": "GetOpenDate",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Planning"
+        ]
+      }
+    },
+    "/animal/specie": {
+      "get": {
+        "summary": "Get All",
+        "description": "#### Client permission minimum required\n\nGet all species with optional\n- limit\n- offset",
+        "operationId": "GetAll0",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": true,
+            "style": "form",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": true,
+            "style": "form",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Specie"
+        ]
+      },
+      "post": {
+        "summary": "Create",
+        "description": "#### Employee permission minimum required\n\nCreate new specie with given parameters",
+        "operationId": "Create2",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "requestBody": {
+          "description": "#### Employee permission minimum required\n\nCreate new specie with given parameters",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string",
+                "example": {
+                  "origin": "numerique",
+                  "name": "Hoglip",
+                  "description": "le tem de max evo"
+                }
+              },
+              "example": "{\n    \"origin\": \"numerique\",\n    \"name\": \"Hoglip\",\n    \"description\": \"le tem de max evo\"\n}"
+            }
+          }
+        },
+        "tags": [
+          "Specie"
+        ]
+      }
+    },
+    "/animal/specie/{specieId}": {
+      "get": {
+        "summary": "Get By Id",
+        "description": "#### Client permission minimum required\n\nGet one specie by ID",
+        "operationId": "GetById",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/specieId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Specie"
+        ]
+      },
+      "put": {
+        "summary": "Update",
+        "description": "#### Employee permission minimum required\n\nUpdate specie with given parameters in body",
+        "operationId": "Update3",
+        "parameters": [
+          {
+            "name": "specieId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "number"
+            },
+            "description": "Specie ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "requestBody": {
+          "description": "#### Employee permission minimum required\n\nUpdate specie with given parameters in body",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string",
+                "example": {
+                  "origin": "numerique",
+                  "name": "oree",
+                  "description": "Le tem de max no evo"
+                }
+              },
+              "example": "{\n    \"origin\": \"numerique\",\n    \"name\": \"oree\",\n    \"description\": \"Le tem de max no evo\"\n}"
+            }
+          }
+        },
+        "tags": [
+          "Specie"
+        ]
+      },
+      "delete": {
+        "summary": "Delete",
+        "description": "#### Admin permission minimum required\nSoft remove specie (don't delete concerned animals)",
+        "operationId": "Delete4",
+        "parameters": [
+          {
+            "name": "specieId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "number"
+            },
+            "description": "Specie ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Specie"
+        ]
+      }
+    },
+    "/monitoring/statistic/count/user": {
+      "get": {
+        "summary": "Count user",
+        "description": "#### Client permission minimum required\nCount total of active users",
+        "operationId": "Countuser",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Statistics"
+        ]
+      }
+    },
+    "/monitoring/statistic/count/enclosure": {
+      "get": {
+        "summary": "Count enclosure",
+        "description": "#### Client permission minimum required\nCount total of enclosures",
+        "operationId": "Countenclosure",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Statistics"
+        ]
+      }
+    },
+    "/monitoring/statistic/count/animal/": {
+      "get": {
+        "summary": "Count animal",
+        "description": "#### Client permission minimum required\nCount total of animals",
+        "operationId": "Countanimal",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Statistics"
+        ]
+      }
+    },
+    "/monitoring/statistic/count/animal/{enclosureId}": {
+      "get": {
+        "summary": "Count animal by enclosure",
+        "description": "#### Client permission minimum required\nCount total of enclosure's animals",
+        "operationId": "Countanimalbyenclosure",
+        "parameters": [
+          {
+            "name": "enclosureId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "number"
+            },
+            "description": "Enclosure ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Statistics"
+        ]
+      }
+    },
+    "/monitoring/statistic/count/pass/valid/": {
+      "get": {
+        "summary": "Count valid pass",
+        "description": "#### Client permission minimum required\nCount total of valid pass",
+        "operationId": "Countvalidpass",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Statistics"
+        ]
+      }
+    },
+    "/monitoring/statistic/count/pass/valid/types": {
+      "get": {
+        "summary": "Count valid pass by types",
+        "description": "#### Client permission minimum required\nCount total of valid pass by types",
+        "operationId": "Countvalidpassbytypes",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Statistics"
+        ]
+      }
+    },
+    "/monitoring/statistic/count/pass/expired": {
+      "get": {
+        "summary": "Count expired pass",
+        "description": "#### Client permission minimum required\nCount total of expired pass",
+        "operationId": "Countexpiredpass",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Statistics"
+        ]
+      }
+    },
+    "/monitoring/statistic/count/pass/": {
+      "get": {
+        "summary": "Count all pass",
+        "description": "#### Client permission minimum required\nCount total of both valid or expired pass",
+        "operationId": "Countallpass",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Statistics"
+        ]
+      }
+    },
+    "/monitoring/statistic/count/pass/types": {
+      "get": {
+        "summary": "Count all pass by types",
+        "description": "#### Client permission minimum required\nCount total of both valid or expired pass by types",
+        "operationId": "Countallpassbytypes",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "Statistics"
+        ]
+      }
+    },
+    "/user/role": {
+      "get": {
+        "summary": "Get All",
+        "description": "#### Employee permission minimum required\nGet all user roles",
+        "operationId": "GetAll0",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "User Role"
+        ]
+      },
+      "post": {
+        "summary": "Create",
+        "description": "#### Admin permission minimum required\nCreate new user role",
+        "operationId": "Create2",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "requestBody": {
+          "description": "#### Admin permission minimum required\nCreate new user role",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string",
+                "example": {
+                  "name": "SINGE"
+                }
+              },
+              "example": "{\n    \"name\": \"SINGE\"\n}"
+            }
+          }
+        },
+        "tags": [
+          "User Role"
+        ]
+      }
+    },
+    "/user/role/{userRoleId}": {
+      "get": {
+        "summary": "Get by Id",
+        "description": "#### Employee permission minimum required\nGet one user role by id",
+        "operationId": "GetbyId",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userRoleId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "User Role"
+        ]
+      },
+      "put": {
+        "summary": "Update",
+        "description": "#### Admin permission minimum required\nUpdate existing user role",
+        "operationId": "Update3",
+        "parameters": [
+          {
+            "name": "userRoleId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "number"
+            },
+            "description": "User Role ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "requestBody": {
+          "description": "#### Admin permission minimum required\nUpdate existing user role",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string",
+                "example": {
+                  "name": "Grand signe"
+                }
+              },
+              "example": "{\n    \"name\": \"Grand signe\"\n}"
+            }
+          }
+        },
+        "tags": [
+          "User Role"
+        ]
+      },
+      "delete": {
+        "summary": "Delete",
+        "description": "#### Admin permission minimum required\nRemove user role (keeps users with this role)",
+        "operationId": "Delete4",
+        "parameters": [
+          {
+            "name": "userRoleId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "number"
+            },
+            "description": "User Role ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "User Role"
+        ]
+      }
+    },
+    "/user/role/{roleId}/affect-user/{userId}": {
+      "patch": {
+        "summary": "Affect User",
+        "operationId": "AffectUser",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/roleId"
+          },
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "User Role"
+        ]
+      }
+    },
+    "/user": {
+      "get": {
+        "summary": "Get All",
+        "description": "#### Employee permission minimum required\nGet all users with optional \n- limit\n- offset",
+        "operationId": "GetAll0",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": true,
+            "style": "form",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": true,
+            "style": "form",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "User"
+        ]
+      },
+      "post": {
+        "summary": "Create",
+        "description": "#### Admin permission minimum required\nCreate new user with required parameters in body",
+        "operationId": "Create3",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "requestBody": {
+          "description": "#### Admin permission minimum required\nCreate new user with required parameters in body",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string",
+                "example": {
+                  "email": "testSinge@jungle.lol",
+                  "firstName": "Singe",
+                  "lastName": "Poilu",
+                  "userRoleId": 2,
+                  "password": "ggirigizol"
+                }
+              },
+              "example": "{\n    \"email\": \"testSinge@jungle.lol\",\n    \"firstName\": \"Singe\",\n    \"lastName\": \"Poilu\",\n    \"userRoleId\": 2,\n    \"password\": \"ggirigizol\"\n}"
+            }
+          }
+        },
+        "tags": [
+          "User"
+        ]
+      }
+    },
+    "/user/{userId}": {
+      "get": {
+        "summary": "Get By Id",
+        "description": "#### Employee permission minimum required\nGet one user by id",
+        "operationId": "GetById1",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "User"
+        ]
+      },
+      "put": {
+        "summary": "Update by admin",
+        "description": "#### Admin permission minimum required\n\nCan update any user",
+        "operationId": "Updatebyadmin",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "number"
+            },
+            "description": "User ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "requestBody": {
+          "description": "#### Admin permission minimum required\n\nCan update any user",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string",
+                "example": {
+                  "firstName": "Capsule",
+                  "lastName": "Herrera",
+                  "email": "capsule3@gmail.com",
+                  "birthdate": "2021-01-01 12:21:51",
+                  "password": "briatvmhr",
+                  "userRoleId": 3
+                }
+              },
+              "example": "{\n    \"firstName\": \"Capsule\",\n    \"lastName\": \"Herrera\",\n    \"email\": \"capsule3@gmail.com\",\n    \"birthdate\": \"2021-01-01 12:21:51\",\n    \"password\": \"briatvmhr\",\n    \"userRoleId\": 3\n}"
+            }
+          }
+        },
+        "tags": [
+          "User"
+        ]
+      },
+      "delete": {
+        "summary": "Delete",
+        "description": "#### Admin permission minimum required\nSoft remove user",
+        "operationId": "Delete8",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "number"
+            },
+            "description": "User ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "User"
+        ]
+      }
+    },
+    "/user/me": {
+      "get": {
+        "summary": "ME",
+        "description": "#### Client permission minimum required\nRetrieve current connected user with beaver token given in header",
+        "operationId": "ME",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "User"
+        ]
+      }
+    },
+    "/user/login": {
+      "post": {
+        "summary": "Login",
+        "description": "Login with email and password, return bearer token if successful",
+        "operationId": "Login",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "requestBody": {
+          "description": "Login with email and password, return bearer token if successful",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string",
+                "example": {
+                  "email": "EMPLOYEE@EMPLOYEE.com",
+                  "password": "azerty"
+                }
+              },
+              "example": "{\n    \"email\": \"EMPLOYEE@EMPLOYEE.com\",\n    \"password\": \"azerty\"\n}"
+            }
+          }
+        },
+        "tags": [
+          "User"
+        ]
+      }
+    },
+    "/user/register": {
+      "post": {
+        "summary": "Register",
+        "description": "Register to create account with simple user role",
+        "operationId": "Register",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "requestBody": {
+          "description": "Register to create account with simple user role",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string",
+                "example": {
+                  "email": "capsule3@gmail.com",
+                  "password": "azerty",
+                  "firstName": "capsule",
+                  "lastName": "herrera"
+                }
+              },
+              "example": "{\n    \"email\": \"capsule3@gmail.com\",\n    \"password\": \"azerty\",\n    \"firstName\": \"capsule\",\n    \"lastName\": \"herrera\"\n}"
+            }
+          }
+        },
+        "tags": [
+          "User"
+        ]
+      }
+    },
+    "/user/update-client/{userId}": {
+      "put": {
+        "summary": "Update client only by employee",
+        "description": "#### Employee permission minimum required\n\nCan only update client",
+        "operationId": "Updateclientonlybyemployee",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "number"
+            },
+            "description": "User ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "requestBody": {
+          "description": "#### Employee permission minimum required\n\nCan only update client",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string",
+                "example": {
+                  "firstName": "Capsule",
+                  "lastName": "Herrera",
+                  "email": "capsule3@gmail.com",
+                  "birthdate": "2021-01-01 12:21:51",
+                  "password": "shadolebest",
+                  "userRoleId": 3
+                }
+              },
+              "example": "{\n    \"firstName\": \"Capsule\",\n    \"lastName\": \"Herrera\",\n    \"email\": \"capsule3@gmail.com\",\n    \"birthdate\": \"2021-01-01 12:21:51\",\n    \"password\": \"shadolebest\",\n    \"userRoleId\": 3\n}"
+            }
+          }
+        },
+        "tags": [
+          "User"
+        ]
+      }
+    },
+    "/user/force-delete/{userId}": {
+      "delete": {
+        "summary": "Force Delete",
+        "description": "#### Admin permission minimum required\nRemove user from db (hard delete)",
+        "operationId": "ForceDelete",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "number"
+            },
+            "description": "User ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "User"
+        ]
+      }
+    },
+    "/user/logout": {
+      "delete": {
+        "summary": "Logout",
+        "description": "#### Client permission minimum required\nLogout to release token session",
+        "operationId": "Logout",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "User"
+        ]
+      }
+    },
+    "/user/change-password": {
+      "patch": {
+        "summary": "Change Password",
+        "description": "#### Client permission minimum required\nUpdate connected user password",
+        "operationId": "ChangePassword",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "requestBody": {
+          "description": "#### Client permission minimum required\nUpdate connected user password",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string",
+                "example": {
+                  "actualPassword": "tytyty",
+                  "newPassword": "azerty",
+                  "newPasswordConfirm": "azerty"
+                }
+              },
+              "example": "{\n    \"actualPassword\": \"tytyty\",\n    \"newPassword\": \"azerty\",\n    \"newPasswordConfirm\": \"azerty\"\n}"
+            }
+          }
+        },
+        "tags": [
+          "User"
+        ]
+      }
+    },
+    "/user/restore/{userId}": {
+      "patch": {
+        "summary": "Restaure User",
+        "description": "#### Admin permission minimum required\nRestaure soft deleted user",
+        "operationId": "RestaureUser",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "number"
+            },
+            "description": "User ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "tags": [
+          "User"
+        ]
+      }
+    }
+  },
+  "components": {
+    "parameters": {
+      "limit": {
+        "name": "limit",
+        "in": "query",
+        "required": false,
+        "style": "form",
+        "schema": {
+          "type": "number"
+        },
+        "example": "1337"
+      },
+      "offset": {
+        "name": "offset",
+        "in": "query",
+        "required": false,
+        "style": "form",
+        "schema": {
+          "type": "number"
+        },
+        "example": "42"
+      },
+      "animalId": {
+        "name": "animalId",
+        "in": "path",
+        "required": true,
+        "style": "simple",
+        "schema": {
+          "type": "number"
+        },
+        "description": "Animal ID"
+      },
+      "healthBookId": {
+        "name": "healthBookId",
+        "in": "path",
+        "required": true,
+        "style": "simple",
+        "schema": {
+          "type": "number"
+        },
+        "description": "Animal health book id"
+      },
+      "enclosureId": {
+        "name": "enclosureId",
+        "in": "path",
+        "required": true,
+        "style": "simple",
+        "schema": {
+          "type": "number"
+        },
+        "description": "Enclosure ID"
+      },
+      "month": {
+        "name": "month",
+        "in": "path",
+        "required": true,
+        "style": "simple",
+        "schema": {
+          "type": "number"
+        },
+        "description": "Month number (1-12)"
+      },
+      "year": {
+        "name": "year",
+        "in": "path",
+        "required": true,
+        "style": "simple",
+        "schema": {
+          "type": "number"
+        },
+        "description": "Year"
+      },
+      "enclosureTypeId": {
+        "name": "enclosureTypeId",
+        "in": "path",
+        "required": true,
+        "style": "simple",
+        "schema": {
+          "type": "number"
+        }
+      },
+      "imageId": {
+        "name": "imageId",
+        "in": "path",
+        "required": true,
+        "style": "simple",
+        "schema": {
+          "type": "number"
+        },
+        "description": "Image ID"
+      },
+      "serviceBookId": {
+        "name": "serviceBookId",
+        "in": "path",
+        "required": true,
+        "style": "simple",
+        "schema": {
+          "type": "number"
+        },
+        "description": "Service Book ID"
+      },
+      "employeeId": {
+        "name": "employeeId",
+        "in": "path",
+        "required": true,
+        "style": "simple",
+        "schema": {
+          "type": "number"
+        },
+        "description": "Employee ID"
+      },
+      "userId": {
+        "name": "userId",
+        "in": "path",
+        "required": true,
+        "style": "simple",
+        "schema": {
+          "type": "number"
+        },
+        "description": "User ID"
+      },
+      "passId": {
+        "name": "passId",
+        "in": "path",
+        "required": true,
+        "style": "simple",
+        "schema": {
+          "type": "number"
+        },
+        "description": "Pass ID"
+      },
+      "entryId": {
+        "name": "entryId",
+        "in": "path",
+        "required": true,
+        "style": "simple",
+        "schema": {
+          "type": "number"
+        }
+      },
+      "passNightAvailabilityId": {
+        "name": "passNightAvailabilityId",
+        "in": "path",
+        "required": true,
+        "style": "simple",
+        "schema": {
+          "type": "number"
+        },
+        "description": "Pass Night Availability ID"
+      },
+      "passTypeId": {
+        "name": "passTypeId",
+        "in": "path",
+        "required": true,
+        "style": "simple",
+        "schema": {
+          "type": "number"
+        },
+        "description": "Pass Type Id"
+      },
+      "planningId": {
+        "name": "planningId",
+        "in": "path",
+        "required": true,
+        "style": "simple",
+        "schema": {
+          "type": "number"
+        },
+        "description": "Planning entry ID"
+      },
+      "specieId": {
+        "name": "specieId",
+        "in": "path",
+        "required": true,
+        "style": "simple",
+        "schema": {
+          "type": "number"
+        },
+        "description": "Specie ID"
+      },
+      "userRoleId": {
+        "name": "userRoleId",
+        "in": "path",
+        "required": true,
+        "style": "simple",
+        "schema": {
+          "type": "number"
+        },
+        "description": "User Role ID"
+      },
+      "roleId": {
+        "name": "roleId",
+        "in": "path",
+        "required": true,
+        "style": "simple",
+        "schema": {
+          "type": "number"
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearer": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  },
+  "security": [
+    {
+      "bearer": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "Animal",
+      "description": "You can manage all animals in our zoo from theses endpoints\n"
+    },
+    {
+      "name": "Animal Health Book",
+      "description": "Theses entries points allows veterinaries to manage animal health and employees to see it\n"
+    },
+    {
+      "name": "Affluence",
+      "description": "Concern affluence (entries) in the zoo\n"
+    },
+    {
+      "name": "Enclosure",
+      "description": "This is where we can access and manage the differents enclosure in the zoo. We cn have different species in one enclosure\n"
+    },
+    {
+      "name": "Enclosure Images",
+      "description": "Each enclosure can have some images\n\n"
+    },
+    {
+      "name": "Enclosure Service-book",
+      "description": "Employee service book help employees too manage enclosure's health\n"
+    },
+    {
+      "name": "Enclosure Type",
+      "description": "Enclosure type help to categories the enclosures and help to manages animals inside (water enclosure will be unplaisant to host lions...)\n"
+    },
+    {
+      "name": "Entry",
+      "description": "You can here manage pass entries\n"
+    },
+    {
+      "name": "Maintenance",
+      "description": "Help to manage enclosure maintenance when needed\n"
+    },
+    {
+      "name": "Pass",
+      "description": "Pass is one main feature. I help to access on enclosures\n"
+    },
+    {
+      "name": "Pass Night",
+      "description": "You can here manage pass night availabilities\n"
+    },
+    {
+      "name": "Pass Type",
+      "description": "You can here manage pass type\n"
+    },
+    {
+      "name": "Planning",
+      "description": "Theses routes are for employees and help to manage planning and zoo opening days\n"
+    },
+    {
+      "name": "Specie",
+      "description": "Here is to manage animal's species in zoo\n"
+    },
+    {
+      "name": "Statistics",
+      "description": "Concern global stats\n"
+    },
+    {
+      "name": "User Role",
+      "description": "User roles are very importannt to determine rights on API\n"
+    },
+    {
+      "name": "User",
+      "description": "Theses routes are both for client and employees and help manage everything concerning user account\n"
+    }
+  ],
+  "externalDocs": {
+    "url": "",
+    "description": ""
+  }
+}
