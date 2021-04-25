@@ -99,14 +99,14 @@ export class UserController extends Controller {
         .end();
       return;
     }
-    this.insert(user, res);
+    await this.insert(user, res);
   };
 
   public register = async (req: Request, res: Response): Promise<void> => {
     const newUser = req.body;
     this.schema = this.registerSchema;
     const { UserRole, User } = await SequelizeManager.getInstance();
-    const clientRole = await UserRole.findOne({ where: { name: "CLIENT" } });
+    const clientRole = await UserRole.findOne({ where: { name: "VISITEUR" } });
     if (clientRole === null) {
       res.status(StatusCode.SERVER_ERROR).end();
       return;
@@ -125,7 +125,7 @@ export class UserController extends Controller {
         .end();
       return;
     }
-    this.insert(newUser, res);
+    await this.insert(newUser, res);
   };
 
   public login = async (req: Request, res: Response): Promise<void> => {
