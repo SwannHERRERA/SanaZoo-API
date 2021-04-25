@@ -2,7 +2,6 @@ import express from "express";
 import controller from "../../controllers/animals/animals_heals_book.controller";
 import {
   adminMiddleware,
-  authMiddleware,
   employeeMiddleware,
   veterinaryMiddleware,
 } from "../../middlewares";
