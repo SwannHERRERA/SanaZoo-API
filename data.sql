@@ -17,7 +17,7 @@ VALUES (2, 'VENDEUR', NOW(), NOW());
 insert into User_Role (id, name, created_at, updated_at)
 VALUES (3, 'AGENT D\'ACCUEIL', NOW(), NOW());
 insert into User_Role (id, name, created_at, updated_at)
-VALUES (4, 'AGENT d\'ENTRETIENT', NOW(), NOW());
+VALUES (4, 'AGENT D\'ENTRETIENT', NOW(), NOW());
 insert into User_Role (id, name, created_at, updated_at)
 VALUES (5, 'VETERINAIRE', NOW(), NOW());
 insert into User_Role (id, name, created_at, updated_at)
