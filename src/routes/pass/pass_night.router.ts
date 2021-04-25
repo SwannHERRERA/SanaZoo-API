@@ -1,8 +1,6 @@
 import express from "express";
 import { PassNightController } from "../../controllers/pass/pass_night.controller";
-import { authMiddleware } from "../../middlewares/auth.middleware";
-import { adminMiddleware } from "../../middlewares/admin.middleware";
-import { employeeMiddleware } from "../../middlewares";
+import { adminMiddleware, authMiddleware } from "../../middlewares";
 
 const passNightRouter = express.Router();
 let passNightController: PassNightController;

@@ -60,7 +60,6 @@ export function entryCreator(sequelize: Sequelize): ModelCtor<IEntry_Instance> {
     {
       freezeTableName: true,
       underscored: true,
-      paranoid: true,
       timestamps: true,
     }
   );

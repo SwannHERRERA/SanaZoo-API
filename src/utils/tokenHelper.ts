@@ -1,3 +1,4 @@
+import { Op } from "sequelize";
 import { IUser_Instance } from "../models";
 import { SequelizeManager } from "./db";
 
@@ -13,8 +14,16 @@ export async function findUserByToken(
   token: string
 ): Promise<IUser_Instance | null> {
   const { User, Session } = await SequelizeManager.getInstance();
-  // TODO take expire date in request
-  const session = await Session.findOne({ where: { token } });
+
+  const now = new Date();
+  const session = await Session.findOne({
+    where: {
+      token,
+      expireDate: {
+        [Op.gte]: now.toISOString(),
+      },
+    },
+  });
   if (session === null) {
     return null;
   }

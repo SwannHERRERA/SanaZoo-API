@@ -42,7 +42,6 @@ export function userRoleCreator(
     {
       freezeTableName: true,
       underscored: true,
-      paranoid: true,
       timestamps: true,
     }
   );

@@ -57,7 +57,6 @@ export function enclosureImageCreator(
     {
       freezeTableName: true,
       underscored: true,
-      paranoid: true,
       timestamps: true,
     }
   );

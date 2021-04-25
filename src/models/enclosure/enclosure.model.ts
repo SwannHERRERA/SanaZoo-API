@@ -112,7 +112,6 @@ export function enclosureCreator(
     {
       freezeTableName: true,
       underscored: true,
-      paranoid: true,
       timestamps: true,
     }
   );
