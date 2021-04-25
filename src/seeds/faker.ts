@@ -3,7 +3,7 @@ import { SequelizeManager } from "../utils/db";
 import { hash } from "argon2";
 import { Op } from "sequelize";
 
-export async function initFaker(): Promise<void> {
+export async function seedDB(): Promise<void> {
   // await createUser();
   // await createEncosureType();
   // await createEnclosure();
