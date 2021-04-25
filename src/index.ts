@@ -4,16 +4,21 @@ import { SequelizeManager } from "./utils/db";
 import swaggerUI from "swagger-ui-express";
 import swaggerJSON from "../swagger/zoo.json";
 import { buildRoutes } from "./routes";
+// import { seedDB } from "./seeds/faker";
 
 config();
 
 process.env.TZ = "Europe/Paris";
 
+/**
+ * Create Fake data
+ */
+// seedDB();
+
 const app = express();
 app.use(express.json());
 app.use("/swagger", swaggerUI.serve, swaggerUI.setup(swaggerJSON));
 
-// const sequelize = SequelizeManager.getInstance();
 buildRoutes(app);
 //Initialise instance
 SequelizeManager.getInstance();

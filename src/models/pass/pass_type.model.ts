@@ -54,7 +54,6 @@ export function passTypeCreator(
     {
       freezeTableName: true,
       underscored: true,
-      paranoid: true,
       timestamps: true,
     }
   );

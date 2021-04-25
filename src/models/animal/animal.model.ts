@@ -55,7 +55,7 @@ export function animalCreator(
         unique: true,
       },
       description: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
       },
       birthdate: {
         type: DataTypes.DATE,
@@ -83,7 +83,6 @@ export function animalCreator(
     {
       freezeTableName: true,
       underscored: true,
-      paranoid: true,
       timestamps: true,
     }
   );

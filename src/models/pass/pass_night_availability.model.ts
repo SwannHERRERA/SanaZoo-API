@@ -53,7 +53,6 @@ export function passNightAvailabilityCreator(
     {
       freezeTableName: true,
       underscored: true,
-      paranoid: true,
       timestamps: true,
     }
   );
