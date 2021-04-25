@@ -16,8 +16,7 @@ export interface ISession_Props {
   userId: number;
 }
 
-export interface ISession_Creation_Props
-  extends Optional<ISession_Props, "id"> {}
+export type ISession_Creation_Props = Optional<ISession_Props, "id">;
 
 export interface ISession_Instance
   extends Model<ISession_Props, ISession_Creation_Props>,
