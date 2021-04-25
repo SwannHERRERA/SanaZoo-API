@@ -8,7 +8,7 @@
     }
   ],
   "info": {
-    "version": "1.7",
+    "version": "2.0",
     "title": "SanaZoo API",
     "description": "SanaZoo is a very popular zoo !\n\nFirst created in C with XML files, it is now developped with nodejs and swagger, for your eyes only",
     "contact": {
