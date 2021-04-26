@@ -1,5 +1,7 @@
 # SanaZoo API
 
+![package.json version](https://img.shields.io/github/package-json/v/SwannHERRERA/SanaZoo-API)![express version](https://img.shields.io/github/package-json/dependency-version/SwannHERRERA/SanaZoo-API/express)![sequelize version](https://img.shields.io/github/package-json/dependency-version/SwannHERRERA/SanaZoo-API/sequelize)![typescript version](https://img.shields.io/github/package-json/dependency-version/SwannHERRERA/SanaZoo-API/dev/typescript)
+
 SanaZoo is a very popular zoo !
 
 First created in C with XML files, it is now developped with nodejs and swagger, for your eyes only
@@ -121,18 +123,18 @@ CMD node dist/src/index.js
 
 ## Main dependencies
 
-| Dependency         | Version     | Description                                                  |
-| ------------------ | ----------- | ------------------------------------------------------------ |
-| Express            | ^4.17.1     | Web API Framework                                            |
-| Date FNS           | ^2.21.1     | Useful librairies to manipulates dates                       |
-| Dotenv             | ^8.2.0      | Used to load `.env` file                                     |
-| Argon2             | ^0.27.0     | Used to encrupt users password                               |
-| Mysql2             | ^2.2.5      | DB driver                                                    |
-| Sequelize          | ^6.6.2      | Orm librairies to bind class to DB entities                  |
-| Swagger-jsdoc      | ^7.0.0-rc.6 | Used to implements swagger page                              |
-| Swagger-ui-express | ^4.1.6      | Used to implements swagger page                              |
-| Yup                | ^0.32.9     | Form validation library used to validate data in post body of our requests |
-| Typescript         | ^4.2.3      | Very useful to use types in JS based framework               |
+| Dependency         | Version                                                      | Description                                                  |
+| ------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| Express            | ![express version](https://img.shields.io/github/package-json/dependency-version/SwannHERRERA/SanaZoo-API/express) | Web API Framework                                            |
+| Date FNS           | ![date-fns version](https://img.shields.io/github/package-json/dependency-version/SwannHERRERA/SanaZoo-API/date-fns) | Useful librairies to manipulates dates                       |
+| Dotenv             | ![date fns version](https://img.shields.io/github/package-json/dependency-version/SwannHERRERA/SanaZoo-API/dotenv) | Used to load `.env` file                                     |
+| Argon2             | ![argon2 version](https://img.shields.io/github/package-json/dependency-version/SwannHERRERA/SanaZoo-API/argon2) | Used to encrupt users password                               |
+| Mysql2             | ![mysql version](https://img.shields.io/github/package-json/dependency-version/SwannHERRERA/SanaZoo-API/mysql2) | DB driver                                                    |
+| Sequelize          | ![sequelize version](https://img.shields.io/github/package-json/dependency-version/SwannHERRERA/SanaZoo-API/sequelize) | Orm librairies to bind class to DB entities                  |
+| Swagger-jsdoc      | ![version](https://img.shields.io/github/package-json/dependency-version/SwannHERRERA/SanaZoo-API/swagger-jsdoc) | Used to implements swagger page                              |
+| Swagger-ui-express | ![version](https://img.shields.io/github/package-json/dependency-version/SwannHERRERA/SanaZoo-API/swagger-ui-express) | Used to implements swagger page                              |
+| Yup                | ![yup version](https://img.shields.io/github/package-json/dependency-version/SwannHERRERA/SanaZoo-API/yup) | Form validation library used to validate data in post body of our requests |
+| Typescript         | ![typescript version](https://img.shields.io/github/package-json/dependency-version/SwannHERRERA/SanaZoo-API/dev/typescript) | Very useful to use types in JS based framework               |
 
 # API Endpoints
 
